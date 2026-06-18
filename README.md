@@ -77,6 +77,7 @@ rag-sdk/
 ├── pnpm-workspace.yaml           # pnpm workspace 配置
 ├── turbo.json                    # Turborepo 任务编排
 ├── tsconfig.json                 # 共享 TypeScript 基础配置
+├── vitest.config.ts              # 测试配置
 ├── .eslintrc.cjs
 ├── .prettierrc
 ├── .gitignore
@@ -92,6 +93,13 @@ rag-sdk/
 │   ├── 07-评测模块.md
 │   └── 08-知识图谱.md
 │
+├── tests/                        # 跨包集成测试 + 冒烟测试
+│   ├── integration/
+│   │   └── pipeline.test.ts      # Pipeline 集成测试
+│   └── smoke/
+│       ├── smoke.test.ts         # 冒烟测试
+│       └── type-contract.test.ts # 类型契约验证
+│
 └── packages/
     ├── core/                     # @rag-sdk/core — 核心类型 + Pipeline + Router
     │   ├── src/
@@ -100,120 +108,62 @@ rag-sdk/
     │   │   ├── pipeline.ts       # Pipeline 编排器
     │   │   ├── router.ts         # 检索路由
     │   │   └── logger.ts         # 日志
+    │   ├── __tests__/            # 单元测试
+    │   │   ├── pipeline.test.ts
+    │   │   ├── router.test.ts
+    │   │   └── logger.test.ts
+    │   ├── demo/                 # 可运行示例
+    │   │   └── basic.ts
     │   ├── package.json
     │   ├── tsconfig.json
     │   └── tsup.config.ts
     │
     ├── llm/                      # @rag-sdk/llm — LLM 提供商
-    │   ├── src/
-    │   │   ├── types.ts
-    │   │   ├── base.ts           # LLMProvider 接口
-    │   │   ├── openai.ts
-    │   │   ├── anthropic.ts
-    │   │   └── google.ts
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     ├── embedding/                # @rag-sdk/embedding — 向量嵌入
-    │   ├── src/
-    │   │   ├── types.ts
-    │   │   ├── base.ts           # EmbeddingProvider 接口
-    │   │   ├── openai.ts
-    │   │   ├── anthropic.ts
-    │   │   ├── google.ts
-    │   │   └── voyage.ts
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     ├── storage/                  # @rag-sdk/storage — 向量存储
-    │   ├── src/
-    │   │   ├── types.ts
-    │   │   ├── base.ts           # VectorStore 接口
-    │   │   ├── memory.ts         # 内置内存向量存储
-    │   │   ├── pinecone.ts
-    │   │   ├── weaviate.ts
-    │   │   ├── chroma.ts
-    │   │   ├── qdrant.ts
-    │   │   └── index-manager.ts  # 增量更新 / 索引管理
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     ├── document/                 # @rag-sdk/document — 文档处理
-    │   ├── src/
-    │   │   ├── types.ts
-    │   │   ├── loader/           # 文档加载器
-    │   │   │   ├── base.ts
-    │   │   │   ├── text-loader.ts
-    │   │   │   ├── pdf-loader.ts
-    │   │   │   ├── markdown-loader.ts
-    │   │   │   └── json-loader.ts
-    │   │   ├── chunking/         # 切块策略
-    │   │   │   ├── base.ts
-    │   │   │   ├── fixed-size.ts       # 固定大小切块
-    │   │   │   ├── recursive.ts        # 递归切块
-    │   │   │   ├── semantic.ts         # 语义切块
-    │   │   │   └── contextual-header.ts # 上下文头
-    │   │   ├── cleaner.ts        # 文档清洗
-    │   │   ├── deduplicator.ts   # 文档去重
-    │   │   ├── metadata-extractor.ts # 元数据抽取
-    │   │   └── augmenter.ts      # 文档增强
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     ├── retrieval/                # @rag-sdk/retrieval — 检索
-    │   ├── src/
-    │   │   ├── query/            # 查询变换
-    │   │   │   ├── types.ts
-    │   │   │   ├── rewriter.ts         # Query Rewrite
-    │   │   │   ├── multi-query.ts      # Multi-query
-    │   │   │   ├── decomposition.ts    # Query Decomposition
-    │   │   │   └── hyde.ts             # HyDE
-    │   │   ├── search/           # 搜索策略
-    │   │   │   ├── vector.ts           # 向量检索
-    │   │   │   ├── keyword.ts          # 关键词检索 (BM25)
-    │   │   │   ├── fusion.ts           # 融合检索
-    │   │   │   ├── rrf.ts              # RRF
-    │   │   │   ├── small-to-big.ts     # Small-to-Big
-    │   │   │   └── hierarchical.ts     # 分层索引
-    │   │   └── post-process/     # 检索后处理
-    │   │       ├── reranker.ts         # Re-rank
-    │   │       ├── context-enrich.ts   # Context Enriched
-    │   │       ├── selective-context.ts # RSC
-    │   │       ├── compression.ts      # Context Compression
-    │   │       └── threshold.ts        # 阈值过滤
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     ├── generation/               # @rag-sdk/generation — 答案生成
-    │   ├── src/
-    │   │   ├── types.ts
-    │   │   ├── prompt-template.ts  # Prompt 模板
-    │   │   ├── generator.ts        # 答案生成器
-    │   │   ├── grounding.ts        # Grounding
-    │   │   ├── citation.ts         # 引用回答
-    │   │   ├── self-rag.ts         # Self-RAG
-    │   │   └── consistency.ts      # 多答案一致性
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     ├── evaluation/               # @rag-sdk/evaluation — 评测
-    │   ├── src/
-    │   │   ├── retrieval/        # 检索评测
-    │   │   │   ├── recall.ts
-    │   │   │   ├── precision.ts
-    │   │   │   ├── mrr.ts
-    │   │   │   └── ndcg.ts
-    │   │   ├── generation/       # 生成评测
-    │   │   │   ├── bleu.ts
-    │   │   │   ├── rouge.ts
-    │   │   │   ├── bert-score.ts
-    │   │   │   ├── faithfulness.ts
-    │   │   │   └── relevance.ts
-    │   │   └── e2e/              # 端到端评测
-    │   │       ├── llm-judge.ts
-    │   │       └── ab-test.ts
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     ├── knowledge-graph/          # @rag-sdk/knowledge-graph — 知识图谱
-    │   ├── src/
-    │   │   ├── types.ts
-    │   │   ├── entity-extractor.ts # 实体关系抽取
-    │   │   ├── graph-store.ts      # 图存储
-    │   │   └── graph-retriever.ts  # 图检索
+    │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
     │   └── ...
     │
     └── rag-sdk/                  # rag-sdk — 主包（re-export + 预设 Pipeline）
@@ -223,6 +173,8 @@ rag-sdk/
         │       ├── simple-rag.ts
         │       ├── advanced-rag.ts
         │       └── custom.ts
+        ├── __tests__/
+        ├── demo/
         └── ...
 ```
 
@@ -252,6 +204,7 @@ rag-sdk/
 | [06-生成模块](./docs/06-生成模块.md) | Prompt、Grounding、Citation、Self-RAG |
 | [07-评测模块](./docs/07-评测模块.md) | 检索/生成/端到端评测 |
 | [08-知识图谱](./docs/08-知识图谱.md) | 实体抽取、图存储、图检索 |
+| [09-验收标准](./docs/09-验收标准.md) | 阶段验收清单、模块验收标准、接口契约验证 |
 
 ## 开发
 
@@ -265,11 +218,23 @@ pnpm run build
 # 开发模式（监听变更）
 pnpm run dev
 
-# 运行测试
+# 运行所有测试（单元 + 集成 + 冒烟）
 pnpm run test
+
+# 只运行单元测试
+pnpm run test:unit
+
+# 只运行集成测试 + 冒烟测试
+pnpm run test:e2e
 
 # 类型检查
 pnpm run typecheck
+
+# Lint
+pnpm run lint
+
+# 运行 demo
+npx tsx packages/core/demo/basic.ts
 ```
 
 ## License

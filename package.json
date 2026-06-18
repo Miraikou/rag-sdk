@@ -5,8 +5,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "test": "turbo run test",
-    "test:run": "turbo run test:run",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:unit": "vitest run packages/*/__tests__",
+    "test:e2e": "vitest run tests/",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"packages/*/src/**/*.ts\"",
