@@ -9,22 +9,22 @@ import type {
 
 /** 文档清洗器接口 */
 export interface DocumentCleaner {
-  clean(document: Document): Document;
+  clean(documents: Document[]): Promise<Document[]>;
 }
 
 /** 文档去重器接口 */
 export interface DocumentDeduplicator {
-  deduplicate(documents: Document[]): Document[];
+  deduplicate(documents: Document[]): Promise<Document[]>;
 }
 
 /** 元数据抽取器接口 */
 export interface MetadataExtractor {
-  extract(document: Document): Promise<Document>;
+  extract(documents: Document[]): Promise<Document[]>;
 }
 
 /** 文档增强器接口 */
 export interface DocumentAugmenter {
-  augment(document: Document): Promise<Document>;
+  augment(documents: Document[]): Promise<Document[]>;
 }
 
 /** Indexing Pipeline 配置 */

@@ -49,6 +49,11 @@ export class RAGPipeline implements Pipeline {
   private generator: Generator;
 
   constructor(config: PipelineConfig) {
+    if (!config.llm) throw new Error('PipelineConfig.llm is required');
+    if (!config.embedding) throw new Error('PipelineConfig.embedding is required');
+    if (!config.store) throw new Error('PipelineConfig.store is required');
+    if (!config.chunker) throw new Error('PipelineConfig.chunker is required');
+
     this.config = config;
 
     // 默认检索器：基于 store 的向量检索

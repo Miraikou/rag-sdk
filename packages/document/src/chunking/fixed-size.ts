@@ -10,7 +10,16 @@ import { BaseChunker } from './base';
 export class FixedSizeChunker extends BaseChunker {
   chunk(document: Document, options?: ChunkOptions): Chunk[] {
     const { chunkSize, overlap, separator } = this.mergeOptions(options);
+
+    // 参数校验
+    if (chunkSize <= 0) throw new Error(`chunkSize must be positive, got ${chunkSize}`);
+    if (overlap < 0) throw new Error(`overlap must be non-negative, got ${overlap}`);
+    if (overlap >= chunkSize) throw new Error(`overlap (${overlap}) must be less than chunkSize (${chunkSize})`);
+
     const content = document.content;
+
+    // 空文档返回空数组
+    if (!content.trim()) return [];
 
     if (content.length <= chunkSize) {
       return [

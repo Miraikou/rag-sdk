@@ -28,10 +28,20 @@ function cosineSimilarity(a: number[], b: number[]): number {
  */
 export class MemoryStore implements VectorStore {
   private chunks = new Map<string, Chunk>();
+  private dimension: number | null = null;
 
   /** 插入或更新 chunks */
   async upsert(chunks: Chunk[]): Promise<void> {
     for (const chunk of chunks) {
+      if (chunk.embedding) {
+        if (this.dimension === null) {
+          this.dimension = chunk.embedding.length;
+        } else if (chunk.embedding.length !== this.dimension) {
+          throw new Error(
+            `Embedding dimension mismatch: expected ${this.dimension}, got ${chunk.embedding.length} (chunk: ${chunk.id})`
+          );
+        }
+      }
       this.chunks.set(chunk.id, chunk);
     }
   }

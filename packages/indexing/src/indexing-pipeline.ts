@@ -46,25 +46,23 @@ export class IndexingPipeline {
 
     // 1. 清洗
     if (this.config.cleaner) {
-      docs = docs.map((d) => this.config.cleaner!.clean(d));
+      docs = await this.config.cleaner.clean(docs);
     }
 
     // 2. 去重
     if (this.config.deduplicator) {
-      docs = this.config.deduplicator.deduplicate(docs);
+      docs = await this.config.deduplicator.deduplicate(docs);
       report.documentsAfterDedup = docs.length;
     }
 
     // 3. 元数据抽取
     if (this.config.metadataExtractor) {
-      const extractPromises = docs.map((d) => this.config.metadataExtractor!.extract(d));
-      docs = await Promise.all(extractPromises);
+      docs = await this.config.metadataExtractor.extract(docs);
     }
 
     // 4. 文档增强
     if (this.config.augmenter) {
-      const augmentPromises = docs.map((d) => this.config.augmenter!.augment(d));
-      docs = await Promise.all(augmentPromises);
+      docs = await this.config.augmenter.augment(docs);
     }
 
     // 5. 切块

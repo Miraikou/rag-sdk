@@ -28,6 +28,8 @@ export class OpenAIProvider extends BaseLLMProvider {
   }
 
   async chat(messages: Message[], options?: ChatOptions): Promise<string> {
+    if (messages.length === 0) throw new Error('messages must not be empty');
+
     const opts = this.mergeOptions(options);
     const model = opts.model ?? this.defaultModel;
 
@@ -60,6 +62,8 @@ export class OpenAIProvider extends BaseLLMProvider {
   }
 
   async *chatStream(messages: Message[], options?: ChatOptions): AsyncIterable<string> {
+    if (messages.length === 0) throw new Error('messages must not be empty');
+
     const opts = this.mergeOptions(options);
     const model = opts.model ?? this.defaultModel;
 
