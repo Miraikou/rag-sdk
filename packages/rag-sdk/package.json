@@ -23,6 +23,7 @@
     "@rag-sdk/core": "workspace:*",
     "@rag-sdk/document": "workspace:*",
     "@rag-sdk/embedding": "workspace:*",
+    "@rag-sdk/indexing": "workspace:*",
     "@rag-sdk/llm": "workspace:*",
     "@rag-sdk/storage": "workspace:*",
     "@rag-sdk/retrieval": "workspace:*",

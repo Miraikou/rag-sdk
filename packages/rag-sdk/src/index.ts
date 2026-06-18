@@ -7,6 +7,9 @@ export * from '@rag-sdk/document';
 // 向量嵌入
 export * from '@rag-sdk/embedding';
 
+// 文档索引
+export * from '@rag-sdk/indexing';
+
 // LLM 提供商
 export * from '@rag-sdk/llm';
 
