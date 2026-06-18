@@ -17,13 +17,17 @@ export * from '@rag-sdk/llm';
 export * from '@rag-sdk/storage';
 
 // 检索
-export * from '@rag-sdk/retrieval';
+// TODO: 待实现
+// export * from '@rag-sdk/retrieval';
 
 // 生成
-export * from '@rag-sdk/generation';
+// TODO: 待实现
+// export * from '@rag-sdk/generation';
 
 // 评测
-export * from '@rag-sdk/evaluation';
+// TODO: 待实现
+// export * from '@rag-sdk/evaluation';
 
 // 知识图谱
-export * from '@rag-sdk/knowledge-graph';
+// TODO: 待实现
+// export * from '@rag-sdk/knowledge-graph';
