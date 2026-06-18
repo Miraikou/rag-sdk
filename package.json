@@ -1,0 +1,39 @@
+{
+  "name": "rag-sdk-monorepo",
+  "private": true,
+  "description": "通用、模块化、可扩展的 TypeScript RAG SDK",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "test:run": "turbo run test:run",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"packages/*/src/**/*.ts\"",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean"
+  },
+  "keywords": [
+    "rag",
+    "llm",
+    "embedding",
+    "vector-search",
+    "knowledge-base",
+    "ai"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "prettier": "^3.2.0",
+    "tsup": "^8.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}

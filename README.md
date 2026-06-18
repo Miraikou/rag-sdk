@@ -1,0 +1,277 @@
+# RAG SDK
+
+通用、模块化、可扩展的 TypeScript RAG（检索增强生成）SDK。
+
+提供完整的 RAG pipeline 和多种优化策略，支持自定义 LLM 提供商、向量数据库和检索策略。
+
+## 特性
+
+- 🔌 **接口驱动** — 每个模块定义抽象接口，可自由替换实现
+- 🧩 **模块化 Monorepo** — 10 个独立子包，按需引入
+- 🔄 **Pipeline 模式** — 一行代码串联文档处理→检索→生成
+- 📊 **内置评测** — 检索指标（NDCG/MRR）+ 生成指标（BLEU/ROUGE）+ 端到端评测
+- 🕸️ **知识图谱** — 实体抽取 + 图检索，支持多跳推理
+- 📝 **TypeScript 严格模式** — 完整类型定义，零 `any`
+
+## 安装
+
+```bash
+# 安装主包（包含所有子包）
+pnpm add rag-sdk
+
+# 或按需安装子包
+pnpm add @rag-sdk/core @rag-sdk/llm @rag-sdk/storage
+```
+
+## 快速开始
+
+```ts
+import { RAGPipeline } from '@rag-sdk/core';
+import { OpenAI } from '@rag-sdk/llm';
+import { OpenAIEmbedding } from '@rag-sdk/embedding';
+import { MemoryStore } from '@rag-sdk/storage';
+import { SemanticChunker } from '@rag-sdk/document';
+import { FusionRetriever, Reranker } from '@rag-sdk/retrieval';
+import { CitationGenerator } from '@rag-sdk/generation';
+
+// 创建 Pipeline
+const rag = new RAGPipeline({
+  llm: new OpenAI({ apiKey: process.env.OPENAI_API_KEY }),
+  embedding: new OpenAIEmbedding({ apiKey: process.env.OPENAI_API_KEY }),
+  store: new MemoryStore(),
+  chunker: new SemanticChunker(),
+  retriever: new FusionRetriever(),
+  postProcessors: [new Reranker()],
+  generator: new CitationGenerator(),
+});
+
+// 导入文档
+await rag.ingest([
+  { content: '公司年假为15天，入职满一年后开始计算。', metadata: { source: '员工手册' } },
+]);
+
+// 查询
+const { answer, sources } = await rag.query('年假有几天？');
+```
+
+## 模块一览
+
+| 包名 | 说明 |
+|------|------|
+| [@rag-sdk/core](./packages/core) | 核心类型、Pipeline 编排器、检索路由 |
+| [@rag-sdk/llm](./packages/llm) | LLM 提供商（OpenAI / Anthropic / Google） |
+| [@rag-sdk/embedding](./packages/embedding) | 向量嵌入（OpenAI / Anthropic / Google / Voyage） |
+| [@rag-sdk/storage](./packages/storage) | 向量存储（内置内存 + Pinecone / Weaviate / Chroma / Qdrant） |
+| [@rag-sdk/document](./packages/document) | 文档加载、切块（4种策略）、清洗、增强、元数据抽取 |
+| [@rag-sdk/retrieval](./packages/retrieval) | 查询变换、搜索策略（向量/关键词/融合）、后处理（Re-rank等） |
+| [@rag-sdk/generation](./packages/generation) | Prompt 模板、Grounding、引用回答、Self-RAG |
+| [@rag-sdk/evaluation](./packages/evaluation) | 检索评测（NDCG/MRR）+ 生成评测（BLEU/ROUGE/BERTScore）+ 端到端 |
+| [@rag-sdk/knowledge-graph](./packages/knowledge-graph) | 实体关系抽取、图存储、图检索 |
+| [rag-sdk](./packages/rag-sdk) | 主包，re-export 所有子包 + 预设 Pipeline |
+
+## 目录结构
+
+```
+rag-sdk/
+├── package.json                  # workspace 根（private）
+├── pnpm-workspace.yaml           # pnpm workspace 配置
+├── turbo.json                    # Turborepo 任务编排
+├── tsconfig.json                 # 共享 TypeScript 基础配置
+├── .eslintrc.cjs
+├── .prettierrc
+├── .gitignore
+│
+├── docs/                         # 需求文档
+│   ├── README.md                 # 文档索引
+│   ├── 01-项目概述.md
+│   ├── 02-架构设计.md
+│   ├── 03-核心接口.md
+│   ├── 04-文档处理.md
+│   ├── 05-检索模块.md
+│   ├── 06-生成模块.md
+│   ├── 07-评测模块.md
+│   └── 08-知识图谱.md
+│
+└── packages/
+    ├── core/                     # @rag-sdk/core — 核心类型 + Pipeline + Router
+    │   ├── src/
+    │   │   ├── index.ts
+    │   │   ├── types.ts          # 全局类型定义
+    │   │   ├── pipeline.ts       # Pipeline 编排器
+    │   │   ├── router.ts         # 检索路由
+    │   │   └── logger.ts         # 日志
+    │   ├── package.json
+    │   ├── tsconfig.json
+    │   └── tsup.config.ts
+    │
+    ├── llm/                      # @rag-sdk/llm — LLM 提供商
+    │   ├── src/
+    │   │   ├── types.ts
+    │   │   ├── base.ts           # LLMProvider 接口
+    │   │   ├── openai.ts
+    │   │   ├── anthropic.ts
+    │   │   └── google.ts
+    │   └── ...
+    │
+    ├── embedding/                # @rag-sdk/embedding — 向量嵌入
+    │   ├── src/
+    │   │   ├── types.ts
+    │   │   ├── base.ts           # EmbeddingProvider 接口
+    │   │   ├── openai.ts
+    │   │   ├── anthropic.ts
+    │   │   ├── google.ts
+    │   │   └── voyage.ts
+    │   └── ...
+    │
+    ├── storage/                  # @rag-sdk/storage — 向量存储
+    │   ├── src/
+    │   │   ├── types.ts
+    │   │   ├── base.ts           # VectorStore 接口
+    │   │   ├── memory.ts         # 内置内存向量存储
+    │   │   ├── pinecone.ts
+    │   │   ├── weaviate.ts
+    │   │   ├── chroma.ts
+    │   │   ├── qdrant.ts
+    │   │   └── index-manager.ts  # 增量更新 / 索引管理
+    │   └── ...
+    │
+    ├── document/                 # @rag-sdk/document — 文档处理
+    │   ├── src/
+    │   │   ├── types.ts
+    │   │   ├── loader/           # 文档加载器
+    │   │   │   ├── base.ts
+    │   │   │   ├── text-loader.ts
+    │   │   │   ├── pdf-loader.ts
+    │   │   │   ├── markdown-loader.ts
+    │   │   │   └── json-loader.ts
+    │   │   ├── chunking/         # 切块策略
+    │   │   │   ├── base.ts
+    │   │   │   ├── fixed-size.ts       # 固定大小切块
+    │   │   │   ├── recursive.ts        # 递归切块
+    │   │   │   ├── semantic.ts         # 语义切块
+    │   │   │   └── contextual-header.ts # 上下文头
+    │   │   ├── cleaner.ts        # 文档清洗
+    │   │   ├── deduplicator.ts   # 文档去重
+    │   │   ├── metadata-extractor.ts # 元数据抽取
+    │   │   └── augmenter.ts      # 文档增强
+    │   └── ...
+    │
+    ├── retrieval/                # @rag-sdk/retrieval — 检索
+    │   ├── src/
+    │   │   ├── query/            # 查询变换
+    │   │   │   ├── types.ts
+    │   │   │   ├── rewriter.ts         # Query Rewrite
+    │   │   │   ├── multi-query.ts      # Multi-query
+    │   │   │   ├── decomposition.ts    # Query Decomposition
+    │   │   │   └── hyde.ts             # HyDE
+    │   │   ├── search/           # 搜索策略
+    │   │   │   ├── vector.ts           # 向量检索
+    │   │   │   ├── keyword.ts          # 关键词检索 (BM25)
+    │   │   │   ├── fusion.ts           # 融合检索
+    │   │   │   ├── rrf.ts              # RRF
+    │   │   │   ├── small-to-big.ts     # Small-to-Big
+    │   │   │   └── hierarchical.ts     # 分层索引
+    │   │   └── post-process/     # 检索后处理
+    │   │       ├── reranker.ts         # Re-rank
+    │   │       ├── context-enrich.ts   # Context Enriched
+    │   │       ├── selective-context.ts # RSC
+    │   │       ├── compression.ts      # Context Compression
+    │   │       └── threshold.ts        # 阈值过滤
+    │   └── ...
+    │
+    ├── generation/               # @rag-sdk/generation — 答案生成
+    │   ├── src/
+    │   │   ├── types.ts
+    │   │   ├── prompt-template.ts  # Prompt 模板
+    │   │   ├── generator.ts        # 答案生成器
+    │   │   ├── grounding.ts        # Grounding
+    │   │   ├── citation.ts         # 引用回答
+    │   │   ├── self-rag.ts         # Self-RAG
+    │   │   └── consistency.ts      # 多答案一致性
+    │   └── ...
+    │
+    ├── evaluation/               # @rag-sdk/evaluation — 评测
+    │   ├── src/
+    │   │   ├── retrieval/        # 检索评测
+    │   │   │   ├── recall.ts
+    │   │   │   ├── precision.ts
+    │   │   │   ├── mrr.ts
+    │   │   │   └── ndcg.ts
+    │   │   ├── generation/       # 生成评测
+    │   │   │   ├── bleu.ts
+    │   │   │   ├── rouge.ts
+    │   │   │   ├── bert-score.ts
+    │   │   │   ├── faithfulness.ts
+    │   │   │   └── relevance.ts
+    │   │   └── e2e/              # 端到端评测
+    │   │       ├── llm-judge.ts
+    │   │       └── ab-test.ts
+    │   └── ...
+    │
+    ├── knowledge-graph/          # @rag-sdk/knowledge-graph — 知识图谱
+    │   ├── src/
+    │   │   ├── types.ts
+    │   │   ├── entity-extractor.ts # 实体关系抽取
+    │   │   ├── graph-store.ts      # 图存储
+    │   │   └── graph-retriever.ts  # 图检索
+    │   └── ...
+    │
+    └── rag-sdk/                  # rag-sdk — 主包（re-export + 预设 Pipeline）
+        ├── src/
+        │   ├── index.ts          # re-export 所有子包
+        │   └── pipeline/         # 预设 Pipeline
+        │       ├── simple-rag.ts
+        │       ├── advanced-rag.ts
+        │       └── custom.ts
+        └── ...
+```
+
+## 支持的 RAG 策略
+
+**文档处理**：语义切块 · 递归切块 · Contextual Chunk Header · 元数据抽取 · 去重清洗 · 文档增强 · 增量更新
+
+**检索优化**：Query Rewrite · Multi-query · HyDE · Query Decomposition · 向量检索 · 关键词检索(BM25) · Fusion · RRF · Small-to-Big · 分层索引 · Re-rank · Context Enriched · RSC · Context Compression · 阈值过滤
+
+**生成增强**：Prompt Template · Grounding · Citation · Self-RAG · 多答案一致性 · LLM-as-Judge
+
+**知识图谱**：实体关系抽取 · 图存储 · 图检索 · 向量+图混合检索
+
+**评测体系**：Recall@K · Precision@K · MRR · NDCG · BLEU · ROUGE · BERTScore · Faithfulness · Answer Relevance · A/B Test
+
+## 文档
+
+详细需求文档在 [docs/](./docs/) 目录：
+
+| 文档 | 内容 |
+|------|------|
+| [01-项目概述](./docs/01-项目概述.md) | 项目目标、设计理念、功能清单 |
+| [02-架构设计](./docs/02-架构设计.md) | Monorepo 结构、模块依赖、实施阶段 |
+| [03-核心接口](./docs/03-核心接口.md) | 所有抽象接口定义（TypeScript） |
+| [04-文档处理](./docs/04-文档处理.md) | 加载、切块、清洗、增强 |
+| [05-检索模块](./docs/05-检索模块.md) | 查询变换、搜索策略、后处理 |
+| [06-生成模块](./docs/06-生成模块.md) | Prompt、Grounding、Citation、Self-RAG |
+| [07-评测模块](./docs/07-评测模块.md) | 检索/生成/端到端评测 |
+| [08-知识图谱](./docs/08-知识图谱.md) | 实体抽取、图存储、图检索 |
+
+## 开发
+
+```bash
+# 安装依赖
+pnpm install
+
+# 构建所有子包
+pnpm run build
+
+# 开发模式（监听变更）
+pnpm run dev
+
+# 运行测试
+pnpm run test
+
+# 类型检查
+pnpm run typecheck
+```
+
+## License
+
+MIT
