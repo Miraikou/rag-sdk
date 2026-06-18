@@ -7,7 +7,7 @@
 ## 特性
 
 - 🔌 **接口驱动** — 每个模块定义抽象接口，可自由替换实现
-- 🧩 **模块化 Monorepo** — 10 个独立子包，按需引入
+- 🧩 **模块化 Monorepo** — 11 个独立子包，按需引入
 - 🔄 **Pipeline 模式** — 一行代码串联文档处理→检索→生成
 - 📊 **内置评测** — 检索指标（NDCG/MRR）+ 生成指标（BLEU/ROUGE）+ 端到端评测
 - 🕸️ **知识图谱** — 实体抽取 + 图检索，支持多跳推理
@@ -67,6 +67,7 @@ const { answer, sources } = await rag.query('年假有几天？');
 | [@rag-sdk/generation](./packages/generation) | Prompt 模板、Grounding、引用回答、Self-RAG |
 | [@rag-sdk/evaluation](./packages/evaluation) | 检索评测（NDCG/MRR）+ 生成评测（BLEU/ROUGE/BERTScore）+ 端到端 |
 | [@rag-sdk/knowledge-graph](./packages/knowledge-graph) | 实体关系抽取、图存储、图检索 |
+| [@rag-sdk/indexing](./packages/indexing) | 文档索引编排（加载→清洗→去重→增强→切块→嵌入→存储） |
 | [rag-sdk](./packages/rag-sdk) | 主包，re-export 所有子包 + 预设 Pipeline |
 
 ## 目录结构
@@ -162,6 +163,15 @@ rag-sdk/
     │
     ├── knowledge-graph/          # @rag-sdk/knowledge-graph — 知识图谱
     │   ├── src/ ...
+    │   ├── __tests__/
+    │   ├── demo/
+    │   └── ...
+    │
+    ├── indexing/                 # @rag-sdk/indexing — 文档索引编排
+    │   ├── src/
+    │   │   ├── types.ts
+    │   │   ├── indexing-pipeline.ts
+    │   │   └── index.ts
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
