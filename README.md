@@ -7,7 +7,7 @@
 ## 特性
 
 - 🔌 **接口驱动** — 每个模块定义抽象接口，可自由替换实现
-- 🧩 **模块化 Monorepo** — 11 个独立子包，按需引入
+- 🧩 **模块化 Monorepo** — 20 个子包（11 个核心包 + 9 个适配器包），按需引入
 - 🔄 **Pipeline 模式** — 一行代码串联文档处理→检索→生成
 - 📊 **内置评测** — 检索指标（NDCG/MRR）+ 生成指标（BLEU/ROUGE）+ 端到端评测
 - 🕸️ **知识图谱** — 实体抽取 + 图检索，支持多跳推理
@@ -21,6 +21,10 @@ pnpm add rag-sdk
 
 # 或按需安装子包
 pnpm add @rag-sdk/core @rag-sdk/llm @rag-sdk/storage
+
+# 按需安装适配器（需同时安装对应的外部 SDK）
+pnpm add @rag-sdk/llm-anthropic @anthropic-ai/sdk
+pnpm add @rag-sdk/storage-pinecone @pinecone-database/pinecone
 ```
 
 ## 快速开始
@@ -59,9 +63,9 @@ const { answer, sources } = await rag.query('年假有几天？');
 | 包名 | 说明 |
 |------|------|
 | [@rag-sdk/core](./packages/core) | 核心类型、Pipeline 编排器、检索路由 |
-| [@rag-sdk/llm](./packages/llm) | LLM 提供商（OpenAI / Anthropic / Google） |
-| [@rag-sdk/embedding](./packages/embedding) | 向量嵌入（OpenAI / Anthropic / Google / Voyage） |
-| [@rag-sdk/storage](./packages/storage) | 向量存储（内置内存 + Pinecone / Weaviate / Chroma / Qdrant） |
+| [@rag-sdk/llm](./packages/llm) | LLM 抽象接口 + 内置 OpenAI 适配器（零外部依赖） |
+| [@rag-sdk/embedding](./packages/embedding) | 向量嵌入抽象接口 + 内置 OpenAI 适配器 |
+| [@rag-sdk/storage](./packages/storage) | 向量存储抽象接口 + 内置内存存储和 pgvector |
 | [@rag-sdk/document](./packages/document) | 文档加载、切块（4种策略）、清洗、增强、元数据抽取 |
 | [@rag-sdk/retrieval](./packages/retrieval) | 查询变换、搜索策略（向量/关键词/融合）、后处理（Re-rank等） |
 | [@rag-sdk/generation](./packages/generation) | Prompt 模板、Grounding、引用回答、Self-RAG |
@@ -69,6 +73,20 @@ const { answer, sources } = await rag.query('年假有几天？');
 | [@rag-sdk/knowledge-graph](./packages/knowledge-graph) | 实体关系抽取、图存储、图检索 |
 | [@rag-sdk/indexing](./packages/indexing) | 文档索引编排（加载→清洗→去重→增强→切块→嵌入→存储） |
 | [rag-sdk](./packages/rag-sdk) | 主包，re-export 所有子包 + 预设 Pipeline |
+
+### 适配器包
+
+| 适配器包 | 说明 | 外部依赖 |
+|---------|------|---------|
+| [@rag-sdk/llm-anthropic](./packages/llm-anthropic) | Anthropic Claude LLM | @anthropic-ai/sdk |
+| [@rag-sdk/llm-google](./packages/llm-google) | Google Gemini LLM | @google/generative-ai |
+| [@rag-sdk/embedding-anthropic](./packages/embedding-anthropic) | Anthropic Embedding | @anthropic-ai/sdk |
+| [@rag-sdk/embedding-google](./packages/embedding-google) | Google Embedding | @google/generative-ai |
+| [@rag-sdk/embedding-voyage](./packages/embedding-voyage) | Voyage AI Embedding | voyageai |
+| [@rag-sdk/storage-pinecone](./packages/storage-pinecone) | Pinecone 向量数据库 | @pinecone-database/pinecone |
+| [@rag-sdk/storage-weaviate](./packages/storage-weaviate) | Weaviate 向量数据库 | weaviate-ts-client |
+| [@rag-sdk/storage-chroma](./packages/storage-chroma) | Chroma 向量数据库 | chromadb |
+| [@rag-sdk/storage-qdrant](./packages/storage-qdrant) | Qdrant 向量数据库 | @qdrant/js-client-rest |
 
 ## 目录结构
 
@@ -175,6 +193,16 @@ rag-sdk/
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
+    │
+    ├── llm-anthropic/            # @rag-sdk/llm-anthropic — Anthropic Claude 适配器
+    ├── llm-google/               # @rag-sdk/llm-google — Google Gemini 适配器
+    ├── embedding-anthropic/      # @rag-sdk/embedding-anthropic
+    ├── embedding-google/         # @rag-sdk/embedding-google
+    ├── embedding-voyage/         # @rag-sdk/embedding-voyage
+    ├── storage-pinecone/         # @rag-sdk/storage-pinecone
+    ├── storage-weaviate/         # @rag-sdk/storage-weaviate
+    ├── storage-chroma/           # @rag-sdk/storage-chroma
+    ├── storage-qdrant/           # @rag-sdk/storage-qdrant
     │
     └── rag-sdk/                  # rag-sdk — 主包（re-export + 预设 Pipeline）
         ├── src/
