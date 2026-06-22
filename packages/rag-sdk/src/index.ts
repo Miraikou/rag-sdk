@@ -20,8 +20,7 @@ export * from '@rag-sdk/storage';
 export * from '@rag-sdk/retrieval';
 
 // 生成
-// TODO: 待实现
-// export * from '@rag-sdk/generation';
+export * from '@rag-sdk/generation';
 
 // 评测
 // TODO: 待实现
