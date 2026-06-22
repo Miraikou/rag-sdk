@@ -129,6 +129,8 @@ export interface QueryTransformer {
 export interface RetrieveOptions {
   topK?: number;
   filter?: Record<string, unknown>;
+  /** 最低分数阈值，低于此值的结果将被过滤 */
+  threshold?: number;
 }
 
 /** 检索器接口 */
