@@ -11,4 +11,9 @@ describe('OpenAIProvider', () => {
     const provider = new OpenAIProvider({ apiKey: 'test-key' });
     await expect(provider.chat([])).rejects.toThrow('messages must not be empty');
   });
+
+  it('should have chatJson method', () => {
+    const provider = new OpenAIProvider({ apiKey: 'test-key' });
+    expect(typeof provider.chatJson).toBe('function');
+  });
 });
