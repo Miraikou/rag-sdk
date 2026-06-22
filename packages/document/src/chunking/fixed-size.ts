@@ -8,6 +8,15 @@ import { BaseChunker } from './base';
  * 优先在 separator 处断开，避免截断单词。
  */
 export class FixedSizeChunker extends BaseChunker {
+  /**
+   * 按固定大小切分文档
+   *
+   * 优先在 separator 处断开，避免截断单词。支持 overlap 重叠区域。
+   *
+   * @param document - 待切分的文档
+   * @param options - 切块选项（chunkSize、overlap、separator）
+   * @returns 切分后的 chunk 数组
+   */
   chunk(document: Document, options?: ChunkOptions): Chunk[] {
     const { chunkSize, overlap, separator } = this.mergeOptions(options);
 
