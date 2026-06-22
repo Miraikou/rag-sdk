@@ -1,4 +1,10 @@
+import { z } from 'zod';
 import type { LLMProvider, QueryTransformer } from '@rag-sdk/core';
+
+/** 多查询扩展的结构化输出 schema */
+const MultiQuerySchema = z.object({
+  queries: z.array(z.string()).min(1),
+});
 
 /**
  * MultiQueryExpander
@@ -29,10 +35,44 @@ export class MultiQueryExpander implements QueryTransformer {
   /**
    * 执行多查询扩展
    *
+   * 优先使用 chatJson 结构化输出，失败时降级到 prompt + parse 方式。
+   *
    * @param query - 原始查询字符串
    * @returns 扩展后的查询数组，每个元素代表一个不同角度的查询变体
    */
   async transform(query: string): Promise<string[]> {
+    try {
+      const schema = z.toJSONSchema(MultiQuerySchema);
+      const result = await this.llm.chatJson<{ queries: string[] }>(
+        [
+          {
+            role: 'system',
+            content: `你是一个查询扩展助手。请从 ${this.numQueries} 个不同角度改写以下问题。
+规则：
+- 保持原始问题的核心意图
+- 每个变体从不同角度出发
+- 返回 JSON 对象，格式为 { "queries": ["查询1", "查询2", ...] }
+- 只输出 JSON，不要解释`,
+          },
+          { role: 'user', content: query },
+        ],
+        schema,
+        { temperature: this.temperature },
+      );
+      return result.queries;
+    } catch {
+      // 降级：chatJson 不支持时回退到 prompt + parse
+      return this.fallbackTransform(query);
+    }
+  }
+
+  /**
+   * 降级方案：使用普通 chat + 文本解析生成查询变体
+   *
+   * @param query - 原始查询字符串
+   * @returns 扩展后的查询数组
+   */
+  private async fallbackTransform(query: string): Promise<string[]> {
     const result = await this.llm.chat(
       [
         {

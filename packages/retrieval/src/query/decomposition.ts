@@ -1,4 +1,10 @@
+import { z } from 'zod';
 import type { LLMProvider, QueryTransformer } from '@rag-sdk/core';
+
+/** 查询分解的结构化输出 schema */
+const DecompositionSchema = z.object({
+  subQueries: z.array(z.string()).min(1),
+});
 
 /**
  * QueryDecomposer
@@ -26,10 +32,44 @@ export class QueryDecomposer implements QueryTransformer {
   /**
    * 执行查询分解
    *
+   * 优先使用 chatJson 结构化输出，失败时降级到 prompt + parse 方式。
+   *
    * @param query - 原始查询字符串
    * @returns 分解后的子问题数组，如果问题已经足够简单则返回包含原始问题的数组
    */
   async transform(query: string): Promise<string[]> {
+    try {
+      const schema = z.toJSONSchema(DecompositionSchema);
+      const result = await this.llm.chatJson<{ subQueries: string[] }>(
+        [
+          {
+            role: 'system',
+            content: `你是一个问题拆解助手。请将以下复杂问题拆解为最多 ${this.maxSubQueries} 个可独立检索的子问题。
+规则：
+- 每个子问题应可独立回答
+- 子问题组合起来应覆盖原始问题
+- 如果问题已经足够简单，直接返回包含原问题的数组
+- 返回 JSON 对象，格式为 { "subQueries": ["子问题1", "子问题2", ...] }
+- 只输出 JSON，不要解释`,
+          },
+          { role: 'user', content: query },
+        ],
+        schema,
+      );
+      return result.subQueries;
+    } catch {
+      // 降级：chatJson 不支持时回退到 prompt + parse
+      return this.fallbackTransform(query);
+    }
+  }
+
+  /**
+   * 降级方案：使用普通 chat + 文本解析分解查询
+   *
+   * @param query - 原始查询字符串
+   * @returns 分解后的子问题数组
+   */
+  private async fallbackTransform(query: string): Promise<string[]> {
     const result = await this.llm.chat([
       {
         role: 'system',
