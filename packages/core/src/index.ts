@@ -8,6 +8,7 @@ export type {
   GenerateResult,
   MessageRole,
   Message,
+  ResponseFormat,
   ChatOptions,
   LLMProvider,
   EmbeddingProvider,

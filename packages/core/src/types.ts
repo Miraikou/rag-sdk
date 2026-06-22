@@ -55,6 +55,15 @@ export interface Message {
 
 // ==================== Chat / LLM ====================
 
+/** LLM 响应格式 */
+export interface ResponseFormat {
+  type: 'text' | 'json_object' | 'json_schema';
+  /** 标准 JSON Schema（当 type 为 json_schema 时使用） */
+  schema?: Record<string, unknown>;
+  /** Schema 名称 */
+  name?: string;
+}
+
 /** LLM 调用选项 */
 export interface ChatOptions {
   model?: string;
@@ -62,12 +71,27 @@ export interface ChatOptions {
   maxTokens?: number;
   topP?: number;
   stop?: string[];
+  /** 响应格式约束（结构化输出） */
+  responseFormat?: ResponseFormat;
 }
 
 /** LLM 提供商接口 */
 export interface LLMProvider {
   chat(messages: Message[], options?: ChatOptions): Promise<string>;
   chatStream(messages: Message[], options?: ChatOptions): AsyncIterable<string>;
+  /**
+   * 结构化输出：返回符合 JSON Schema 的 parsed 对象
+   *
+   * @param messages - 对话消息列表
+   * @param schema - 标准 JSON Schema 对象
+   * @param options - 调用选项
+   * @returns 符合 schema 的类型安全对象
+   */
+  chatJson<T = unknown>(
+    messages: Message[],
+    schema: Record<string, unknown>,
+    options?: ChatOptions,
+  ): Promise<T>;
 }
 
 // ==================== Embedding ====================
