@@ -4,3 +4,6 @@ export type { Document, Chunk, ChunkOptions, Chunker, DocumentLoader } from './t
 // 切块策略
 export { BaseChunker } from './chunking/base';
 export { FixedSizeChunker } from './chunking/fixed-size';
+export { RecursiveChunker } from './chunking/recursive';
+export { SemanticChunker } from './chunking/semantic';
+export { ContextualHeaderChunker } from './chunking/contextual-header';

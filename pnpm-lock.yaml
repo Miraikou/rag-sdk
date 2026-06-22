@@ -53,6 +53,33 @@ importers:
         specifier: workspace:*
         version: link:../core
 
+  packages/embedding-anthropic:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/embedding':
+        specifier: workspace:*
+        version: link:../embedding
+
+  packages/embedding-google:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/embedding':
+        specifier: workspace:*
+        version: link:../embedding
+
+  packages/embedding-voyage:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/embedding':
+        specifier: workspace:*
+        version: link:../embedding
+
   packages/evaluation:
     dependencies:
       '@rag-sdk/core':
@@ -70,6 +97,21 @@ importers:
       '@rag-sdk/llm':
         specifier: workspace:*
         version: link:../llm
+
+  packages/indexing:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/document':
+        specifier: workspace:*
+        version: link:../document
+      '@rag-sdk/embedding':
+        specifier: workspace:*
+        version: link:../embedding
+      '@rag-sdk/storage':
+        specifier: workspace:*
+        version: link:../storage
 
   packages/knowledge-graph:
     dependencies:
@@ -89,6 +131,24 @@ importers:
         specifier: workspace:*
         version: link:../core
 
+  packages/llm-anthropic:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/llm':
+        specifier: workspace:*
+        version: link:../llm
+
+  packages/llm-google:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/llm':
+        specifier: workspace:*
+        version: link:../llm
+
   packages/rag-sdk:
     dependencies:
       '@rag-sdk/core':
@@ -106,6 +166,9 @@ importers:
       '@rag-sdk/generation':
         specifier: workspace:*
         version: link:../generation
+      '@rag-sdk/indexing':
+        specifier: workspace:*
+        version: link:../indexing
       '@rag-sdk/knowledge-graph':
         specifier: workspace:*
         version: link:../knowledge-graph
@@ -136,6 +199,42 @@ importers:
       '@rag-sdk/core':
         specifier: workspace:*
         version: link:../core
+
+  packages/storage-chroma:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/storage':
+        specifier: workspace:*
+        version: link:../storage
+
+  packages/storage-pinecone:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/storage':
+        specifier: workspace:*
+        version: link:../storage
+
+  packages/storage-qdrant:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/storage':
+        specifier: workspace:*
+        version: link:../storage
+
+  packages/storage-weaviate:
+    dependencies:
+      '@rag-sdk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rag-sdk/storage':
+        specifier: workspace:*
+        version: link:../storage
 
 packages:
 

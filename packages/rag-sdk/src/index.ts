@@ -17,8 +17,7 @@ export * from '@rag-sdk/llm';
 export * from '@rag-sdk/storage';
 
 // 检索
-// TODO: 待实现
-// export * from '@rag-sdk/retrieval';
+export * from '@rag-sdk/retrieval';
 
 // 生成
 // TODO: 待实现
