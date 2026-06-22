@@ -33,18 +33,38 @@ export class OpenAIProvider extends BaseLLMProvider {
     const opts = this.mergeOptions(options);
     const model = opts.model ?? this.defaultModel;
 
+    // 构建请求 body
+    const body: Record<string, unknown> = {
+      model,
+      messages,
+      temperature: opts.temperature,
+      max_tokens: opts.maxTokens,
+      top_p: opts.topP,
+      stop: opts.stop,
+      stream: false,
+    };
+
+    // 结构化输出支持
+    if (opts.responseFormat) {
+      const { type, schema, name } = opts.responseFormat;
+      if (type === 'json_schema' && schema) {
+        body['response_format'] = {
+          type: 'json_schema',
+          json_schema: {
+            name: name ?? 'output',
+            strict: true,
+            schema,
+          },
+        };
+      } else if (type === 'json_object') {
+        body['response_format'] = { type: 'json_object' };
+      }
+    }
+
     const response = await fetch(`${this.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({
-        model,
-        messages,
-        temperature: opts.temperature,
-        max_tokens: opts.maxTokens,
-        top_p: opts.topP,
-        stop: opts.stop,
-        stream: false,
-      }),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
