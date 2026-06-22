@@ -3,8 +3,8 @@ import type { LLMProvider, QueryTransformer } from '@rag-sdk/core';
 
 /** 多查询扩展的结构化输出 schema */
 const MultiQuerySchema = z.object({
-  queries: z.array(z.string()).min(1),
-});
+  queries: z.array(z.string()).min(1).describe('从不同角度改写后的查询变体列表'),
+}).describe('多查询扩展结果：同一问题的多个不同角度的查询变体');
 
 /**
  * MultiQueryExpander

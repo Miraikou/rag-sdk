@@ -3,8 +3,8 @@ import type { LLMProvider, PostProcessor, SearchResult } from '@rag-sdk/core';
 
 /** 相关性判断的结构化输出 schema */
 const RelevanceSchema = z.object({
-  relevantIndices: z.array(z.number().int().min(1)),
-});
+  relevantIndices: z.array(z.number().int().min(1)).describe('与问题相关的句子编号列表（从 1 开始），空数组表示无相关句子'),
+}).describe('句子相关性判断结果：标注哪些句子与用户查询相关');
 
 /**
  * 选择性上下文后处理器

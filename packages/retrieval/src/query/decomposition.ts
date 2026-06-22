@@ -3,8 +3,8 @@ import type { LLMProvider, QueryTransformer } from '@rag-sdk/core';
 
 /** 查询分解的结构化输出 schema */
 const DecompositionSchema = z.object({
-  subQueries: z.array(z.string()).min(1),
-});
+  subQueries: z.array(z.string()).min(1).describe('分解后的子问题列表，每个子问题应可独立检索'),
+}).describe('查询分解结果：将复杂问题拆解为多个可独立检索的子问题');
 
 /**
  * QueryDecomposer
