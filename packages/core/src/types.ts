@@ -212,6 +212,8 @@ export interface Pipeline {
 export interface MetricResult {
   name: string;
   score: number;
+  /** 评分理由，用于调试和可解释性 */
+  reason?: string;
   details?: Record<string, unknown>;
 }
 
@@ -222,5 +224,5 @@ export interface RetrievalEvaluator {
 
 /** 生成评估器接口 */
 export interface GenerationEvaluator {
-  evaluate(answer: string, reference: string, context?: string): MetricResult;
+  evaluate(answer: string, reference: string, context?: string): Promise<MetricResult> | MetricResult;
 }
