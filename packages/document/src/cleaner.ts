@@ -122,7 +122,7 @@ export class DocumentCleaner {
    */
   private stripSpecialChars(text: string): string {
     return text.replace(
-      /[^[]一-龥a-zA-Z0-9\s.,;:!?"'(){}。，；：！？""''（）【】-]/g,
+      /[^一-龥a-zA-Z0-9\s.,;:!?"'()\[\]{}。，；：！？""''（）【】-]/g,
       ''
     );
   }
