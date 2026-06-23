@@ -7,11 +7,19 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -23,7 +31,24 @@
   },
   "dependencies": {
     "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/embedding": "workspace:*"
+    "@rag-sdk/embedding": "workspace:*",
+    "zod": "^4.4.3"
   },
-  "devDependencies": {}
+  "peerDependencies": {
+    "cheerio": "^1.0.0",
+    "pdf-parse": "^1.1.0"
+  },
+  "peerDependenciesMeta": {
+    "pdf-parse": {
+      "optional": true
+    },
+    "cheerio": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/pdf-parse": "^1.1.5",
+    "cheerio": "^1.2.0",
+    "pdf-parse": "^2.4.5"
+  }
 }
