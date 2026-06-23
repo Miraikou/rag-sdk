@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/llm": "workspace:*"
+    "@rag-sdk/llm": "workspace:*",
+    "zod": "^4.4.3"
   },
   "devDependencies": {}
 }
