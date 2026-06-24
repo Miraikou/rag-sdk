@@ -75,15 +75,15 @@ function mean(values: number[]): number {
 }
 
 /**
- * 计算数组的方差（总体方差）
+ * 计算数组的样本方差（Bessel 修正，÷n-1）
  *
  * @param values - 数值数组
  * @param avg - 均值
- * @returns 方差
+ * @returns 样本方差
  */
 function variance(values: number[], avg: number): number {
-  if (values.length === 0) return 0;
-  return values.reduce((sum, v) => sum + (v - avg) ** 2, 0) / values.length;
+  if (values.length < 2) return 0;
+  return values.reduce((sum, v) => sum + (v - avg) ** 2, 0) / (values.length - 1);
 }
 
 /**
