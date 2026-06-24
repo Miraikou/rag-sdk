@@ -1,4 +1,4 @@
-import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core'
+import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core';
 
 /**
  * 平均倒数排名（Mean Reciprocal Rank）评估器
@@ -14,10 +14,10 @@ export class MRREvaluator implements RetrievalEvaluator {
    * @returns MRR 指标结果
    */
   evaluate(results: SearchResult[], groundTruthIds: string[]): MetricResult {
-    const truthSet = new Set(groundTruthIds)
+    const truthSet = new Set(groundTruthIds);
 
     for (let i = 0; i < results.length; i++) {
-      const result = results[i]
+      const result = results[i];
       if (result && truthSet.has(result.chunk.id)) {
         return {
           name: 'MRR',
@@ -25,7 +25,7 @@ export class MRREvaluator implements RetrievalEvaluator {
           details: {
             firstRelevantRank: i + 1,
           },
-        }
+        };
       }
     }
 
@@ -35,6 +35,6 @@ export class MRREvaluator implements RetrievalEvaluator {
       details: {
         firstRelevantRank: 0,
       },
-    }
+    };
   }
 }

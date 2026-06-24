@@ -1,10 +1,10 @@
-import type { GenerationEvaluator, MetricResult } from '@rag-sdk/core'
+import type { GenerationEvaluator, MetricResult } from '@rag-sdk/core';
 
 /**
  * 中文标点 + 英文标点分词正则
  * 按空白和标点拆分，同时保留中英文标点作为分隔符
  */
-const TOKEN_REGEX = /[^a-zA-Z0-9一-鿿]+|[一-鿿]|[a-zA-Z0-9]+/g
+const TOKEN_REGEX = /[^a-zA-Z0-9一-鿿]+|[一-鿿]|[a-zA-Z0-9]+/g;
 
 /**
  * 将文本切分为 token 列表
@@ -13,8 +13,8 @@ const TOKEN_REGEX = /[^a-zA-Z0-9一-鿿]+|[一-鿿]|[a-zA-Z0-9]+/g
  * @returns token 数组
  */
 function tokenize(text: string): string[] {
-  const matches = text.toLowerCase().match(TOKEN_REGEX)
-  return (matches ?? []).filter((t) => /\S/.test(t))
+  const matches = text.toLowerCase().match(TOKEN_REGEX);
+  return (matches ?? []).filter((t) => /\S/.test(t));
 }
 
 /**
@@ -25,11 +25,11 @@ function tokenize(text: string): string[] {
  * @returns n-gram 字符串数组
  */
 function getNgrams(tokens: string[], n: number): string[] {
-  const ngrams: string[] = []
+  const ngrams: string[] = [];
   for (let i = 0; i <= tokens.length - n; i++) {
-    ngrams.push(tokens.slice(i, i + n).join(' '))
+    ngrams.push(tokens.slice(i, i + n).join(' '));
   }
-  return ngrams
+  return ngrams;
 }
 
 /**
@@ -37,7 +37,7 @@ function getNgrams(tokens: string[], n: number): string[] {
  */
 interface BLEUEvaluatorOptions {
   /** 最大 n-gram 阶数，默认 4 */
-  maxN?: number
+  maxN?: number;
 }
 
 /**
@@ -54,13 +54,13 @@ interface BLEUEvaluatorOptions {
  * ```
  */
 export class BLEUEvaluator implements GenerationEvaluator {
-  private readonly maxN: number
+  private readonly maxN: number;
 
   /**
    * @param options - 配置选项
    */
   constructor(options?: BLEUEvaluatorOptions) {
-    this.maxN = options?.maxN ?? 4
+    this.maxN = options?.maxN ?? 4;
   }
 
   /**
@@ -71,11 +71,11 @@ export class BLEUEvaluator implements GenerationEvaluator {
    * @returns 包含 BLEU 分数的 MetricResult
    */
   evaluate(answer: string, reference: string): MetricResult {
-    const answerTokens = tokenize(answer)
-    const referenceTokens = tokenize(reference)
+    const answerTokens = tokenize(answer);
+    const referenceTokens = tokenize(reference);
 
-    const c = answerTokens.length
-    const r = referenceTokens.length
+    const c = answerTokens.length;
+    const r = referenceTokens.length;
 
     // 边界情况：空文本
     if (c === 0 || r === 0) {
@@ -84,41 +84,41 @@ export class BLEUEvaluator implements GenerationEvaluator {
         score: 0,
         reason: c === 0 && r === 0 ? '回答和参考均为空' : c === 0 ? '回答为空' : '参考为空',
         details: { maxN: this.maxN, brevityPenalty: 0, precisions: [] },
-      }
+      };
     }
 
     // 计算各阶 n-gram 修正精确率
-    const precisions: number[] = []
+    const precisions: number[] = [];
     for (let n = 1; n <= this.maxN; n++) {
-      const answerNgrams = getNgrams(answerTokens, n)
-      const referenceNgrams = getNgrams(referenceTokens, n)
+      const answerNgrams = getNgrams(answerTokens, n);
+      const referenceNgrams = getNgrams(referenceTokens, n);
 
       // 统计参考 n-gram 频次
-      const refCounts = new Map<string, number>()
+      const refCounts = new Map<string, number>();
       for (const ng of referenceNgrams) {
-        refCounts.set(ng, (refCounts.get(ng) ?? 0) + 1)
+        refCounts.set(ng, (refCounts.get(ng) ?? 0) + 1);
       }
 
       // 统计回答 n-gram 频次并裁剪
-      const ansCounts = new Map<string, number>()
+      const ansCounts = new Map<string, number>();
       for (const ng of answerNgrams) {
-        ansCounts.set(ng, (ansCounts.get(ng) ?? 0) + 1)
+        ansCounts.set(ng, (ansCounts.get(ng) ?? 0) + 1);
       }
 
-      let clippedCount = 0
-      const totalCount = answerNgrams.length
+      let clippedCount = 0;
+      const totalCount = answerNgrams.length;
 
       for (const [ng, count] of ansCounts) {
-        const refCount = refCounts.get(ng) ?? 0
-        clippedCount += Math.min(count, refCount)
+        const refCount = refCounts.get(ng) ?? 0;
+        clippedCount += Math.min(count, refCount);
       }
 
-      const precision = totalCount === 0 ? 0 : clippedCount / totalCount
-      precisions.push(precision)
+      const precision = totalCount === 0 ? 0 : clippedCount / totalCount;
+      precisions.push(precision);
     }
 
     // 如果任一 p_n 为 0，BLEU = 0
-    const hasZero = precisions.some((p) => p === 0)
+    const hasZero = precisions.some((p) => p === 0);
     if (hasZero) {
       return {
         name: 'BLEU',
@@ -129,17 +129,17 @@ export class BLEUEvaluator implements GenerationEvaluator {
           brevityPenalty: this.computeBrevityPenalty(c, r),
           precisions,
         },
-      }
+      };
     }
 
     // 对数空间几何平均
-    const logPrecisionSum = precisions.reduce((sum, p) => sum + Math.log(p), 0)
-    const avgLogPrecision = logPrecisionSum / this.maxN
+    const logPrecisionSum = precisions.reduce((sum, p) => sum + Math.log(p), 0);
+    const avgLogPrecision = logPrecisionSum / this.maxN;
 
     // 简短惩罚
-    const bp = this.computeBrevityPenalty(c, r)
+    const bp = this.computeBrevityPenalty(c, r);
 
-    const score = bp * Math.exp(avgLogPrecision)
+    const score = bp * Math.exp(avgLogPrecision);
 
     return {
       name: 'BLEU',
@@ -150,7 +150,7 @@ export class BLEUEvaluator implements GenerationEvaluator {
         brevityPenalty: bp,
         precisions,
       },
-    }
+    };
   }
 
   /**
@@ -162,8 +162,8 @@ export class BLEUEvaluator implements GenerationEvaluator {
    */
   private computeBrevityPenalty(c: number, r: number): number {
     if (c > r) {
-      return 1
+      return 1;
     }
-    return Math.exp(1 - r / c)
+    return Math.exp(1 - r / c);
   }
 }

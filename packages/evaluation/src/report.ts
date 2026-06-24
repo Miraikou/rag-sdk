@@ -1,9 +1,4 @@
-import type {
-  ABTestReport,
-  BenchmarkReport,
-  E2EJudgeResult,
-  FullReport,
-} from './types';
+import type { ABTestReport, BenchmarkReport, E2EJudgeResult, FullReport } from './types';
 
 /**
  * 评测报告生成器
@@ -91,8 +86,8 @@ export class EvaluationReport {
         const dimScores: Record<string, number[]> = {};
         for (const result of this.e2eJudgeResults) {
           for (const [dim, score] of Object.entries(result.scores)) {
-            if (!dimScores[dim]) dimScores[dim] = [];
-            dimScores[dim]!.push(score);
+            const arr = dimScores[dim] ?? (dimScores[dim] = []);
+            arr.push(score);
           }
         }
         report.e2e.llmJudgeScores = {};
@@ -127,10 +122,9 @@ export class EvaluationReport {
     }
 
     if (this.e2eJudgeResults && this.e2eJudgeResults.length > 0) {
-      const avgOverall = this.e2eJudgeResults.reduce(
-        (sum, r) => sum + r.overallScore,
-        0,
-      ) / this.e2eJudgeResults.length;
+      const avgOverall =
+        this.e2eJudgeResults.reduce((sum, r) => sum + r.overallScore, 0) /
+        this.e2eJudgeResults.length;
       // 归一化 1-10 到 0-1
       scores.push(avgOverall / 10);
     }
@@ -170,7 +164,9 @@ export class EvaluationReport {
     if (this.retrievalReport) {
       const recall = this.retrievalReport.metrics['Recall@K'];
       if (recall && recall.mean < 0.7) {
-        recs.push('Recall@K 低于 0.7，建议：优化嵌入模型、调整切块策略（增大 chunkSize 或尝试语义切块）、增加查询变换');
+        recs.push(
+          'Recall@K 低于 0.7，建议：优化嵌入模型、调整切块策略（增大 chunkSize 或尝试语义切块）、增加查询变换',
+        );
       }
 
       const precision = this.retrievalReport.metrics['Precision@K'];
@@ -188,12 +184,16 @@ export class EvaluationReport {
     if (this.generationReport) {
       const faithfulness = this.generationReport.metrics['Faithfulness'];
       if (faithfulness && faithfulness.mean < 0.8) {
-        recs.push('Faithfulness 低于 0.8，存在幻觉风险，建议：在 prompt 中加强"仅基于提供的上下文回答"约束、使用 GroundingGenerator');
+        recs.push(
+          'Faithfulness 低于 0.8，存在幻觉风险，建议：在 prompt 中加强"仅基于提供的上下文回答"约束、使用 GroundingGenerator',
+        );
       }
 
       const relevance = this.generationReport.metrics['AnswerRelevance'];
       if (relevance && relevance.mean < 0.7) {
-        recs.push('AnswerRelevance 低于 0.7，回答偏离问题，建议：优化 prompt 模板、检查检索上下文的相关性');
+        recs.push(
+          'AnswerRelevance 低于 0.7，回答偏离问题，建议：优化 prompt 模板、检查检索上下文的相关性',
+        );
       }
 
       const bleu = this.generationReport.metrics['BLEU'];

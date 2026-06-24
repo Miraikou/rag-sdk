@@ -1,5 +1,3 @@
-import type { MetricResult, SearchResult } from '@rag-sdk/core';
-
 // Re-export 核心评测类型
 export type { MetricResult, RetrievalEvaluator, GenerationEvaluator } from '@rag-sdk/core';
 

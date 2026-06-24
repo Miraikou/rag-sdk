@@ -1,10 +1,9 @@
-import type { Retriever, SearchResult } from '@rag-sdk/core';
 import type {
-  BenchmarkReport,
-  GenerationSample,
-  MetricStats,
-  RetrievalSample,
-} from './types';
+  Retriever,
+  RetrievalEvaluator,
+  GenerationEvaluator,
+} from '@rag-sdk/core';
+import type { BenchmarkReport, GenerationSample, MetricStats, RetrievalSample } from './types';
 
 /**
  * 评测运行器
@@ -34,7 +33,7 @@ export class BenchmarkRunner {
    * @returns 评测报告
    */
   async runRetrievalBenchmark(
-    evaluators: import('@rag-sdk/core').RetrievalEvaluator[],
+    evaluators: RetrievalEvaluator[],
     retriever: Retriever,
     dataset: RetrievalSample[],
   ): Promise<BenchmarkReport> {
@@ -61,7 +60,10 @@ export class BenchmarkRunner {
       }
     }
 
-    return this.buildReport(evaluators.map((e) => e.evaluate([], []).name), perSample);
+    return this.buildReport(
+      evaluators.map((e) => e.evaluate([], []).name),
+      perSample,
+    );
   }
 
   /**
@@ -74,7 +76,7 @@ export class BenchmarkRunner {
    * @returns 评测报告
    */
   async runGenerationBenchmark(
-    evaluators: import('@rag-sdk/core').GenerationEvaluator[],
+    evaluators: GenerationEvaluator[],
     dataset: GenerationSample[],
   ): Promise<BenchmarkReport> {
     const perSample: Array<Record<string, number>> = [];
@@ -126,9 +128,7 @@ export class BenchmarkRunner {
     const metrics: Record<string, MetricStats> = {};
 
     for (const name of evaluatorNames) {
-      const scores = perSample
-        .map((s) => s[name])
-        .filter((s): s is number => s !== undefined);
+      const scores = perSample.map((s) => s[name]).filter((s): s is number => s !== undefined);
 
       if (scores.length === 0) {
         metrics[name] = { mean: 0, std: 0, min: 0, max: 0 };

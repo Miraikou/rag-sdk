@@ -1,4 +1,4 @@
-import type { EmbeddingProvider, GenerationEvaluator, MetricResult } from '@rag-sdk/core'
+import type { EmbeddingProvider, GenerationEvaluator, MetricResult } from '@rag-sdk/core';
 
 /**
  * BERTScore 评估器（基于句子级语义相似度）
@@ -17,13 +17,13 @@ import type { EmbeddingProvider, GenerationEvaluator, MetricResult } from '@rag-
  * ```
  */
 export class BERTScoreEvaluator implements GenerationEvaluator {
-  private readonly embedding: EmbeddingProvider
+  private readonly embedding: EmbeddingProvider;
 
   /**
    * @param embedding - 嵌入向量提供商，用于将文本编码为向量
    */
   constructor(embedding: EmbeddingProvider) {
-    this.embedding = embedding
+    this.embedding = embedding;
   }
 
   /**
@@ -34,8 +34,8 @@ export class BERTScoreEvaluator implements GenerationEvaluator {
    * @returns 包含语义相似度分数的 MetricResult
    */
   async evaluate(answer: string, reference: string): Promise<MetricResult> {
-    const trimmedAnswer = answer.trim()
-    const trimmedReference = reference.trim()
+    const trimmedAnswer = answer.trim();
+    const trimmedReference = reference.trim();
 
     // 边界情况：空文本
     if (trimmedAnswer.length === 0 || trimmedReference.length === 0) {
@@ -44,24 +44,24 @@ export class BERTScoreEvaluator implements GenerationEvaluator {
           ? '回答和参考均为空'
           : trimmedAnswer.length === 0
             ? '回答为空'
-            : '参考为空'
+            : '参考为空';
       return {
         name: 'SemanticSimilarity',
         score: 0,
         reason,
         details: { answerVectorNorm: 0, referenceVectorNorm: 0 },
-      }
+      };
     }
 
     // 并行嵌入两段文本
     const [answerVector, referenceVector] = await Promise.all([
       this.embedding.embed(trimmedAnswer),
       this.embedding.embed(trimmedReference),
-    ])
+    ]);
 
-    const similarity = cosineSimilarity(answerVector, referenceVector)
-    const answerNorm = vectorNorm(answerVector)
-    const referenceNorm = vectorNorm(referenceVector)
+    const similarity = cosineSimilarity(answerVector, referenceVector);
+    const answerNorm = vectorNorm(answerVector);
+    const referenceNorm = vectorNorm(referenceVector);
 
     return {
       name: 'SemanticSimilarity',
@@ -71,7 +71,7 @@ export class BERTScoreEvaluator implements GenerationEvaluator {
         answerVectorNorm: answerNorm,
         referenceVectorNorm: referenceNorm,
       },
-    }
+    };
   }
 }
 
@@ -83,25 +83,25 @@ export class BERTScoreEvaluator implements GenerationEvaluator {
  * @returns 余弦相似度（0 ~ 1 范围，负值钳制为 0）
  */
 function cosineSimilarity(a: number[], b: number[]): number {
-  let dotProduct = 0
-  let normA = 0
-  let normB = 0
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
 
   for (let i = 0; i < a.length; i++) {
-    const ai = a[i] ?? 0
-    const bi = b[i] ?? 0
-    dotProduct += ai * bi
-    normA += ai * ai
-    normB += bi * bi
+    const ai = a[i] ?? 0;
+    const bi = b[i] ?? 0;
+    dotProduct += ai * bi;
+    normA += ai * ai;
+    normB += bi * bi;
   }
 
-  const denominator = Math.sqrt(normA) * Math.sqrt(normB)
+  const denominator = Math.sqrt(normA) * Math.sqrt(normB);
   if (denominator === 0) {
-    return 0
+    return 0;
   }
 
   // 余弦相似度范围 [-1, 1]，钳制负值为 0（文本相似度场景）
-  return Math.max(0, dotProduct / denominator)
+  return Math.max(0, dotProduct / denominator);
 }
 
 /**
@@ -111,9 +111,9 @@ function cosineSimilarity(a: number[], b: number[]): number {
  * @returns 向量的 L2 范数
  */
 function vectorNorm(v: number[]): number {
-  let sum = 0
+  let sum = 0;
   for (const x of v) {
-    sum += x * x
+    sum += x * x;
   }
-  return Math.sqrt(sum)
+  return Math.sqrt(sum);
 }

@@ -1,9 +1,9 @@
-import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core'
+import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core';
 
 /** 召回率评估选项 */
 interface RecallOptions {
   /** 取前 K 个结果进行评估，默认 10 */
-  k?: number
+  k?: number;
 }
 
 /**
@@ -12,13 +12,13 @@ interface RecallOptions {
  * 衡量检索结果中相关文档的覆盖比例，即 ground truth 中有多少文档被检索到。
  */
 export class RecallEvaluator implements RetrievalEvaluator {
-  private readonly k: number
+  private readonly k: number;
 
   /**
    * @param options - 评估选项
    */
   constructor(options?: RecallOptions) {
-    this.k = options?.k ?? 10
+    this.k = options?.k ?? 10;
   }
 
   /**
@@ -39,14 +39,14 @@ export class RecallEvaluator implements RetrievalEvaluator {
           retrievedRelevantCount: 0,
           totalRelevantCount: 0,
         },
-      }
+      };
     }
 
-    const topK = results.slice(0, this.k)
-    const truthSet = new Set(groundTruthIds)
-    const retrievedRelevantCount = topK.filter((r) => truthSet.has(r.chunk.id)).length
+    const topK = results.slice(0, this.k);
+    const truthSet = new Set(groundTruthIds);
+    const retrievedRelevantCount = topK.filter((r) => truthSet.has(r.chunk.id)).length;
 
-    const score = retrievedRelevantCount / groundTruthIds.length
+    const score = retrievedRelevantCount / groundTruthIds.length;
 
     return {
       name: 'Recall@K',
@@ -56,6 +56,6 @@ export class RecallEvaluator implements RetrievalEvaluator {
         retrievedRelevantCount,
         totalRelevantCount: groundTruthIds.length,
       },
-    }
+    };
   }
 }

@@ -1,10 +1,10 @@
-import type { GenerationEvaluator, MetricResult } from '@rag-sdk/core'
+import type { GenerationEvaluator, MetricResult } from '@rag-sdk/core';
 
 /**
  * 中文标点 + 英文标点分词正则
  * 按空白和标点拆分，同时保留中英文标点作为分隔符
  */
-const TOKEN_REGEX = /[^a-zA-Z0-9一-鿿]+|[一-鿿]|[a-zA-Z0-9]+/g
+const TOKEN_REGEX = /[^a-zA-Z0-9一-鿿]+|[一-鿿]|[a-zA-Z0-9]+/g;
 
 /**
  * 将文本切分为 token 列表
@@ -13,8 +13,8 @@ const TOKEN_REGEX = /[^a-zA-Z0-9一-鿿]+|[一-鿿]|[a-zA-Z0-9]+/g
  * @returns token 数组
  */
 function tokenize(text: string): string[] {
-  const matches = text.toLowerCase().match(TOKEN_REGEX)
-  return (matches ?? []).filter((t) => /\S/.test(t))
+  const matches = text.toLowerCase().match(TOKEN_REGEX);
+  return (matches ?? []).filter((t) => /\S/.test(t));
 }
 
 /**
@@ -25,24 +25,24 @@ function tokenize(text: string): string[] {
  * @returns n-gram 字符串数组
  */
 function getNgrams(tokens: string[], n: number): string[] {
-  const ngrams: string[] = []
+  const ngrams: string[] = [];
   for (let i = 0; i <= tokens.length - n; i++) {
-    ngrams.push(tokens.slice(i, i + n).join(' '))
+    ngrams.push(tokens.slice(i, i + n).join(' '));
   }
-  return ngrams
+  return ngrams;
 }
 
 /**
  * ROUGE 评估器变体类型
  */
-type ROUGEVariant = '1' | '2' | 'L'
+type ROUGEVariant = '1' | '2' | 'L';
 
 /**
  * ROUGE 评估器配置选项
  */
 interface ROUGEEvaluatorOptions {
   /** ROUGE 变体：'1'（unigram）、'2'（bigram）、'L'（LCS），默认 'L' */
-  variant?: ROUGEVariant
+  variant?: ROUGEVariant;
 }
 
 /**
@@ -54,9 +54,9 @@ interface ROUGEEvaluatorOptions {
  */
 function computeF1(precision: number, recall: number): number {
   if (precision + recall === 0) {
-    return 0
+    return 0;
   }
-  return (2 * precision * recall) / (precision + recall)
+  return (2 * precision * recall) / (precision + recall);
 }
 
 /**
@@ -70,29 +70,29 @@ function computeF1(precision: number, recall: number): number {
  */
 function lcsLength(a: string[], b: string[]): number {
   // 确保 b 是较短的数组以优化空间
-  const [shorter, longer] = a.length <= b.length ? [a, b] : [b, a]
-  const n = shorter.length
+  const [shorter, longer] = a.length <= b.length ? [a, b] : [b, a];
+  const n = shorter.length;
 
   // 滚动数组：只需要两行
-  let prev = new Array<number>(n + 1).fill(0)
-  let curr = new Array<number>(n + 1).fill(0)
+  let prev = new Array<number>(n + 1).fill(0);
+  let curr = new Array<number>(n + 1).fill(0);
 
   for (let i = 1; i <= longer.length; i++) {
     for (let j = 1; j <= n; j++) {
       if (longer[i - 1] === shorter[j - 1]) {
-        curr[j] = (prev[j - 1] ?? 0) + 1
+        curr[j] = (prev[j - 1] ?? 0) + 1;
       } else {
-        curr[j] = Math.max(prev[j] ?? 0, curr[j - 1] ?? 0)
+        curr[j] = Math.max(prev[j] ?? 0, curr[j - 1] ?? 0);
       }
     }
     // 交换引用
-    const temp = prev
-    prev = curr
-    curr = temp
-    curr.fill(0)
+    const temp = prev;
+    prev = curr;
+    curr = temp;
+    curr.fill(0);
   }
 
-  return prev[n] ?? 0
+  return prev[n] ?? 0;
 }
 
 /**
@@ -108,13 +108,13 @@ function lcsLength(a: string[], b: string[]): number {
  * ```
  */
 export class ROUGEEvaluator implements GenerationEvaluator {
-  private readonly variant: ROUGEVariant
+  private readonly variant: ROUGEVariant;
 
   /**
    * @param options - 配置选项
    */
   constructor(options?: ROUGEEvaluatorOptions) {
-    this.variant = options?.variant ?? 'L'
+    this.variant = options?.variant ?? 'L';
   }
 
   /**
@@ -125,10 +125,10 @@ export class ROUGEEvaluator implements GenerationEvaluator {
    * @returns 包含 ROUGE 分数的 MetricResult
    */
   evaluate(answer: string, reference: string): MetricResult {
-    const answerTokens = tokenize(answer)
-    const referenceTokens = tokenize(reference)
+    const answerTokens = tokenize(answer);
+    const referenceTokens = tokenize(reference);
 
-    const { precision, recall, f1 } = this.computeScore(answerTokens, referenceTokens)
+    const { precision, recall, f1 } = this.computeScore(answerTokens, referenceTokens);
 
     return {
       name: `ROUGE-${this.variant}`,
@@ -140,7 +140,7 @@ export class ROUGEEvaluator implements GenerationEvaluator {
         recall,
         f1,
       },
-    }
+    };
   }
 
   /**
@@ -152,19 +152,19 @@ export class ROUGEEvaluator implements GenerationEvaluator {
    */
   private computeScore(
     answerTokens: string[],
-    referenceTokens: string[]
+    referenceTokens: string[],
   ): { precision: number; recall: number; f1: number } {
     // 边界情况
     if (answerTokens.length === 0 && referenceTokens.length === 0) {
-      return { precision: 0, recall: 0, f1: 0 }
+      return { precision: 0, recall: 0, f1: 0 };
     }
 
     if (this.variant === 'L') {
-      return this.computeLCS(answerTokens, referenceTokens)
+      return this.computeLCS(answerTokens, referenceTokens);
     }
 
-    const n = this.variant === '1' ? 1 : 2
-    return this.computeNgram(answerTokens, referenceTokens, n)
+    const n = this.variant === '1' ? 1 : 2;
+    return this.computeNgram(answerTokens, referenceTokens, n);
   }
 
   /**
@@ -178,38 +178,38 @@ export class ROUGEEvaluator implements GenerationEvaluator {
   private computeNgram(
     answerTokens: string[],
     referenceTokens: string[],
-    n: number
+    n: number,
   ): { precision: number; recall: number; f1: number } {
-    const answerNgrams = getNgrams(answerTokens, n)
-    const referenceNgrams = getNgrams(referenceTokens, n)
+    const answerNgrams = getNgrams(answerTokens, n);
+    const referenceNgrams = getNgrams(referenceTokens, n);
 
     if (answerNgrams.length === 0 || referenceNgrams.length === 0) {
-      return { precision: 0, recall: 0, f1: 0 }
+      return { precision: 0, recall: 0, f1: 0 };
     }
 
     // 统计参考 n-gram 频次
-    const refCounts = new Map<string, number>()
+    const refCounts = new Map<string, number>();
     for (const ng of referenceNgrams) {
-      refCounts.set(ng, (refCounts.get(ng) ?? 0) + 1)
+      refCounts.set(ng, (refCounts.get(ng) ?? 0) + 1);
     }
 
     // 统计回答 n-gram 频次并裁剪
-    const ansCounts = new Map<string, number>()
+    const ansCounts = new Map<string, number>();
     for (const ng of answerNgrams) {
-      ansCounts.set(ng, (ansCounts.get(ng) ?? 0) + 1)
+      ansCounts.set(ng, (ansCounts.get(ng) ?? 0) + 1);
     }
 
-    let overlap = 0
+    let overlap = 0;
     for (const [ng, count] of ansCounts) {
-      const refCount = refCounts.get(ng) ?? 0
-      overlap += Math.min(count, refCount)
+      const refCount = refCounts.get(ng) ?? 0;
+      overlap += Math.min(count, refCount);
     }
 
-    const precision = overlap / answerNgrams.length
-    const recall = overlap / referenceNgrams.length
-    const f1 = computeF1(precision, recall)
+    const precision = overlap / answerNgrams.length;
+    const recall = overlap / referenceNgrams.length;
+    const f1 = computeF1(precision, recall);
 
-    return { precision, recall, f1 }
+    return { precision, recall, f1 };
   }
 
   /**
@@ -221,18 +221,18 @@ export class ROUGEEvaluator implements GenerationEvaluator {
    */
   private computeLCS(
     answerTokens: string[],
-    referenceTokens: string[]
+    referenceTokens: string[],
   ): { precision: number; recall: number; f1: number } {
     if (answerTokens.length === 0 || referenceTokens.length === 0) {
-      return { precision: 0, recall: 0, f1: 0 }
+      return { precision: 0, recall: 0, f1: 0 };
     }
 
-    const lcsLen = lcsLength(answerTokens, referenceTokens)
+    const lcsLen = lcsLength(answerTokens, referenceTokens);
 
-    const precision = lcsLen / answerTokens.length
-    const recall = lcsLen / referenceTokens.length
-    const f1 = computeF1(precision, recall)
+    const precision = lcsLen / answerTokens.length;
+    const recall = lcsLen / referenceTokens.length;
+    const f1 = computeF1(precision, recall);
 
-    return { precision, recall, f1 }
+    return { precision, recall, f1 };
   }
 }

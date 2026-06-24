@@ -1,7 +1,7 @@
-import type { ABTestEvent, ABTestReport } from '../types'
+import type { ABTestEvent, ABTestReport } from '../types';
 
 /** 默认置信水平 */
-const DEFAULT_CONFIDENCE_LEVEL = 0.95
+const DEFAULT_CONFIDENCE_LEVEL = 0.95;
 
 /** 满意度计算权重 */
 const WEIGHTS = {
@@ -9,10 +9,10 @@ const WEIGHTS = {
   followUp: -0.3,
   sourceClick: 0.15,
   dwellTime: 0.15,
-} as const
+} as const;
 
 /** 停留时间阈值（秒） */
-const DWELL_TIME_THRESHOLD = 30
+const DWELL_TIME_THRESHOLD = 30;
 
 /**
  * 标准正态分布累积分布函数（Abramowitz-Stegun 近似）
@@ -21,17 +21,17 @@ const DWELL_TIME_THRESHOLD = 30
  * @returns 累积概率 P(Z <= x)
  */
 function normalCDF(x: number): number {
-  const a1 = 0.254829592
-  const a2 = -0.284496736
-  const a3 = 1.421413741
-  const a4 = -1.453152027
-  const a5 = 1.061405429
-  const p = 0.3275911
-  const sign = x < 0 ? -1 : 1
-  const absX = Math.abs(x)
-  const t = 1.0 / (1.0 + p * absX)
-  const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-absX * absX / 2)
-  return 0.5 * (1.0 + sign * y)
+  const a1 = 0.254829592;
+  const a2 = -0.284496736;
+  const a3 = 1.421413741;
+  const a4 = -1.453152027;
+  const a5 = 1.061405429;
+  const p = 0.3275911;
+  const sign = x < 0 ? -1 : 1;
+  const absX = Math.abs(x);
+  const t = 1.0 / (1.0 + p * absX);
+  const y = 1.0 - ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp((-absX * absX) / 2);
+  return 0.5 * (1.0 + sign * y);
 }
 
 /**
@@ -44,23 +44,23 @@ function normalCDF(x: number): number {
  * @returns 满意度得分 [0, 1]
  */
 function computeSatisfaction(event: ABTestEvent): number {
-  let score = 0
+  let score = 0;
 
   if (event.thumbsUp) {
-    score += WEIGHTS.thumbsUp
+    score += WEIGHTS.thumbsUp;
   }
   if (event.followUp) {
-    score += WEIGHTS.followUp
+    score += WEIGHTS.followUp;
   }
   if (event.sourceClick) {
-    score += WEIGHTS.sourceClick
+    score += WEIGHTS.sourceClick;
   }
   if (event.dwellTime !== undefined && event.dwellTime > DWELL_TIME_THRESHOLD) {
-    score += WEIGHTS.dwellTime
+    score += WEIGHTS.dwellTime;
   }
 
   // clamp 到 [0, 1]
-  return Math.max(0, Math.min(1, score))
+  return Math.max(0, Math.min(1, score));
 }
 
 /**
@@ -70,8 +70,8 @@ function computeSatisfaction(event: ABTestEvent): number {
  * @returns 均值
  */
 function mean(values: number[]): number {
-  if (values.length === 0) return 0
-  return values.reduce((sum, v) => sum + v, 0) / values.length
+  if (values.length === 0) return 0;
+  return values.reduce((sum, v) => sum + v, 0) / values.length;
 }
 
 /**
@@ -82,8 +82,8 @@ function mean(values: number[]): number {
  * @returns 方差
  */
 function variance(values: number[], avg: number): number {
-  if (values.length === 0) return 0
-  return values.reduce((sum, v) => sum + (v - avg) ** 2, 0) / values.length
+  if (values.length === 0) return 0;
+  return values.reduce((sum, v) => sum + (v - avg) ** 2, 0) / values.length;
 }
 
 /**
@@ -93,15 +93,15 @@ function variance(values: number[], avg: number): number {
  * 判断两组之间是否存在显著差异并给出胜出方。
  */
 export class ABTestAnalyzer {
-  private readonly confidenceLevel: number
-  private readonly eventsA: ABTestEvent[] = []
-  private readonly eventsB: ABTestEvent[] = []
+  private readonly confidenceLevel: number;
+  private readonly eventsA: ABTestEvent[] = [];
+  private readonly eventsB: ABTestEvent[] = [];
 
   /**
    * @param confidenceLevel - 置信水平，默认 0.95
    */
   constructor(confidenceLevel: number = DEFAULT_CONFIDENCE_LEVEL) {
-    this.confidenceLevel = confidenceLevel
+    this.confidenceLevel = confidenceLevel;
   }
 
   /**
@@ -111,9 +111,9 @@ export class ABTestAnalyzer {
    */
   collectEvent(event: ABTestEvent): void {
     if (event.group === 'A') {
-      this.eventsA.push(event)
+      this.eventsA.push(event);
     } else {
-      this.eventsB.push(event)
+      this.eventsB.push(event);
     }
   }
 
@@ -124,7 +124,7 @@ export class ABTestAnalyzer {
    */
   collectEvents(events: ABTestEvent[]): void {
     for (const event of events) {
-      this.collectEvent(event)
+      this.collectEvent(event);
     }
   }
 
@@ -138,8 +138,8 @@ export class ABTestAnalyzer {
    * @returns A/B 测试分析报告
    */
   analyze(): ABTestReport {
-    const countA = this.eventsA.length
-    const countB = this.eventsB.length
+    const countA = this.eventsA.length;
+    const countB = this.eventsB.length;
 
     // 边界情况：任一组样本数不足 2
     if (countA < 2 || countB < 2) {
@@ -152,35 +152,35 @@ export class ABTestAnalyzer {
         pValue: 1,
         significant: false,
         winner: 'tie',
-      }
+      };
     }
 
     // 计算各组满意度得分
-    const scoresA = this.eventsA.map(computeSatisfaction)
-    const scoresB = this.eventsB.map(computeSatisfaction)
+    const scoresA = this.eventsA.map(computeSatisfaction);
+    const scoresB = this.eventsB.map(computeSatisfaction);
 
-    const meanA = mean(scoresA)
-    const meanB = mean(scoresB)
-    const varA = variance(scoresA, meanA)
-    const varB = variance(scoresB, meanB)
+    const meanA = mean(scoresA);
+    const meanB = mean(scoresB);
+    const varA = variance(scoresA, meanA);
+    const varB = variance(scoresB, meanB);
 
     // Z-test 统计量
-    const denominator = Math.sqrt(varA / countA + varB / countB)
-    const zScore = denominator > 0 ? (meanA - meanB) / denominator : 0
+    const denominator = Math.sqrt(varA / countA + varB / countB);
+    const zScore = denominator > 0 ? (meanA - meanB) / denominator : 0;
 
     // 双尾 p-value
-    const pValue = 2 * (1 - normalCDF(Math.abs(zScore)))
+    const pValue = 2 * (1 - normalCDF(Math.abs(zScore)));
 
     // 显著性判断
-    const alpha = 1 - this.confidenceLevel
-    const significant = pValue < alpha
+    const alpha = 1 - this.confidenceLevel;
+    const significant = pValue < alpha;
 
     // 确定胜出方
-    let winner: 'A' | 'B' | 'tie'
+    let winner: 'A' | 'B' | 'tie';
     if (significant) {
-      winner = meanA > meanB ? 'A' : 'B'
+      winner = meanA > meanB ? 'A' : 'B';
     } else {
-      winner = 'tie'
+      winner = 'tie';
     }
 
     return {
@@ -192,6 +192,6 @@ export class ABTestAnalyzer {
       pValue,
       significant,
       winner,
-    }
+    };
   }
 }

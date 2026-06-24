@@ -1,9 +1,9 @@
-import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core'
+import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core';
 
 /** NDCG 评估选项 */
 interface NDCGOptions {
   /** 取前 K 个结果进行评估，默认 10 */
-  k?: number
+  k?: number;
 }
 
 /**
@@ -13,13 +13,13 @@ interface NDCGOptions {
  * 结果越相关、排名越靠前，得分越高。
  */
 export class NDCGEvaluator implements RetrievalEvaluator {
-  private readonly k: number
+  private readonly k: number;
 
   /**
    * @param options - 评估选项
    */
   constructor(options?: NDCGOptions) {
-    this.k = options?.k ?? 10
+    this.k = options?.k ?? 10;
   }
 
   /**
@@ -36,20 +36,20 @@ export class NDCGEvaluator implements RetrievalEvaluator {
     groundTruthIds: string[],
     relevanceScores?: Map<string, number>,
   ): MetricResult {
-    const topK = results.slice(0, this.k)
+    const topK = results.slice(0, this.k);
 
     // 构建相关性映射：未提供时使用二值相关性
-    const relMap = relevanceScores ?? this.buildBinaryRelevance(groundTruthIds)
+    const relMap = relevanceScores ?? this.buildBinaryRelevance(groundTruthIds);
 
     // 计算 DCG
-    const dcg = this.computeDCG(topK.map((r) => relMap.get(r.chunk.id) ?? 0))
+    const dcg = this.computeDCG(topK.map((r) => relMap.get(r.chunk.id) ?? 0));
 
     // 计算 IDCG：取所有已知相关性分数，按降序排列后计算理想 DCG
-    const allRelevances = this.collectAllRelevances(topK, relMap, groundTruthIds)
-    allRelevances.sort((a, b) => b - a)
-    const idcg = this.computeDCG(allRelevances.slice(0, this.k))
+    const allRelevances = this.collectAllRelevances(topK, relMap, groundTruthIds);
+    allRelevances.sort((a, b) => b - a);
+    const idcg = this.computeDCG(allRelevances.slice(0, this.k));
 
-    const score = idcg === 0 ? 0 : dcg / idcg
+    const score = idcg === 0 ? 0 : dcg / idcg;
 
     return {
       name: 'NDCG@K',
@@ -59,7 +59,7 @@ export class NDCGEvaluator implements RetrievalEvaluator {
         dcg,
         idcg,
       },
-    }
+    };
   }
 
   /**
@@ -69,11 +69,11 @@ export class NDCGEvaluator implements RetrievalEvaluator {
    * @returns 相关性映射（ground truth ID → 1，其余 → 0）
    */
   private buildBinaryRelevance(groundTruthIds: string[]): Map<string, number> {
-    const map = new Map<string, number>()
+    const map = new Map<string, number>();
     for (const id of groundTruthIds) {
-      map.set(id, 1)
+      map.set(id, 1);
     }
-    return map
+    return map;
   }
 
   /**
@@ -90,20 +90,20 @@ export class NDCGEvaluator implements RetrievalEvaluator {
     groundTruthIds: string[],
   ): number[] {
     // 收集 topK 中所有结果的相关性
-    const relevances: number[] = []
+    const relevances: number[] = [];
     for (const r of topK) {
-      relevances.push(relMap.get(r.chunk.id) ?? 0)
+      relevances.push(relMap.get(r.chunk.id) ?? 0);
     }
 
     // 还需考虑 ground truth 中未出现在 topK 里的文档
-    const topKIds = new Set(topK.map((r) => r.chunk.id))
+    const topKIds = new Set(topK.map((r) => r.chunk.id));
     for (const id of groundTruthIds) {
       if (!topKIds.has(id)) {
-        relevances.push(relMap.get(id) ?? 0)
+        relevances.push(relMap.get(id) ?? 0);
       }
     }
 
-    return relevances
+    return relevances;
   }
 
   /**
@@ -115,11 +115,11 @@ export class NDCGEvaluator implements RetrievalEvaluator {
    * @returns DCG 值
    */
   private computeDCG(relevances: number[]): number {
-    let dcg = 0
+    let dcg = 0;
     for (let i = 0; i < relevances.length; i++) {
-      const rel = relevances[i] ?? 0
-      dcg += rel / Math.log2(i + 2)
+      const rel = relevances[i] ?? 0;
+      dcg += rel / Math.log2(i + 2);
     }
-    return dcg
+    return dcg;
   }
 }

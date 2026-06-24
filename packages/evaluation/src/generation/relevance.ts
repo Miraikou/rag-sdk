@@ -1,20 +1,24 @@
-import { z } from 'zod'
-import type { GenerationEvaluator, LLMProvider, Message, MetricResult } from '@rag-sdk/core'
+import { z } from 'zod';
+import type { GenerationEvaluator, LLMProvider, Message, MetricResult } from '@rag-sdk/core';
 
 /** 问题生成的 Zod schema：从回答中反向生成问题 */
-const questionsSchema = z.object({
-  questions: z.array(z.string()).describe('从回答中反向生成的问题列表，每个问题应能通过回答得到解答'),
-}).describe('问题生成结果：从回答中反向推导出可由该回答解答的问题')
+const questionsSchema = z
+  .object({
+    questions: z
+      .array(z.string())
+      .describe('从回答中反向生成的问题列表，每个问题应能通过回答得到解答'),
+  })
+  .describe('问题生成结果：从回答中反向推导出可由该回答解答的问题');
 
 /** chatJson 问题生成的返回类型 */
 interface QuestionsAnalysis {
-  questions: string[]
+  questions: string[];
 }
 
 /** AnswerRelevanceEvaluator 构造选项 */
 export interface AnswerRelevanceOptions {
   /** 反向生成的问题数量，默认 3 */
-  numQuestions?: number
+  numQuestions?: number;
 }
 
 /**
@@ -29,16 +33,16 @@ export interface AnswerRelevanceOptions {
  * 3. 最终得分 = 所有相似度的均值
  */
 export class AnswerRelevanceEvaluator implements GenerationEvaluator {
-  private readonly llm: LLMProvider
-  private readonly numQuestions: number
+  private readonly llm: LLMProvider;
+  private readonly numQuestions: number;
 
   /**
    * @param llm - LLM 提供商实例，用于反向生成问题
    * @param options - 配置选项
    */
   constructor(llm: LLMProvider, options?: AnswerRelevanceOptions) {
-    this.llm = llm
-    this.numQuestions = options?.numQuestions ?? 3
+    this.llm = llm;
+    this.numQuestions = options?.numQuestions ?? 3;
   }
 
   /**
@@ -50,7 +54,7 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
    */
   async evaluate(answer: string, reference: string): Promise<MetricResult> {
     // reference 即为原始查询
-    const query = reference
+    const query = reference;
 
     // 空回答或空查询的特殊处理
     if (!answer.trim() || !query.trim()) {
@@ -62,15 +66,15 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
           numQuestions: 0,
           similarities: [],
         },
-      }
+      };
     }
 
     // 生成反向问题
-    const questions = await this.generateQuestions(answer)
+    const questions = await this.generateQuestions(answer);
 
     // 无问题时降级
     if (questions.length === 0) {
-      const fallbackScore = this.fallbackOverlap(answer, query)
+      const fallbackScore = this.fallbackOverlap(answer, query);
       return {
         name: 'AnswerRelevance',
         score: fallbackScore,
@@ -79,12 +83,12 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
           numQuestions: 0,
           similarities: [],
         },
-      }
+      };
     }
 
     // 计算每个生成问题与查询的 TF 余弦相似度
-    const similarities = questions.map((q) => this.tfCosineSimilarity(q, query))
-    const score = similarities.reduce((sum, s) => sum + s, 0) / similarities.length
+    const similarities = questions.map((q) => this.tfCosineSimilarity(q, query));
+    const score = similarities.reduce((sum, s) => sum + s, 0) / similarities.length;
 
     return {
       name: 'AnswerRelevance',
@@ -94,7 +98,7 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
         numQuestions: questions.length,
         similarities,
       },
-    }
+    };
   }
 
   /**
@@ -107,7 +111,7 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
    */
   private async generateQuestions(answer: string): Promise<string[]> {
     try {
-      const schema = z.toJSONSchema(questionsSchema)
+      const schema = z.toJSONSchema(questionsSchema);
       const messages: Message[] = [
         {
           role: 'system',
@@ -117,18 +121,18 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
           role: 'user',
           content: `请根据以下回答生成 ${this.numQuestions} 个问题：\n\n${answer}`,
         },
-      ]
+      ];
 
-      const result = await this.llm.chatJson<QuestionsAnalysis>(messages, schema)
-      const parsed = questionsSchema.safeParse(result)
+      const result = await this.llm.chatJson<QuestionsAnalysis>(messages, schema);
+      const parsed = questionsSchema.safeParse(result);
       if (parsed.success) {
-        return parsed.data.questions.filter((q) => q.trim().length > 0)
+        return parsed.data.questions.filter((q) => q.trim().length > 0);
       }
 
-      return []
+      return [];
     } catch {
       // LLM 调用失败，返回空列表触发降级
-      return []
+      return [];
     }
   }
 
@@ -143,33 +147,33 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
    * @returns 余弦相似度，范围 [0, 1]
    */
   private tfCosineSimilarity(textA: string, textB: string): number {
-    const tokensA = this.tokenize(textA)
-    const tokensB = this.tokenize(textB)
+    const tokensA = this.tokenize(textA);
+    const tokensB = this.tokenize(textB);
 
-    if (tokensA.length === 0 || tokensB.length === 0) return 0
+    if (tokensA.length === 0 || tokensB.length === 0) return 0;
 
     // 构建统一词表
-    const vocab = new Set([...tokensA, ...tokensB])
+    const vocab = new Set([...tokensA, ...tokensB]);
 
     // 计算词频向量
-    const tfA = this.buildTfVector(tokensA, vocab)
-    const tfB = this.buildTfVector(tokensB, vocab)
+    const tfA = this.buildTfVector(tokensA, vocab);
+    const tfB = this.buildTfVector(tokensB, vocab);
 
     // 余弦相似度：dot(A, B) / (||A|| * ||B||)
-    let dotProduct = 0
-    let normA = 0
-    let normB = 0
+    let dotProduct = 0;
+    let normA = 0;
+    let normB = 0;
 
     for (const word of vocab) {
-      const a = tfA.get(word) ?? 0
-      const b = tfB.get(word) ?? 0
-      dotProduct += a * b
-      normA += a * a
-      normB += b * b
+      const a = tfA.get(word) ?? 0;
+      const b = tfB.get(word) ?? 0;
+      dotProduct += a * b;
+      normA += a * a;
+      normB += b * b;
     }
 
-    const denominator = Math.sqrt(normA) * Math.sqrt(normB)
-    return denominator === 0 ? 0 : dotProduct / denominator
+    const denominator = Math.sqrt(normA) * Math.sqrt(normB);
+    return denominator === 0 ? 0 : dotProduct / denominator;
   }
 
   /**
@@ -184,7 +188,7 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
     return text
       .toLowerCase()
       .split(/[^a-z0-9一-鿿]+/)
-      .filter((t) => t.length > 0)
+      .filter((t) => t.length > 0);
   }
 
   /**
@@ -195,16 +199,16 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
    * @returns 词频映射
    */
   private buildTfVector(tokens: string[], vocab: Set<string>): Map<string, number> {
-    const tf = new Map<string, number>()
+    const tf = new Map<string, number>();
     for (const word of vocab) {
-      tf.set(word, 0)
+      tf.set(word, 0);
     }
     for (const token of tokens) {
       if (vocab.has(token)) {
-        tf.set(token, (tf.get(token) ?? 0) + 1)
+        tf.set(token, (tf.get(token) ?? 0) + 1);
       }
     }
-    return tf
+    return tf;
   }
 
   /**
@@ -217,17 +221,17 @@ export class AnswerRelevanceEvaluator implements GenerationEvaluator {
    * @returns 关键词重叠率，范围 [0, 1]
    */
   private fallbackOverlap(answer: string, query: string): number {
-    const queryTokens = new Set(this.tokenize(query))
-    if (queryTokens.size === 0) return 0
+    const queryTokens = new Set(this.tokenize(query));
+    if (queryTokens.size === 0) return 0;
 
-    const answerLower = answer.toLowerCase()
-    let hitCount = 0
+    const answerLower = answer.toLowerCase();
+    let hitCount = 0;
     for (const token of queryTokens) {
       if (answerLower.includes(token)) {
-        hitCount++
+        hitCount++;
       }
     }
 
-    return hitCount / queryTokens.size
+    return hitCount / queryTokens.size;
   }
 }
