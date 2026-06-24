@@ -67,8 +67,6 @@ export class LoggingMonitor implements PipelineMonitor {
  */
 export class CollectingMonitor implements PipelineMonitor {
   private readonly reports: PipelineReport[] = [];
-  private currentStages: StageMetrics[] = [];
-  private queryStartTime = 0;
 
   /**
    * 阶段开始回调
@@ -83,10 +81,10 @@ export class CollectingMonitor implements PipelineMonitor {
    * 阶段结束回调
    *
    * @param _stage - 阶段名称
-   * @param metrics - 阶段性能指标
+   * @param _metrics - 阶段性能指标
    */
-  onStageEnd(_stage: string, metrics: StageMetrics): void {
-    this.currentStages.push(metrics);
+  onStageEnd(_stage: string, _metrics: StageMetrics): void {
+    // 阶段指标已包含在 onQueryComplete 的 report 中
   }
 
   /**

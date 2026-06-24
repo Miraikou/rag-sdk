@@ -175,40 +175,51 @@ export class RAGPipeline implements Pipeline {
    */
   async *queryStream(question: string): AsyncIterable<string> {
     logger.info(`QueryStream: "${question}"`);
+    const queryStart = Date.now();
+    const stageMetrics: StageMetrics[] = [];
 
     // 1. 查询变换
-    let queries: string[] = [question];
-    for (const transformer of this.config.queryTransformers ?? []) {
-      const results: string[] = [];
-      for (const q of queries) {
-        const transformed = await transformer.transform(q);
-        if (Array.isArray(transformed)) {
-          results.push(...transformed);
-        } else {
-          results.push(transformed);
+    const queries = await this.measure('transform', stageMetrics, async () => {
+      let qs: string[] = [question];
+      for (const transformer of this.config.queryTransformers ?? []) {
+        const results: string[] = [];
+        for (const q of qs) {
+          const transformed = await transformer.transform(q);
+          if (Array.isArray(transformed)) {
+            results.push(...transformed);
+          } else {
+            results.push(transformed);
+          }
         }
+        qs = results;
       }
-      queries = results;
-    }
+      return qs;
+    });
 
     // 2. 检索
-    const allResults: SearchResult[] = [];
-    const seenIds = new Set<string>();
-    for (const q of queries) {
-      const qResults = await this.retriever.retrieve(q);
-      for (const result of qResults) {
-        if (!seenIds.has(result.chunk.id)) {
-          seenIds.add(result.chunk.id);
-          allResults.push(result);
+    const allResults = await this.measure('retrieve', stageMetrics, async () => {
+      const results: SearchResult[] = [];
+      const seenIds = new Set<string>();
+      for (const q of queries) {
+        const qResults = await this.retriever.retrieve(q);
+        for (const result of qResults) {
+          if (!seenIds.has(result.chunk.id)) {
+            seenIds.add(result.chunk.id);
+            results.push(result);
+          }
         }
       }
-    }
+      return results;
+    });
 
     // 3. 后处理
-    let processedResults = allResults;
-    for (const processor of this.config.postProcessors ?? []) {
-      processedResults = await processor.process(processedResults, question);
-    }
+    const processedResults = await this.measure('postProcess', stageMetrics, async () => {
+      let processed = allResults;
+      for (const processor of this.config.postProcessors ?? []) {
+        processed = await processor.process(processed, question);
+      }
+      return processed;
+    });
 
     // 4. Token 预算截断
     let chunks = processedResults.map((r) => r.chunk);
@@ -216,13 +227,32 @@ export class RAGPipeline implements Pipeline {
       chunks = this.tokenBudget.truncateContext(chunks);
     }
 
-    // 5. 流式生成
+    // 5. 流式生成（生成阶段的计时在流结束后统计）
+    this.monitor?.onStageStart('generate');
+    const genStart = Date.now();
+
     if (this.generator.generateStream) {
       yield* this.generator.generateStream(question, chunks);
     } else {
       // 降级：完整生成后逐字符 yield
       const result = await this.generator.generate(question, chunks);
       yield* result.answer;
+    }
+
+    const genMetrics: StageMetrics = {
+      stage: 'generate',
+      durationMs: Date.now() - genStart,
+    };
+    stageMetrics.push(genMetrics);
+    this.monitor?.onStageEnd('generate', genMetrics);
+
+    // 发送性能报告
+    if (this.monitor) {
+      const report: PipelineReport = {
+        queryDurationMs: Date.now() - queryStart,
+        stages: stageMetrics,
+      };
+      this.monitor.onQueryComplete(report);
     }
   }
 
