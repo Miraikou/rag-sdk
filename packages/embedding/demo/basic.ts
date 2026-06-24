@@ -5,7 +5,7 @@
  *
  * 需要设置环境变量 OPENAI_API_KEY
  */
-
+import 'dotenv/config';
 import { OpenAIEmbeddingProvider } from '../src/index';
 
 async function main(): Promise<void> {
@@ -22,12 +22,12 @@ async function main(): Promise<void> {
   const provider = new OpenAIEmbeddingProvider({
     apiKey: apiKey ?? 'test-key',
     baseUrl: process.env.OPENAI_BASE_URL ?? 'https://api.openai.com/v1',
-    model: 'text-embedding-3-small',
-    dimension: 1536,
+    model: process.env.TEST_MODEL,
+    dimension: 2048,
   });
 
   console.log('Provider 已创建');
-  console.log(`模型: text-embedding-3-small`);
+  console.log(`模型: ${process.env.TEST_MODEL}`);
   console.log(`维度: ${provider.dimension}\n`);
 
   if (!apiKey) {
