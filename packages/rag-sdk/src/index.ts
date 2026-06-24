@@ -7,14 +7,16 @@ export * from '@rag-sdk/document';
 // 向量嵌入
 export * from '@rag-sdk/embedding';
 
-// 文档索引
-export * from '@rag-sdk/indexing';
+// 文档索引（排除与 document 包重复的类型名）
+export { IndexingPipeline } from '@rag-sdk/indexing';
+export type { IndexingConfig, IndexingReport } from '@rag-sdk/indexing';
 
 // LLM 提供商
 export * from '@rag-sdk/llm';
 
-// 向量存储
-export * from '@rag-sdk/storage';
+// 向量存储（排除与 document 包重复的 SyncReport / DocumentHashRecord）
+export { BaseVectorStore, MemoryStore, IndexManager } from '@rag-sdk/storage';
+export type { VectorStoreConfig, IndexManagerOptions } from '@rag-sdk/storage';
 
 // 检索
 export * from '@rag-sdk/retrieval';
@@ -23,9 +25,35 @@ export * from '@rag-sdk/retrieval';
 export * from '@rag-sdk/generation';
 
 // 评测
-// TODO: 待实现
-// export * from '@rag-sdk/evaluation';
+export * from '@rag-sdk/evaluation';
 
 // 知识图谱
-// TODO: 待实现
-// export * from '@rag-sdk/knowledge-graph';
+export {
+  EntityExtractor,
+  MemoryGraphStore,
+  Neo4jGraphStore,
+  GraphRetriever,
+  GraphEnhancedRetriever,
+  GraphBuilder,
+} from '@rag-sdk/knowledge-graph';
+export type {
+  Entity,
+  Relation,
+  GraphData,
+  GraphStore,
+  GraphQueryResult,
+  NeighborResult,
+  NeighborOptions,
+  EntityExtractorOptions,
+  GraphRetrieverOptions,
+  GraphEnhancedRetrieverOptions,
+  GraphBuilderOptions,
+  BuildReport,
+} from '@rag-sdk/knowledge-graph';
+
+// Pipeline 预设
+export { createSimpleRAG } from './pipeline/simple-rag';
+export type { SimpleRAGOptions } from './pipeline/simple-rag';
+export { createAdvancedRAG } from './pipeline/advanced-rag';
+export type { AdvancedRAGOptions } from './pipeline/advanced-rag';
+export { PipelineBuilder } from './pipeline/custom';

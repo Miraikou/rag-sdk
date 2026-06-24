@@ -34,6 +34,24 @@ export async function createSimpleRAG(options: SimpleRAGOptions): Promise<RAGPip
   // 动态导入避免循环依赖
   const { FixedSizeChunker } = await import('@rag-sdk/document');
 
+  // 构建带 topK 的默认检索器
+  const topK = options.topK;
+  const retriever =
+    topK !== undefined
+      ? {
+          async retrieve(
+            query: string,
+            opts?: { topK?: number; filter?: Record<string, unknown> },
+          ) {
+            const queryVector = await options.embedding.embed(query);
+            return options.store.search(queryVector, {
+              topK: opts?.topK ?? topK,
+              filter: opts?.filter,
+            });
+          },
+        }
+      : undefined;
+
   const pipeline = new RAGPipeline({
     llm: options.llm,
     embedding: options.embedding,
@@ -42,6 +60,7 @@ export async function createSimpleRAG(options: SimpleRAGOptions): Promise<RAGPip
       chunkSize: options.chunkSize ?? 500,
       overlap: options.overlap ?? 50,
     }),
+    retriever,
     // Simple RAG 不使用查询变换、后处理
   });
 
