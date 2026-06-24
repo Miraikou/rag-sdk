@@ -22,7 +22,7 @@ function createMockLLM(): LLMProvider {
       yield '流式';
       yield '回答';
     }),
-    chatJson: vi.fn(async () => ({})),
+    chatJson: vi.fn(async () => ({})) as unknown as LLMProvider['chatJson'],
   };
 }
 
