@@ -82,9 +82,14 @@ export interface LLMProvider {
   /**
    * 结构化输出：返回符合 JSON Schema 的 parsed 对象
    *
+   * 输出模式由 Provider 的 `jsonOutputMode` 决定，可通过 `options.responseFormat` 覆盖：
+   * - `json_schema`：API 原生 schema 约束（OpenAI Structured Outputs）
+   * - `json_object`：API 保证合法 JSON，schema 通过 prompt 传递（DeepSeek / OpenAI JSON mode）
+   * - `prompt_only`：纯 prompt 引导，无 API 层约束（Anthropic / Google Gemini）
+   *
    * @param messages - 对话消息列表
    * @param schema - 标准 JSON Schema 对象
-   * @param options - 调用选项
+   * @param options - 调用选项，可通过 responseFormat 覆盖默认输出模式
    * @returns 符合 schema 的类型安全对象
    */
   chatJson<T = unknown>(

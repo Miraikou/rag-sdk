@@ -62,6 +62,11 @@ export class AnthropicProvider extends BaseLLMProvider {
     this.defaultModel = config.defaultModel ?? 'claude-sonnet-4-6';
   }
 
+  /** Anthropic 不支持服务端 JSON 约束，使用 prompt_only 避免与基类重复注入 */
+  override get jsonOutputMode(): 'prompt_only' {
+    return 'prompt_only';
+  }
+
   /** Anthropic API 版本 */
   private get apiVersion(): string {
     return '2023-06-01';

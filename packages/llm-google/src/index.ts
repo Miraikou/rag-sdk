@@ -70,6 +70,11 @@ export class GoogleProvider extends BaseLLMProvider {
     this.defaultModel = config.defaultModel ?? 'gemini-2.5-flash';
   }
 
+  /** Gemini 不支持服务端 JSON 约束，使用 prompt_only 避免与基类重复注入 */
+  override get jsonOutputMode(): 'prompt_only' {
+    return 'prompt_only';
+  }
+
   /** Gemini API 基础地址 */
   protected override get baseUrl(): string {
     return this.config.baseUrl ?? 'https://generativelanguage.googleapis.com/v1beta';

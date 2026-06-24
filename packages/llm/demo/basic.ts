@@ -5,7 +5,7 @@
  *
  * 需要设置环境变量 OPENAI_API_KEY
  */
-
+import 'dotenv/config'
 import { OpenAIProvider } from '../src/index';
 
 async function main(): Promise<void> {
@@ -61,7 +61,7 @@ async function main(): Promise<void> {
   }
   console.log('\n');
 
-  // ==================== 结构化输出 ====================
+  // ==================== 结构化输出（json_object 模式，默认） ====================
 
   console.log('=== 结构化输出（chatJson）===\n');
 
@@ -78,7 +78,7 @@ async function main(): Promise<void> {
   const person = await provider.chatJson<{ name: string; age: number; skills: string[] }>(
     [{ role: 'user', content: '生成一个虚构的人物信息 JSON。' }],
     schema,
-    { temperature: 0.3 },
+    { temperature: 0.3, responseFormat: { type: 'json_object' } },
   );
 
   console.log('结构化输出:', JSON.stringify(person, null, 2));
