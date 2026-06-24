@@ -1,8 +1,4 @@
-import type {
-  Retriever,
-  RetrievalEvaluator,
-  GenerationEvaluator,
-} from '@rag-sdk/core';
+import type { Retriever, RetrievalEvaluator, GenerationEvaluator } from '@rag-sdk/core';
 import type { BenchmarkReport, GenerationSample, MetricStats, RetrievalSample } from './types';
 
 /**
@@ -90,11 +86,7 @@ export class BenchmarkRunner {
           const contextStr = sample.contexts?.join('\n---\n');
 
           for (const evaluator of evaluators) {
-            const metric = await evaluator.evaluate(
-              sample.answer,
-              sample.reference,
-              contextStr ?? sample.query,
-            );
+            const metric = await evaluator.evaluate(sample.answer, sample.reference, contextStr);
             sampleScores[metric.name] = metric.score;
           }
 

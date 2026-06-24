@@ -98,9 +98,6 @@ importers:
       '@rag-sdk/core':
         specifier: workspace:*
         version: link:../core
-      '@rag-sdk/llm':
-        specifier: workspace:*
-        version: link:../llm
       zod:
         specifier: ^4.4.3
         version: 4.4.3

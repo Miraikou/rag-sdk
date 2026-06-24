@@ -46,7 +46,7 @@ export class RecallEvaluator implements RetrievalEvaluator {
     const truthSet = new Set(groundTruthIds);
     const retrievedRelevantCount = topK.filter((r) => truthSet.has(r.chunk.id)).length;
 
-    const score = retrievedRelevantCount / groundTruthIds.length;
+    const score = retrievedRelevantCount / truthSet.size;
 
     return {
       name: 'Recall@K',
@@ -54,7 +54,7 @@ export class RecallEvaluator implements RetrievalEvaluator {
       details: {
         k: this.k,
         retrievedRelevantCount,
-        totalRelevantCount: groundTruthIds.length,
+        totalRelevantCount: truthSet.size,
       },
     };
   }

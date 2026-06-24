@@ -99,17 +99,17 @@ export class FaithfulnessEvaluator implements GenerationEvaluator {
     // Phase 2: 声明验证
     const verdicts = await this.verifyClaims(claims, context);
 
-    // 聚合得分
+    // 聚合得分：以声明总数为分母，防止 LLM 漏判导致分数虚高
     const supportedClaims = verdicts.filter((v) => v.supported);
     const unsupportedClaims = verdicts.filter((v) => !v.supported);
-    const score = supportedClaims.length / verdicts.length;
+    const score = supportedClaims.length / claims.length;
 
     return {
       name: 'Faithfulness',
       score,
-      reason: `${supportedClaims.length}/${verdicts.length} 条声明被上下文支持`,
+      reason: `${supportedClaims.length}/${claims.length} 条声明被上下文支持`,
       details: {
-        totalClaims: verdicts.length,
+        totalClaims: claims.length,
         supportedClaims: supportedClaims.length,
         unsupportedClaims: unsupportedClaims.map((v) => v.claim),
       },
