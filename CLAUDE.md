@@ -62,9 +62,9 @@ npx tsx packages/core/demo/basic.ts
 
 | 包 | 状态 |
 |---|------|
-| `@rag-sdk/evaluation` | 源文件为空，测试均为 `it.todo` |
-| `@rag-sdk/knowledge-graph` | 源文件为空，测试均为 `it.todo` |
-| 9 个适配器包（llm-anthropic/google、embedding-anthropic/google/voyage、storage-pinecone/weaviate/chroma/qdrant） | 仅 `export {}` 占位 |
+| `@rag-sdk/evaluation` | Benchmark、Report、检索/生成/端到端评测，已完整实现 |
+| `@rag-sdk/knowledge-graph` | 实体抽取、图谱构建、图谱检索、图谱增强检索，已完整实现 |
+| 9 个适配器包（llm-anthropic/google、embedding-anthropic/google/voyage、storage-pinecone/weaviate/chroma/qdrant） | 使用原生 fetch 实现，无需安装第三方 SDK |
 
 ### 依赖图
 
