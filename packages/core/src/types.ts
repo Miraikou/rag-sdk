@@ -178,14 +178,93 @@ export interface GenerateOptions {
 
 /** 答案生成器接口 */
 export interface Generator {
-  generate(
-    query: string,
-    chunks: Chunk[],
-    options?: GenerateOptions,
-  ): Promise<GenerateResult>;
+  generate(query: string, chunks: Chunk[], options?: GenerateOptions): Promise<GenerateResult>;
+  /**
+   * 流式生成答案（可选）
+   *
+   * 支持此方法的生成器可被 Pipeline.queryStream() 用于真正的流式输出。
+   *
+   * @param query - 用户查询
+   * @param chunks - 检索到的文本块
+   * @returns 逐字符的异步迭代器
+   */
+  generateStream?(query: string, chunks: Chunk[]): AsyncIterable<string>;
 }
 
 // ==================== Pipeline ====================
+
+/** 阶段性能指标 */
+export interface StageMetrics {
+  /** 阶段名称 */
+  stage: string;
+  /** 耗时（毫秒） */
+  durationMs: number;
+  /** Token 使用量 */
+  tokenCount?: number;
+  /** 结果数量 */
+  resultCount?: number;
+}
+
+/** Pipeline 性能报告 */
+export interface PipelineReport {
+  /** 总查询耗时（毫秒） */
+  queryDurationMs: number;
+  /** 各阶段性能指标 */
+  stages: StageMetrics[];
+  /** 总 Token 使用量 */
+  totalTokens?: number;
+}
+
+/** Pipeline 性能监控接口 */
+export interface PipelineMonitor {
+  /**
+   * 阶段开始回调
+   *
+   * @param stage - 阶段名称
+   */
+  onStageStart(stage: string): void;
+  /**
+   * 阶段结束回调
+   *
+   * @param stage - 阶段名称
+   * @param metrics - 阶段性能指标
+   */
+  onStageEnd(stage: string, metrics: StageMetrics): void;
+  /**
+   * 查询完成回调
+   *
+   * @param report - 完整性能报告
+   */
+  onQueryComplete(report: PipelineReport): void;
+}
+
+/** Token 计数器接口 */
+export interface TokenCounter {
+  /**
+   * 计算文本的 token 数量
+   *
+   * @param text - 输入文本
+   * @returns token 数量
+   */
+  count(text: string): number;
+}
+
+/** Token 预算管理接口 */
+export interface TokenBudgetManager {
+  /**
+   * 获取可用于上下文的 token 预算
+   *
+   * @returns 可用 token 数（总预算 - 系统预留 - 生成预留）
+   */
+  getAvailableForContext(): number;
+  /**
+   * 按 token 预算截断上下文
+   *
+   * @param chunks - 文本块列表
+   * @returns 截断后的文本块列表
+   */
+  truncateContext(chunks: Chunk[]): Chunk[];
+}
 
 /** Pipeline 配置 */
 export interface PipelineConfig {
@@ -197,6 +276,10 @@ export interface PipelineConfig {
   retriever?: Retriever;
   postProcessors?: PostProcessor[];
   generator?: Generator;
+  /** 性能监控器 */
+  monitor?: PipelineMonitor;
+  /** Token 预算管理器 */
+  tokenBudget?: TokenBudgetManager;
 }
 
 /** Pipeline 接口 */
@@ -224,5 +307,9 @@ export interface RetrievalEvaluator {
 
 /** 生成评估器接口 */
 export interface GenerationEvaluator {
-  evaluate(answer: string, reference: string, context?: string): Promise<MetricResult> | MetricResult;
+  evaluate(
+    answer: string,
+    reference: string,
+    context?: string,
+  ): Promise<MetricResult> | MetricResult;
 }

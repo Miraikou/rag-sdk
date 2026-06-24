@@ -6,25 +6,16 @@ import type {
   Message,
   Pipeline,
   PipelineConfig,
-  PostProcessor,
-  QueryTransformer,
+  PipelineMonitor,
+  PipelineReport,
   Retriever,
   SearchResult,
+  StageMetrics,
+  TokenBudgetManager,
 } from './types';
 import { Logger } from './logger';
 
 const logger = new Logger('Pipeline');
-
-/** 默认生成器：基于 LLM 的标准答案生成 */
-class DefaultGenerator implements Generator {
-  async generate(
-    query: string,
-    chunks: Chunk[],
-  ): Promise<GenerateResult> {
-    // 此方法需要 LLM，在 RAGPipeline 中会被覆盖
-    throw new Error('DefaultGenerator requires LLM - use RAGPipeline');
-  }
-}
 
 /** 默认向量检索器 */
 class DefaultRetriever implements Retriever {
@@ -33,7 +24,10 @@ class DefaultRetriever implements Retriever {
     private store: import('./types').VectorStore,
   ) {}
 
-  async retrieve(query: string, options?: { topK?: number; filter?: Record<string, unknown> }): Promise<SearchResult[]> {
+  async retrieve(
+    query: string,
+    options?: { topK?: number; filter?: Record<string, unknown> },
+  ): Promise<SearchResult[]> {
     const queryVector = await this.embedding.embed(query);
     return this.store.search(queryVector, {
       topK: options?.topK ?? 5,
@@ -47,6 +41,8 @@ export class RAGPipeline implements Pipeline {
   private config: PipelineConfig;
   private retriever: Retriever;
   private generator: Generator;
+  private monitor?: PipelineMonitor;
+  private tokenBudget?: TokenBudgetManager;
 
   constructor(config: PipelineConfig) {
     if (!config.llm) throw new Error('PipelineConfig.llm is required');
@@ -61,6 +57,8 @@ export class RAGPipeline implements Pipeline {
 
     // 默认生成器：基于 LLM
     this.generator = config.generator ?? this.createDefaultGenerator();
+    this.monitor = config.monitor;
+    this.tokenBudget = config.tokenBudget;
   }
 
   /**
@@ -95,6 +93,88 @@ export class RAGPipeline implements Pipeline {
    */
   async query(question: string): Promise<GenerateResult> {
     logger.info(`Query: "${question}"`);
+    const queryStart = Date.now();
+    const stageMetrics: StageMetrics[] = [];
+
+    // 1. 查询变换
+    const queries = await this.measure('transform', stageMetrics, async () => {
+      let qs: string[] = [question];
+      for (const transformer of this.config.queryTransformers ?? []) {
+        const results: string[] = [];
+        for (const q of qs) {
+          const transformed = await transformer.transform(q);
+          if (Array.isArray(transformed)) {
+            results.push(...transformed);
+          } else {
+            results.push(transformed);
+          }
+        }
+        qs = results;
+      }
+      return qs;
+    });
+
+    // 2. 检索（对每个 query 分别检索，合并去重）
+    const allResults = await this.measure('retrieve', stageMetrics, async () => {
+      const results: SearchResult[] = [];
+      const seenIds = new Set<string>();
+      for (const q of queries) {
+        const qResults = await this.retriever.retrieve(q);
+        for (const result of qResults) {
+          if (!seenIds.has(result.chunk.id)) {
+            seenIds.add(result.chunk.id);
+            results.push(result);
+          }
+        }
+      }
+      logger.info(`Retrieved ${results.length} unique results`);
+      return results;
+    });
+
+    // 3. 后处理
+    const processedResults = await this.measure('postProcess', stageMetrics, async () => {
+      let processed = allResults;
+      for (const processor of this.config.postProcessors ?? []) {
+        processed = await processor.process(processed, question);
+      }
+      logger.info(`After post-processing: ${processed.length} results`);
+      return processed;
+    });
+
+    // 4. Token 预算截断
+    let chunks = processedResults.map((r) => r.chunk);
+    if (this.tokenBudget) {
+      chunks = this.tokenBudget.truncateContext(chunks);
+      logger.info(`After token budget truncation: ${chunks.length} chunks`);
+    }
+
+    // 5. 生成
+    const result = await this.measure('generate', stageMetrics, async () => {
+      const res = await this.generator.generate(question, chunks);
+      logger.info(`Generated answer (${res.answer.length} chars)`);
+      return res;
+    });
+
+    // 发送性能报告
+    if (this.monitor) {
+      const report: PipelineReport = {
+        queryDurationMs: Date.now() - queryStart,
+        stages: stageMetrics,
+      };
+      this.monitor.onQueryComplete(report);
+    }
+
+    return result;
+  }
+
+  /**
+   * 流式查询 — 变换 → 检索 → 后处理 → 流式生成
+   *
+   * 前三个阶段与 query() 相同（非流式），
+   * 生成阶段使用 Generator.generateStream()（如果支持）进行真正的流式输出。
+   */
+  async *queryStream(question: string): AsyncIterable<string> {
+    logger.info(`QueryStream: "${question}"`);
 
     // 1. 查询变换
     let queries: string[] = [question];
@@ -111,45 +191,71 @@ export class RAGPipeline implements Pipeline {
       queries = results;
     }
 
-    // 2. 检索（对每个 query 分别检索，合并去重）
+    // 2. 检索
     const allResults: SearchResult[] = [];
     const seenIds = new Set<string>();
     for (const q of queries) {
-      const results = await this.retriever.retrieve(q);
-      for (const result of results) {
+      const qResults = await this.retriever.retrieve(q);
+      for (const result of qResults) {
         if (!seenIds.has(result.chunk.id)) {
           seenIds.add(result.chunk.id);
           allResults.push(result);
         }
       }
     }
-    logger.info(`Retrieved ${allResults.length} unique results`);
 
     // 3. 后处理
     let processedResults = allResults;
     for (const processor of this.config.postProcessors ?? []) {
       processedResults = await processor.process(processedResults, question);
     }
-    logger.info(`After post-processing: ${processedResults.length} results`);
 
-    // 4. 生成
-    const chunks = processedResults.map((r) => r.chunk);
-    const result = await this.generator.generate(question, chunks);
-    logger.info(`Generated answer (${result.answer.length} chars)`);
+    // 4. Token 预算截断
+    let chunks = processedResults.map((r) => r.chunk);
+    if (this.tokenBudget) {
+      chunks = this.tokenBudget.truncateContext(chunks);
+    }
 
-    return result;
+    // 5. 流式生成
+    if (this.generator.generateStream) {
+      yield* this.generator.generateStream(question, chunks);
+    } else {
+      // 降级：完整生成后逐字符 yield
+      const result = await this.generator.generate(question, chunks);
+      yield* result.answer;
+    }
   }
 
   /**
-   * 流式查询
+   * 带性能计量的阶段执行辅助方法
+   *
+   * @param stage - 阶段名称
+   * @param metricsCollector - 指标收集数组
+   * @param fn - 要执行的异步函数
+   * @returns 函数返回值
    */
-  async *queryStream(question: string): AsyncIterable<string> {
-    // 简化实现：先完成完整查询，再逐字符 yield
-    // 实际生产中应使用 LLM 的流式 API
-    const result = await this.query(question);
-    for (const char of result.answer) {
-      yield char;
+  private async measure<T>(
+    stage: string,
+    metricsCollector: StageMetrics[],
+    fn: () => Promise<T>,
+  ): Promise<T> {
+    this.monitor?.onStageStart(stage);
+    const start = Date.now();
+
+    const result = await fn();
+
+    const durationMs = Date.now() - start;
+    const metrics: StageMetrics = { stage, durationMs };
+
+    // 为检索阶段添加结果数量
+    if (Array.isArray(result)) {
+      metrics.resultCount = result.length;
     }
+
+    metricsCollector.push(metrics);
+    this.monitor?.onStageEnd(stage, metrics);
+
+    return result;
   }
 
   private createDefaultGenerator(): Generator {
@@ -161,7 +267,8 @@ export class RAGPipeline implements Pipeline {
         const messages: Message[] = [
           {
             role: 'system',
-            content: '你是一个知识库助手。请严格根据以下参考资料回答用户问题。如果资料不足以回答，请明确说明。',
+            content:
+              '你是一个知识库助手。请严格根据以下参考资料回答用户问题。如果资料不足以回答，请明确说明。',
           },
           {
             role: 'user',
