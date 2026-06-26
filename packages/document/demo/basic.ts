@@ -4,6 +4,8 @@
  * 运行: npx tsx packages/document/demo/basic.ts
  */
 
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import {
   FixedSizeChunker,
   RecursiveChunker,
@@ -17,36 +19,41 @@ import {
   DocumentCleaner,
 } from '../src/index';
 
+// 示例文件目录（相对于本脚本）
+const demoDir = dirname(fileURLToPath(import.meta.url));
+const file = (name: string) => resolve(demoDir, name);
+
 // ==================== 文档加载器 ====================
 
 console.log('=== 文档加载器 ===\n');
 
-// 文本加载器
+// 文本加载器 — 从文件读取
 const textLoader = new TextLoader();
-const textDocs = await textLoader.load('Hello, world!');
+const textDocs = await textLoader.load(file('text.txt'));
 console.log(`TextLoader: 加载了 ${textDocs.length} 个文档`);
+console.log(`  来源: ${textDocs[0]?.metadata.source}`);
 console.log(`  内容: "${textDocs[0]?.content}"\n`);
 
-// Markdown 加载器
+// Markdown 加载器 — 从文件读取
 const mdLoader = new MarkdownLoader();
-const mdDocs = await mdLoader.load('# 标题\n\n这是一段 **Markdown** 文本。');
+const mdDocs = await mdLoader.load(file('sample.md'));
 console.log(`MarkdownLoader: 加载了 ${mdDocs.length} 个文档`);
-console.log(`  内容: "${mdDocs[0]?.content}"\n`);
+console.log(`  来源: ${mdDocs[0]?.metadata.source}`);
+console.log(`  内容: "${mdDocs[0]?.content.substring(0, 80)}..."\n`);
 
-// JSON 加载器
+// JSON 加载器 — 从文件读取
 const jsonLoader = new JSONLoader();
-const jsonDocs = await jsonLoader.load(JSON.stringify({
-  title: '测试文档',
-  content: '这是一段 JSON 内容。',
-}));
-console.log(`JSONLoader: 加载了 ${jsonDocs.length} 个文档\n`);
+const jsonDocs = await jsonLoader.load(file('sample.json'));
+console.log(`JSONLoader: 加载了 ${jsonDocs.length} 个文档`);
+console.log(`  内容: "${jsonDocs[0]?.content}"`);
+console.log(`  元数据: ${JSON.stringify(jsonDocs[0]?.metadata)}\n`);
 
-// CSV 加载器
+// CSV 加载器 — 从文件读取
 const csvLoader = new CSVLoader();
-const csvDocs = await csvLoader.load('name,age,city\n张三,30,北京\n李四,25,上海');
+const csvDocs = await csvLoader.load(file('sample.csv'));
 console.log(`CSVLoader: 加载了 ${csvDocs.length} 个文档`);
 csvDocs.forEach((doc) => {
-  console.log(`  - ${doc.id}: ${JSON.stringify(doc.metadata)}`);
+  console.log(`  - ${doc.metadata.name} (${doc.metadata.age}岁, ${doc.metadata.city})`);
 });
 
 // ==================== 文档清洗 ====================

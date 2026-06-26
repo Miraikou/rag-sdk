@@ -51,8 +51,17 @@ export class FixedSizeChunker extends BaseChunker {
       let chunkText: string;
 
       if (end >= content.length) {
-        // 最后一段，直接取到结尾
+        // 最后一段，直接取到结尾并结束循环
         chunkText = content.slice(start).trim();
+        if (chunkText.length > 0) {
+          chunks.push({
+            id: this.generateChunkId(document.id, index),
+            documentId: document.id,
+            content: chunkText,
+            metadata: { ...document.metadata, chunkIndex: index },
+          });
+        }
+        break;
       } else {
         // 尝试在 separator 处断开
         const slice = content.slice(start, end);
@@ -83,8 +92,10 @@ export class FixedSizeChunker extends BaseChunker {
       }
 
       // 下一段从当前结束位置 - overlap 开始
+      // 如果 advance <= 0，说明当前 chunk 完全被 overlap 覆盖，无需继续
       const advance = chunkText.length - overlap;
-      start += advance > 0 ? advance : 1;
+      if (advance <= 0) break;
+      start += advance;
     }
 
     return chunks;
