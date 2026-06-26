@@ -5,7 +5,7 @@
  *
  * 需要设置环境变量 OPENAI_API_KEY 以运行 LLM 相关功能
  */
-
+import 'dotenv/config';
 import {
   EntityExtractor,
   MemoryGraphStore,
@@ -69,7 +69,7 @@ async function main(): Promise<void> {
   console.log('\n=== 实体抽取 ===\n');
 
   const { OpenAIProvider } = await import('@rag-sdk/llm');
-  const llm = new OpenAIProvider({ apiKey, defaultModel: 'gpt-4o-mini' });
+  const llm = new OpenAIProvider({ apiKey, defaultModel: process.env.DEFAULT_MODEL ?? 'gpt-4o-mini', baseUrl: process.env.OPENAI_BASE_URL });
 
   const extractor = new EntityExtractor({
     llmProvider: llm,
