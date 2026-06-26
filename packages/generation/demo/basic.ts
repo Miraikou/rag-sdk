@@ -5,7 +5,7 @@
  *
  * 需要设置环境变量 OPENAI_API_KEY
  */
-
+import 'dotenv/config';
 import {
   StandardGenerator,
   GroundedGenerator,
@@ -26,7 +26,7 @@ async function main(): Promise<void> {
 
   // 动态导入避免类型检查时缺少依赖
   const { OpenAIProvider } = await import('@rag-sdk/llm');
-  const llm = new OpenAIProvider({ apiKey, defaultModel: 'gpt-4o-mini' });
+  const llm = new OpenAIProvider({ apiKey, defaultModel: process.env.DEFAULT_MODEL ?? 'gpt-4o-mini', baseUrl: process.env.OPENAI_BASE_URL });
 
   const testChunks: Chunk[] = [
     {
