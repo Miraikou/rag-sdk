@@ -5,7 +5,7 @@
  *
  * 需要设置环境变量 OPENAI_API_KEY 以运行 LLM 相关功能
  */
-
+import 'dotenv/config';
 import {
   VectorSearch,
   KeywordSearch,
@@ -75,7 +75,7 @@ async function main(): Promise<void> {
   console.log('=== 后处理：阈值过滤 ===\n');
   const threshold = new ThresholdPostProcessor({ threshold: 0.9 });
   const allResults = await vectorSearch.retrieve('Python', { topK: 10 });
-  const filtered = await threshold.process(allResults, 'Python');
+  const filtered = await threshold.process(allResults);
   console.log(`阈值过滤前: ${allResults.length} 条 → 过滤后: ${filtered.length} 条\n`);
 
   if (apiKey) {
@@ -83,7 +83,7 @@ async function main(): Promise<void> {
 
     console.log('=== 查询变换：Query Rewriter ===\n');
     const { OpenAIProvider } = await import('@rag-sdk/llm');
-    const llm = new OpenAIProvider({ apiKey, defaultModel: 'gpt-4o-mini' });
+    const llm = new OpenAIProvider({ apiKey, defaultModel: process.env.DEFAULT_MODEL, baseUrl: process.env.OPENAI_BASE_URL });
     const rewriter = new QueryRewriter(llm);
     const rewritten = await rewriter.transform('怎么用那个AI东西做搜索？');
     console.log(`原始查询: "怎么用那个AI东西做搜索？"`);
