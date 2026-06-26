@@ -221,6 +221,10 @@ importers:
       zod:
         specifier: ^4.4.3
         version: 4.4.3
+    devDependencies:
+      '@rag-sdk/llm':
+        specifier: workspace:*
+        version: link:../llm
 
   packages/storage:
     dependencies:

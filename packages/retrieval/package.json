@@ -34,5 +34,8 @@
     "@rag-sdk/embedding": "workspace:*",
     "@rag-sdk/storage": "workspace:*",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@rag-sdk/llm": "workspace:*"
   }
 }
