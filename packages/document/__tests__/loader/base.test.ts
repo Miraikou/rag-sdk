@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { BaseLoader } from '../../src/loader/base'
-import type { Document } from '@rag-sdk/core'
+import type { Document } from '@ragsdk/core'
 
 /**
  * 具体子类，用于测试抽象基类 BaseLoader

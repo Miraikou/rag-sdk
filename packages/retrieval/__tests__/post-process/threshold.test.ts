@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { ThresholdPostProcessor } from '../../src/post-process/threshold';
-import type { SearchResult } from '@rag-sdk/core';
+import type { SearchResult } from '@ragsdk/core';
 
 describe('ThresholdPostProcessor', () => {
   const makeResult = (id: string, score: number): SearchResult => ({

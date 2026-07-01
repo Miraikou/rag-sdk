@@ -1,4 +1,4 @@
-import type { PostProcessor, SearchResult } from '@rag-sdk/core';
+import type { PostProcessor, SearchResult } from '@ragsdk/core';
 import type { RerankerScorer } from './types';
 
 /**

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { HyDETransformer } from '../../src/query/hyde';
-import type { LLMProvider } from '@rag-sdk/core';
+import type { LLMProvider } from '@ragsdk/core';
 
 function createMockLLM(response: string): LLMProvider {
   return {

@@ -1,4 +1,4 @@
-import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core';
+import type { MetricResult, RetrievalEvaluator, SearchResult } from '@ragsdk/core';
 
 /**
  * 平均倒数排名（Mean Reciprocal Rank）评估器

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ConsistencyChecker } from '../src/consistency';
-import type { Chunk, Generator, LLMProvider } from '@rag-sdk/core';
+import type { Chunk, Generator, LLMProvider } from '@ragsdk/core';
 
 const makeChunk = (id: string, content: string): Chunk => ({
   id,

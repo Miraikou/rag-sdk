@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/evaluation 基础用法示例
+ * @ragsdk/evaluation 基础用法示例
  *
  * 运行: npx tsx packages/evaluation/demo/basic.ts
  *
@@ -18,7 +18,7 @@ import {
   BenchmarkRunner,
   EvaluationReport,
 } from '../src/index';
-import type { SearchResult, Retriever } from '@rag-sdk/core';
+import type { SearchResult, Retriever } from '@ragsdk/core';
 
 async function main(): Promise<void> {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -71,7 +71,7 @@ async function main(): Promise<void> {
     console.log('\n=== LLM 评测 ===\n');
 
     // 动态导入避免类型检查时缺少构建产物
-    const { OpenAIProvider } = await import('@rag-sdk/llm');
+    const { OpenAIProvider } = await import('@ragsdk/llm');
     const llm = new OpenAIProvider({ apiKey, defaultModel: process.env.DEFAULT_MODEL ?? 'gpt-4o-mini', baseUrl: process.env.OPENAI_BASE_URL });
 
     const faithfulness = new FaithfulnessEvaluator(llm);

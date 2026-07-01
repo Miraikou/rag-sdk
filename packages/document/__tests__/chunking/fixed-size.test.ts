@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { FixedSizeChunker } from '../../src/chunking/fixed-size';
-import type { Document } from '@rag-sdk/core';
+import type { Document } from '@ragsdk/core';
 
 describe('FixedSizeChunker', () => {
   const chunker = new FixedSizeChunker();

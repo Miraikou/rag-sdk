@@ -1,4 +1,4 @@
-# @rag-sdk/retrieval
+# @ragsdk/retrieval
 
 检索策略包，提供多种检索算法和扩展点。
 
@@ -7,7 +7,7 @@
 ### VectorSearch - 向量语义搜索
 
 ```typescript
-import { VectorSearch } from '@rag-sdk/retrieval';
+import { VectorSearch } from '@ragsdk/retrieval';
 
 const vectorSearch = new VectorSearch(embedding, store);
 const results = await vectorSearch.retrieve('查询文本', { topK: 5, threshold: 0.7 });
@@ -16,7 +16,7 @@ const results = await vectorSearch.retrieve('查询文本', { topK: 5, threshold
 ### KeywordSearch - BM25 关键词搜索
 
 ```typescript
-import { KeywordSearch } from '@rag-sdk/retrieval';
+import { KeywordSearch } from '@ragsdk/retrieval';
 
 const keywordSearch = new KeywordSearch(chunks);
 const results = await keywordSearch.retrieve('TypeScript 编程', { topK: 5 });
@@ -27,7 +27,7 @@ const results = await keywordSearch.retrieve('TypeScript 编程', { topK: 5 });
 ### FusionSearch - 加权融合搜索
 
 ```typescript
-import { FusionSearch } from '@rag-sdk/retrieval';
+import { FusionSearch } from '@ragsdk/retrieval';
 
 const fusion = new FusionSearch(vectorSearch, keywordSearch, 0.6, 0.4);
 const results = await fusion.retrieve('查询文本', { topK: 5 });
@@ -38,7 +38,7 @@ const results = await fusion.retrieve('查询文本', { topK: 5 });
 ### RRFSearch - 排名融合
 
 ```typescript
-import { RRFSearch } from '@rag-sdk/retrieval';
+import { RRFSearch } from '@ragsdk/retrieval';
 
 const rrf = new RRFSearch(60); // k=60
 const results = rrf.fuse([vectorResults, keywordResults], 5, 0.01);
@@ -49,7 +49,7 @@ const results = rrf.fuse([vectorResults, keywordResults], 5, 0.01);
 ### SmallToBigSearch - 小块检索大块回溯
 
 ```typescript
-import { SmallToBigSearch } from '@rag-sdk/retrieval';
+import { SmallToBigSearch } from '@ragsdk/retrieval';
 
 const smallToBig = new SmallToBigSearch(innerRetriever, store, allChunks);
 const results = await smallToBig.retrieve('查询文本', { topK: 5 });
@@ -58,7 +58,7 @@ const results = await smallToBig.retrieve('查询文本', { topK: 5 });
 ### HierarchicalSearch - 分层检索
 
 ```typescript
-import { HierarchicalSearch } from '@rag-sdk/retrieval';
+import { HierarchicalSearch } from '@ragsdk/retrieval';
 
 const hierarchical = new HierarchicalSearch(embedding, summaryStore, contentStore);
 const results = await hierarchical.retrieve('查询文本', { topK: 5 });
@@ -71,7 +71,7 @@ const results = await hierarchical.retrieve('查询文本', { topK: 5 });
 实现 `Retriever` 接口即可：
 
 ```typescript
-import type { Retriever, RetrieveOptions, SearchResult } from '@rag-sdk/core';
+import type { Retriever, RetrieveOptions, SearchResult } from '@ragsdk/core';
 
 class MyCustomRetriever implements Retriever {
   async retrieve(query: string, options?: RetrieveOptions): Promise<SearchResult[]> {
@@ -91,7 +91,7 @@ class MyCustomRetriever implements Retriever {
 
 ```typescript
 import MiniSearch from 'minisearch';
-import type { Retriever, RetrieveOptions, SearchResult, Chunk } from '@rag-sdk/core';
+import type { Retriever, RetrieveOptions, SearchResult, Chunk } from '@ragsdk/core';
 
 export class MiniSearchRetriever implements Retriever {
   private miniSearch: MiniSearch;
@@ -128,7 +128,7 @@ export class MiniSearchRetriever implements Retriever {
 
 ```typescript
 import { Client } from '@elastic/elasticsearch';
-import type { Retriever, RetrieveOptions, SearchResult } from '@rag-sdk/core';
+import type { Retriever, RetrieveOptions, SearchResult } from '@ragsdk/core';
 
 export class ElasticsearchRetriever implements Retriever {
   constructor(private client: Client, private index: string) {}
@@ -176,7 +176,7 @@ interface RetrieveOptions {
 ### QueryRewriter - 查询改写
 
 ```typescript
-import { QueryRewriter } from '@rag-sdk/retrieval';
+import { QueryRewriter } from '@ragsdk/retrieval';
 
 const rewriter = new QueryRewriter(llm);
 const rewritten = await rewriter.transform('模糊查询');
@@ -186,7 +186,7 @@ const rewritten = await rewriter.transform('模糊查询');
 ### MultiQueryExpander - 多查询扩展
 
 ```typescript
-import { MultiQueryExpander } from '@rag-sdk/retrieval';
+import { MultiQueryExpander } from '@ragsdk/retrieval';
 
 const expander = new MultiQueryExpander(llm, { numQueries: 3 });
 const queries = await expander.transform('原始查询');
@@ -196,7 +196,7 @@ const queries = await expander.transform('原始查询');
 ### QueryDecomposer - 查询分解
 
 ```typescript
-import { QueryDecomposer } from '@rag-sdk/retrieval';
+import { QueryDecomposer } from '@ragsdk/retrieval';
 
 const decomposer = new QueryDecomposer(llm);
 const subQueries = await decomposer.transform('复杂问题');
@@ -206,7 +206,7 @@ const subQueries = await decomposer.transform('复杂问题');
 ### HyDETransformer - 假设文档嵌入
 
 ```typescript
-import { HyDETransformer } from '@rag-sdk/retrieval';
+import { HyDETransformer } from '@ragsdk/retrieval';
 
 const hyde = new HyDETransformer(llm);
 const hypothetical = await hyde.transform('问题');
@@ -220,7 +220,7 @@ const hypothetical = await hyde.transform('问题');
 ### ThresholdPostProcessor - 阈值过滤
 
 ```typescript
-import { ThresholdPostProcessor } from '@rag-sdk/retrieval';
+import { ThresholdPostProcessor } from '@ragsdk/retrieval';
 
 const threshold = new ThresholdPostProcessor({ threshold: 0.7, maxResults: 10 });
 const filtered = await threshold.process(results, query);
@@ -229,7 +229,7 @@ const filtered = await threshold.process(results, query);
 ### ContextEnrichPostProcessor - 上下文丰富
 
 ```typescript
-import { ContextEnrichPostProcessor } from '@rag-sdk/retrieval';
+import { ContextEnrichPostProcessor } from '@ragsdk/retrieval';
 
 const enricher = new ContextEnrichPostProcessor(store, { windowSize: 2 });
 const enriched = await enricher.process(results, query);
@@ -238,7 +238,7 @@ const enriched = await enricher.process(results, query);
 ### SelectiveContextPostProcessor - 选择性上下文
 
 ```typescript
-import { SelectiveContextPostProcessor } from '@rag-sdk/retrieval';
+import { SelectiveContextPostProcessor } from '@ragsdk/retrieval';
 
 const selector = new SelectiveContextPostProcessor(llm);
 const selected = await selector.process(results, query);
@@ -247,7 +247,7 @@ const selected = await selector.process(results, query);
 ### CompressionPostProcessor - 内容压缩
 
 ```typescript
-import { CompressionPostProcessor } from '@rag-sdk/retrieval';
+import { CompressionPostProcessor } from '@ragsdk/retrieval';
 
 const compressor = new CompressionPostProcessor(llm, { maxTokens: 200 });
 const compressed = await compressor.process(results, query);
@@ -256,7 +256,7 @@ const compressed = await compressor.process(results, query);
 ### RerankerPostProcessor - 重排序
 
 ```typescript
-import { RerankerPostProcessor } from '@rag-sdk/retrieval';
+import { RerankerPostProcessor } from '@ragsdk/retrieval';
 
 const reranker = new RerankerPostProcessor(scorer, { topK: 5 });
 const reranked = await reranker.process(results, query);
@@ -267,7 +267,7 @@ const reranked = await reranker.process(results, query);
 ## 组合使用
 
 ```typescript
-import { VectorSearch, QueryRewriter, ThresholdPostProcessor } from '@rag-sdk/retrieval';
+import { VectorSearch, QueryRewriter, ThresholdPostProcessor } from '@ragsdk/retrieval';
 
 // 1. 查询改写
 const rewriter = new QueryRewriter(llm);

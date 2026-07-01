@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { DocumentDeduplicator } from '../src/deduplicator';
-import type { Document, EmbeddingProvider } from '@rag-sdk/core';
+import type { Document, EmbeddingProvider } from '@ragsdk/core';
 
 /** 创建测试用文档 */
 function makeDoc(id: string, content: string): Document {

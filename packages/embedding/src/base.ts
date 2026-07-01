@@ -1,4 +1,4 @@
-import type { EmbeddingProvider } from '@rag-sdk/core';
+import type { EmbeddingProvider } from '@ragsdk/core';
 import type { EmbeddingConfig } from './types.js';
 
 /**

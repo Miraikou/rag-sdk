@@ -1,4 +1,4 @@
-import type { LLMProvider, PostProcessor, SearchResult } from '@rag-sdk/core';
+import type { LLMProvider, PostProcessor, SearchResult } from '@ragsdk/core';
 
 /**
  * 压缩后处理器

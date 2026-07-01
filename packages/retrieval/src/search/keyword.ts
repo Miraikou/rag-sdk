@@ -1,4 +1,4 @@
-import type { Chunk, Retriever, RetrieveOptions, SearchResult } from '@rag-sdk/core';
+import type { Chunk, Retriever, RetrieveOptions, SearchResult } from '@ragsdk/core';
 
 /**
  * BM25 关键词搜索

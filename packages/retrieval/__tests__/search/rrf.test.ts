@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { RRFSearch } from '../../src/search/rrf';
-import type { SearchResult } from '@rag-sdk/core';
+import type { SearchResult } from '@ragsdk/core';
 
 const makeResult = (id: string, score: number, source: 'vector' | 'keyword' = 'vector'): SearchResult => ({
   chunk: {

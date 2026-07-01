@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { LLMProvider, PostProcessor, SearchResult } from '@rag-sdk/core';
+import type { LLMProvider, PostProcessor, SearchResult } from '@ragsdk/core';
 
 /** 相关性判断的结构化输出 schema */
 const RelevanceSchema = z.object({

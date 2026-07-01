@@ -48,22 +48,22 @@ npx tsx packages/core/demo/basic.ts
 
 | 包 | 职责 |
 |---|------|
-| `@rag-sdk/core` | 全局类型定义、`RAGPipeline` 编排器、`Router` 路由、`Logger` |
-| `@rag-sdk/llm` | `LLMProvider` 抽象 + 内置 OpenAI 适配器 |
-| `@rag-sdk/embedding` | `EmbeddingProvider` 抽象 + 内置 OpenAI 适配器 |
-| `@rag-sdk/storage` | `VectorStore` 抽象 + `MemoryStore` 内存实现 |
-| `@rag-sdk/document` | `Chunker` 切块（4 种策略）、文档加载、清洗、增强 |
-| `@rag-sdk/retrieval` | 查询变换（Rewrite/HyDE/MultiQuery/Decomposition）、搜索策略（Vector/Keyword/Fusion/RRF/SmallToBig/Hierarchical）、后处理（Reranker/Threshold/ContextEnrich/Compression/SelectiveContext） |
-| `@rag-sdk/generation` | `Generator` 抽象、PromptTemplate、CitationGenerator、GroundingGenerator、SelfRAGGenerator、ConsistencyGenerator |
-| `@rag-sdk/indexing` | `IndexingPipeline`：加载 → 清洗 → 去重 → 元数据抽取 → 增强 → 切块 → 嵌入 → 存储 |
+| `@ragsdk/core` | 全局类型定义、`RAGPipeline` 编排器、`Router` 路由、`Logger` |
+| `@ragsdk/llm` | `LLMProvider` 抽象 + 内置 OpenAI 适配器 |
+| `@ragsdk/embedding` | `EmbeddingProvider` 抽象 + 内置 OpenAI 适配器 |
+| `@ragsdk/storage` | `VectorStore` 抽象 + `MemoryStore` 内存实现 |
+| `@ragsdk/document` | `Chunker` 切块（4 种策略）、文档加载、清洗、增强 |
+| `@ragsdk/retrieval` | 查询变换（Rewrite/HyDE/MultiQuery/Decomposition）、搜索策略（Vector/Keyword/Fusion/RRF/SmallToBig/Hierarchical）、后处理（Reranker/Threshold/ContextEnrich/Compression/SelectiveContext） |
+| `@ragsdk/generation` | `Generator` 抽象、PromptTemplate、CitationGenerator、GroundingGenerator、SelfRAGGenerator、ConsistencyGenerator |
+| `@ragsdk/indexing` | `IndexingPipeline`：加载 → 清洗 → 去重 → 元数据抽取 → 增强 → 切块 → 嵌入 → 存储 |
 | `rag-sdk` | 伞包，re-export 所有子包 + 预设 Pipeline（Simple/Advanced/Custom） |
 
 **Stub 包**（空实现，待开发）：
 
 | 包 | 状态 |
 |---|------|
-| `@rag-sdk/evaluation` | Benchmark、Report、检索/生成/端到端评测，已完整实现 |
-| `@rag-sdk/knowledge-graph` | 实体抽取、图谱构建、图谱检索、图谱增强检索，已完整实现 |
+| `@ragsdk/evaluation` | Benchmark、Report、检索/生成/端到端评测，已完整实现 |
+| `@ragsdk/knowledge-graph` | 实体抽取、图谱构建、图谱检索、图谱增强检索，已完整实现 |
 | 9 个适配器包（llm-anthropic/google、embedding-anthropic/google/voyage、storage-pinecone/weaviate/chroma/qdrant） | 使用原生 fetch 实现，无需安装第三方 SDK |
 
 ### 依赖图
@@ -84,7 +84,7 @@ core（无依赖）
 
 ### 核心设计模式
 
-**接口驱动**：所有模块在 `@rag-sdk/core` 的 `types.ts` 中定义抽象接口，具体实现在各自包中。关键接口：`LLMProvider`、`EmbeddingProvider`、`VectorStore`、`Chunker`、`Retriever`、`PostProcessor`、`Generator`、`Pipeline`。
+**接口驱动**：所有模块在 `@ragsdk/core` 的 `types.ts` 中定义抽象接口，具体实现在各自包中。关键接口：`LLMProvider`、`EmbeddingProvider`、`VectorStore`、`Chunker`、`Retriever`、`PostProcessor`、`Generator`、`Pipeline`。
 
 **Pipeline 编排**：
 - `RAGPipeline`：ingest（chunk → embed → store）和 query（transform → retrieve → post-process → generate）

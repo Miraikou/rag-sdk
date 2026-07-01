@@ -4,7 +4,7 @@ import type {
   Document,
   EmbeddingProvider,
   VectorStore,
-} from '@rag-sdk/core';
+} from '@ragsdk/core';
 import { IndexManager } from '../src/index-manager';
 
 /**

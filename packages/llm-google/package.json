@@ -1,9 +1,15 @@
 {
-  "name": "@rag-sdk/llm-google",
+  "name": "@ragsdk/llm-google",
   "description": "Google Gemini LLM 适配器",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "llm", "google", "gemini", "ai"],
+  "keywords": [
+    "rag",
+    "llm",
+    "google",
+    "gemini",
+    "ai"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -33,8 +39,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/llm": "workspace:*"
+    "@ragsdk/core": "workspace:*",
+    "@ragsdk/llm": "workspace:*"
   },
   "devDependencies": {},
   "license": "MIT",

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { BERTScoreEvaluator } from '../../src/generation/bert-score';
-import type { EmbeddingProvider } from '@rag-sdk/core';
+import type { EmbeddingProvider } from '@ragsdk/core';
 
 /** 构建 mock EmbeddingProvider */
 function createMockEmbedding(): EmbeddingProvider {

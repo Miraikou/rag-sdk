@@ -1,8 +1,8 @@
 /**
- * @rag-sdk/embedding-anthropic
+ * @ragsdk/embedding-anthropic
  * Anthropic Embedding 适配器
  *
- * 安装: pnpm add @rag-sdk/embedding-anthropic
+ * 安装: pnpm add @ragsdk/embedding-anthropic
  * 无需额外安装 @anthropic-ai/sdk，使用原生 fetch 调用 API
  *
  * 注意：Anthropic 目前不提供专用 Embedding API，推荐使用 Voyage AI。
@@ -10,8 +10,8 @@
  * 可通过 baseUrl 配置指向任意兼容服务。
  */
 
-import { BaseEmbeddingProvider } from '@rag-sdk/embedding';
-import type { EmbeddingConfig } from '@rag-sdk/embedding';
+import { BaseEmbeddingProvider } from '@ragsdk/embedding';
+import type { EmbeddingConfig } from '@ragsdk/embedding';
 
 // ==================== API 响应类型 ====================
 

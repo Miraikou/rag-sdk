@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { Chunk, Generator, LLMProvider } from '@rag-sdk/core'
+import type { Chunk, Generator, LLMProvider } from '@ragsdk/core'
 import type { ConsistencyResult } from './types'
 
 /** chatJson 一致性分析的 Zod schema */

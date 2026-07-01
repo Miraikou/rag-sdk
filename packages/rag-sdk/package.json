@@ -1,8 +1,15 @@
 {
   "name": "rag-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "llm", "embedding", "vector-search", "knowledge-base", "ai"],
+  "keywords": [
+    "rag",
+    "llm",
+    "embedding",
+    "vector-search",
+    "knowledge-base",
+    "ai"
+  ],
   "description": "通用、模块化、可扩展的 TypeScript RAG SDK",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -31,16 +38,16 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/document": "workspace:*",
-    "@rag-sdk/embedding": "workspace:*",
-    "@rag-sdk/indexing": "workspace:*",
-    "@rag-sdk/llm": "workspace:*",
-    "@rag-sdk/storage": "workspace:*",
-    "@rag-sdk/retrieval": "workspace:*",
-    "@rag-sdk/generation": "workspace:*",
-    "@rag-sdk/evaluation": "workspace:*",
-    "@rag-sdk/knowledge-graph": "workspace:*"
+    "@ragsdk/core": "workspace:*",
+    "@ragsdk/document": "workspace:*",
+    "@ragsdk/embedding": "workspace:*",
+    "@ragsdk/indexing": "workspace:*",
+    "@ragsdk/llm": "workspace:*",
+    "@ragsdk/storage": "workspace:*",
+    "@ragsdk/retrieval": "workspace:*",
+    "@ragsdk/generation": "workspace:*",
+    "@ragsdk/evaluation": "workspace:*",
+    "@ragsdk/knowledge-graph": "workspace:*"
   },
   "devDependencies": {},
   "license": "MIT",

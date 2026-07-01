@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { LLMProvider } from '@rag-sdk/core';
+import type { LLMProvider } from '@ragsdk/core';
 import { GraphRetriever } from '../src/graph-retriever';
 import { MemoryGraphStore } from '../src/graph-store';
 import type { Entity, Relation } from '../src/types';

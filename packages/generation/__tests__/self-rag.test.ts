@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { SelfRAGGenerator } from '../src/self-rag';
-import type { LLMProvider, Chunk } from '@rag-sdk/core';
+import type { LLMProvider, Chunk } from '@ragsdk/core';
 
 const makeChunk = (id: string, content: string): Chunk => ({
   id,

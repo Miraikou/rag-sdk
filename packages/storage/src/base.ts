@@ -1,4 +1,4 @@
-import type { Chunk, SearchOptions, SearchResult, VectorStore } from '@rag-sdk/core';
+import type { Chunk, SearchOptions, SearchResult, VectorStore } from '@ragsdk/core';
 
 /**
  * 向量存储抽象基类

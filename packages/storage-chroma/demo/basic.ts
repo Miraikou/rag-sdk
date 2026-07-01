@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/storage-chroma 基础用法示例
+ * @ragsdk/storage-chroma 基础用法示例
  *
  * 运行前请先启动 Chroma 服务：
  *   docker run -p 8000:8000 chromadb/chroma
@@ -12,7 +12,7 @@
  */
 import 'dotenv/config'
 import { ChromaStore } from '../src/index'
-import type { Chunk, SearchOptions } from '@rag-sdk/core'
+import type { Chunk, SearchOptions } from '@ragsdk/core'
 
 async function main(): Promise<void> {
   const baseUrl = process.env.CHROMA_BASE_URL ?? 'http://localhost:8000'

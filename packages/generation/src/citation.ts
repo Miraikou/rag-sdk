@@ -1,4 +1,4 @@
-import type { Chunk, Citation, GenerateOptions, LLMProvider } from '@rag-sdk/core'
+import type { Chunk, Citation, GenerateOptions, LLMProvider } from '@ragsdk/core'
 import type { CitationGenerateResult, PromptTemplate } from './types'
 import { StandardGenerator } from './generator'
 import { BasePromptTemplate } from './prompt-template'

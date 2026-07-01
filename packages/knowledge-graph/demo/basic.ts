@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/knowledge-graph 基础用法示例
+ * @ragsdk/knowledge-graph 基础用法示例
  *
  * 运行: npx tsx packages/knowledge-graph/demo/basic.ts
  *
@@ -14,7 +14,7 @@ import {
   GraphEnhancedRetriever,
 } from '../src/index';
 import type { Entity, Relation } from '../src/index';
-import type { Retriever } from '@rag-sdk/core';
+import type { Retriever } from '@ragsdk/core';
 
 async function main(): Promise<void> {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -68,7 +68,7 @@ async function main(): Promise<void> {
 
   console.log('\n=== 实体抽取 ===\n');
 
-  const { OpenAIProvider } = await import('@rag-sdk/llm');
+  const { OpenAIProvider } = await import('@ragsdk/llm');
   const llm = new OpenAIProvider({ apiKey, defaultModel: process.env.DEFAULT_MODEL ?? 'gpt-4o-mini', baseUrl: process.env.OPENAI_BASE_URL });
 
   const extractor = new EntityExtractor({

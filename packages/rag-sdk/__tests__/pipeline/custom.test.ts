@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { PipelineBuilder } from '../../src/pipeline/custom';
-import type { LLMProvider, EmbeddingProvider, VectorStore, Chunker } from '@rag-sdk/core';
+import type { LLMProvider, EmbeddingProvider, VectorStore, Chunker } from '@ragsdk/core';
 
 /** 构建 mock 组件 */
 function createMockComponents() {

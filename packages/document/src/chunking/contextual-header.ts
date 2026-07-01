@@ -1,6 +1,6 @@
-import type { Chunk, ChunkOptions, Document, LLMProvider } from '@rag-sdk/core';
+import type { Chunk, ChunkOptions, Document, LLMProvider } from '@ragsdk/core';
 import { BaseChunker } from './base';
-import type { Chunker } from '@rag-sdk/core';
+import type { Chunker } from '@ragsdk/core';
 
 /**
  * 上下文头切块器（装饰器模式）

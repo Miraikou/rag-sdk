@@ -1,9 +1,15 @@
 {
-  "name": "@rag-sdk/document",
+  "name": "@ragsdk/document",
   "description": "文档处理模块，提供切块、加载、清洗与增强功能",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "document", "chunking", "text-processing", "ai"],
+  "keywords": [
+    "rag",
+    "document",
+    "chunking",
+    "text-processing",
+    "ai"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -34,8 +40,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/embedding": "workspace:*",
+    "@ragsdk/core": "workspace:*",
+    "@ragsdk/embedding": "workspace:*",
     "zod": "^4.4.3"
   },
   "peerDependencies": {

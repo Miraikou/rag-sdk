@@ -1,4 +1,4 @@
-import type { ChatOptions, Message } from '@rag-sdk/core';
+import type { ChatOptions, Message } from '@ragsdk/core';
 import { BaseLLMProvider } from './base';
 import type { LLMConfig } from './types';
 

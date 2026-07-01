@@ -6,7 +6,7 @@ import type {
   Retriever,
   RetrievalEvaluator,
   SearchResult,
-} from '@rag-sdk/core';
+} from '@ragsdk/core';
 
 /** 构建 mock SearchResult */
 function mockResult(id: string): SearchResult {

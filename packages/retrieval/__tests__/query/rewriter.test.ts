@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { QueryRewriter } from '../../src/query/rewriter';
-import type { LLMProvider, Message } from '@rag-sdk/core';
+import type { LLMProvider, Message } from '@ragsdk/core';
 
 function createMockLLM(response: string): LLMProvider {
   return {

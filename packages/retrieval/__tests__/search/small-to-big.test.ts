@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { MemoryStore } from '@rag-sdk/storage';
+import { MemoryStore } from '@ragsdk/storage';
 import { VectorSearch } from '../../src/search/vector';
-import type { EmbeddingProvider, Chunk } from '@rag-sdk/core';
+import type { EmbeddingProvider, Chunk } from '@ragsdk/core';
 
 describe('SmallToBigSearch', () => {
   it('should export SmallToBigSearch', async () => {

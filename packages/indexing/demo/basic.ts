@@ -1,13 +1,13 @@
 /**
- * @rag-sdk/indexing 基础用法示例
+ * @ragsdk/indexing 基础用法示例
  *
  * 运行: npx tsx packages/indexing/demo/basic.ts
  */
 
 import { IndexingPipeline } from '../src/index';
-import { MemoryStore } from '@rag-sdk/storage';
-import { FixedSizeChunker } from '@rag-sdk/document';
-import type { Document } from '@rag-sdk/core';
+import { MemoryStore } from '@ragsdk/storage';
+import { FixedSizeChunker } from '@ragsdk/document';
+import type { Document } from '@ragsdk/core';
 
 // ==================== 模拟 Embedding Provider ====================
 

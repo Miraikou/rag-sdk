@@ -1,13 +1,13 @@
 /**
- * @rag-sdk/storage-qdrant
+ * @ragsdk/storage-qdrant
  * Qdrant 向量数据库适配器
  *
- * 安装: pnpm add @rag-sdk/storage-qdrant
+ * 安装: pnpm add @ragsdk/storage-qdrant
  * 无需额外安装 @qdrant/js-client-rest，使用原生 fetch 调用 Qdrant REST API
  */
 
-import { BaseVectorStore } from '@rag-sdk/storage';
-import type { Chunk, SearchOptions, SearchResult } from '@rag-sdk/core';
+import { BaseVectorStore } from '@ragsdk/storage';
+import type { Chunk, SearchOptions, SearchResult } from '@ragsdk/core';
 
 // ==================== API 响应类型 ====================
 

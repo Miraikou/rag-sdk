@@ -1,31 +1,31 @@
 // 核心
-export * from '@rag-sdk/core';
+export * from '@ragsdk/core';
 
 // 文档处理
-export * from '@rag-sdk/document';
+export * from '@ragsdk/document';
 
 // 向量嵌入
-export * from '@rag-sdk/embedding';
+export * from '@ragsdk/embedding';
 
 // 文档索引（排除与 document 包重复的类型名）
-export { IndexingPipeline } from '@rag-sdk/indexing';
-export type { IndexingConfig, IndexingReport } from '@rag-sdk/indexing';
+export { IndexingPipeline } from '@ragsdk/indexing';
+export type { IndexingConfig, IndexingReport } from '@ragsdk/indexing';
 
 // LLM 提供商
-export * from '@rag-sdk/llm';
+export * from '@ragsdk/llm';
 
 // 向量存储（排除与 document 包重复的 SyncReport / DocumentHashRecord）
-export { BaseVectorStore, MemoryStore, IndexManager } from '@rag-sdk/storage';
-export type { VectorStoreConfig, IndexManagerOptions } from '@rag-sdk/storage';
+export { BaseVectorStore, MemoryStore, IndexManager } from '@ragsdk/storage';
+export type { VectorStoreConfig, IndexManagerOptions } from '@ragsdk/storage';
 
 // 检索
-export * from '@rag-sdk/retrieval';
+export * from '@ragsdk/retrieval';
 
 // 生成
-export * from '@rag-sdk/generation';
+export * from '@ragsdk/generation';
 
 // 评测
-export * from '@rag-sdk/evaluation';
+export * from '@ragsdk/evaluation';
 
 // 知识图谱
 export {
@@ -35,7 +35,7 @@ export {
   GraphRetriever,
   GraphEnhancedRetriever,
   GraphBuilder,
-} from '@rag-sdk/knowledge-graph';
+} from '@ragsdk/knowledge-graph';
 export type {
   Entity,
   Relation,
@@ -49,7 +49,7 @@ export type {
   GraphEnhancedRetrieverOptions,
   GraphBuilderOptions,
   BuildReport,
-} from '@rag-sdk/knowledge-graph';
+} from '@ragsdk/knowledge-graph';
 
 // Pipeline 预设
 export { createSimpleRAG } from './pipeline/simple-rag';

@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/core 基础用法示例
+ * @ragsdk/core 基础用法示例
  *
  * 运行: npx tsx packages/core/demo/basic.ts
  */

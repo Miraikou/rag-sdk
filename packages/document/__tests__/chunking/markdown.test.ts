@@ -1,5 +1,5 @@
 import { MarkdownChunker } from '../../src/chunking/markdown';
-import type { Document } from '@rag-sdk/core';
+import type { Document } from '@ragsdk/core';
 
 /**
  * 构造测试文档

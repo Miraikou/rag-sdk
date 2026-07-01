@@ -6,7 +6,7 @@ import type {
   LLMProvider,
   Message,
   Retriever,
-} from '@rag-sdk/core'
+} from '@ragsdk/core'
 import type { ReflectionTokens, SelfRAGResult } from './types'
 import { StandardGenerator } from './generator'
 import { z } from 'zod'

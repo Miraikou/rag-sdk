@@ -20,23 +20,23 @@
 pnpm add rag-sdk
 
 # 或按需安装子包
-pnpm add @rag-sdk/core @rag-sdk/llm @rag-sdk/storage
+pnpm add @ragsdk/core @ragsdk/llm @ragsdk/storage
 
 # 按需安装适配器（所有适配器均使用原生 fetch，无需安装额外 SDK）
-pnpm add @rag-sdk/llm-anthropic
-pnpm add @rag-sdk/storage-pinecone
+pnpm add @ragsdk/llm-anthropic
+pnpm add @ragsdk/storage-pinecone
 ```
 
 ## 快速开始
 
 ```ts
-import { RAGPipeline } from '@rag-sdk/core';
-import { OpenAI } from '@rag-sdk/llm';
-import { OpenAIEmbedding } from '@rag-sdk/embedding';
-import { MemoryStore } from '@rag-sdk/storage';
-import { SemanticChunker } from '@rag-sdk/document';
-import { FusionRetriever, Reranker } from '@rag-sdk/retrieval';
-import { CitationGenerator } from '@rag-sdk/generation';
+import { RAGPipeline } from '@ragsdk/core';
+import { OpenAI } from '@ragsdk/llm';
+import { OpenAIEmbedding } from '@ragsdk/embedding';
+import { MemoryStore } from '@ragsdk/storage';
+import { SemanticChunker } from '@ragsdk/document';
+import { FusionRetriever, Reranker } from '@ragsdk/retrieval';
+import { CitationGenerator } from '@ragsdk/generation';
 
 // 创建 Pipeline
 const rag = new RAGPipeline({
@@ -62,31 +62,31 @@ const { answer, sources } = await rag.query('年假有几天？');
 
 | 包名 | 说明 |
 |------|------|
-| [@rag-sdk/core](./packages/core) | 核心类型、Pipeline 编排器、检索路由 |
-| [@rag-sdk/llm](./packages/llm) | LLM 抽象接口 + 内置 OpenAI 适配器（零外部依赖） |
-| [@rag-sdk/embedding](./packages/embedding) | 向量嵌入抽象接口 + 内置 OpenAI 适配器 |
-| [@rag-sdk/storage](./packages/storage) | 向量存储抽象接口 + 内置内存存储和 pgvector |
-| [@rag-sdk/document](./packages/document) | 文档加载、切块（4种策略）、清洗、增强、元数据抽取 |
-| [@rag-sdk/retrieval](./packages/retrieval) | 查询变换、搜索策略（向量/关键词/融合）、后处理（Re-rank等） |
-| [@rag-sdk/generation](./packages/generation) | Prompt 模板、Grounding、引用回答、Self-RAG |
-| [@rag-sdk/evaluation](./packages/evaluation) | 检索评测（NDCG/MRR）+ 生成评测（BLEU/ROUGE/BERTScore）+ 端到端 |
-| [@rag-sdk/knowledge-graph](./packages/knowledge-graph) | 实体关系抽取、图存储、图检索 |
-| [@rag-sdk/indexing](./packages/indexing) | 文档索引编排（加载→清洗→去重→增强→切块→嵌入→存储） |
+| [@ragsdk/core](./packages/core) | 核心类型、Pipeline 编排器、检索路由 |
+| [@ragsdk/llm](./packages/llm) | LLM 抽象接口 + 内置 OpenAI 适配器（零外部依赖） |
+| [@ragsdk/embedding](./packages/embedding) | 向量嵌入抽象接口 + 内置 OpenAI 适配器 |
+| [@ragsdk/storage](./packages/storage) | 向量存储抽象接口 + 内置内存存储和 pgvector |
+| [@ragsdk/document](./packages/document) | 文档加载、切块（4种策略）、清洗、增强、元数据抽取 |
+| [@ragsdk/retrieval](./packages/retrieval) | 查询变换、搜索策略（向量/关键词/融合）、后处理（Re-rank等） |
+| [@ragsdk/generation](./packages/generation) | Prompt 模板、Grounding、引用回答、Self-RAG |
+| [@ragsdk/evaluation](./packages/evaluation) | 检索评测（NDCG/MRR）+ 生成评测（BLEU/ROUGE/BERTScore）+ 端到端 |
+| [@ragsdk/knowledge-graph](./packages/knowledge-graph) | 实体关系抽取、图存储、图检索 |
+| [@ragsdk/indexing](./packages/indexing) | 文档索引编排（加载→清洗→去重→增强→切块→嵌入→存储） |
 | [rag-sdk](./packages/rag-sdk) | 主包，re-export 所有子包 + 预设 Pipeline |
 
 ### 适配器包
 
 | 适配器包 | 说明 | 外部依赖 |
 |---------|------|---------|
-| [@rag-sdk/llm-anthropic](./packages/llm-anthropic) | Anthropic Claude LLM | 无（原生 fetch） |
-| [@rag-sdk/llm-google](./packages/llm-google) | Google Gemini LLM | 无（原生 fetch） |
-| [@rag-sdk/embedding-anthropic](./packages/embedding-anthropic) | Anthropic Embedding | 无（原生 fetch） |
-| [@rag-sdk/embedding-google](./packages/embedding-google) | Google Embedding | 无（原生 fetch） |
-| [@rag-sdk/embedding-voyage](./packages/embedding-voyage) | Voyage AI Embedding | 无（原生 fetch） |
-| [@rag-sdk/storage-pinecone](./packages/storage-pinecone) | Pinecone 向量数据库 | 无（原生 fetch） |
-| [@rag-sdk/storage-weaviate](./packages/storage-weaviate) | Weaviate 向量数据库 | 无（原生 fetch） |
-| [@rag-sdk/storage-chroma](./packages/storage-chroma) | Chroma 向量数据库 | 无（原生 fetch） |
-| [@rag-sdk/storage-qdrant](./packages/storage-qdrant) | Qdrant 向量数据库 | 无（原生 fetch） |
+| [@ragsdk/llm-anthropic](./packages/llm-anthropic) | Anthropic Claude LLM | 无（原生 fetch） |
+| [@ragsdk/llm-google](./packages/llm-google) | Google Gemini LLM | 无（原生 fetch） |
+| [@ragsdk/embedding-anthropic](./packages/embedding-anthropic) | Anthropic Embedding | 无（原生 fetch） |
+| [@ragsdk/embedding-google](./packages/embedding-google) | Google Embedding | 无（原生 fetch） |
+| [@ragsdk/embedding-voyage](./packages/embedding-voyage) | Voyage AI Embedding | 无（原生 fetch） |
+| [@ragsdk/storage-pinecone](./packages/storage-pinecone) | Pinecone 向量数据库 | 无（原生 fetch） |
+| [@ragsdk/storage-weaviate](./packages/storage-weaviate) | Weaviate 向量数据库 | 无（原生 fetch） |
+| [@ragsdk/storage-chroma](./packages/storage-chroma) | Chroma 向量数据库 | 无（原生 fetch） |
+| [@ragsdk/storage-qdrant](./packages/storage-qdrant) | Qdrant 向量数据库 | 无（原生 fetch） |
 
 ## 目录结构
 
@@ -120,7 +120,7 @@ rag-sdk/
 │       └── type-contract.test.ts # 类型契约验证
 │
 └── packages/
-    ├── core/                     # @rag-sdk/core — 核心类型 + Pipeline + Router
+    ├── core/                     # @ragsdk/core — 核心类型 + Pipeline + Router
     │   ├── src/
     │   │   ├── index.ts
     │   │   ├── types.ts          # 全局类型定义
@@ -137,55 +137,55 @@ rag-sdk/
     │   ├── tsconfig.json
     │   └── tsup.config.ts
     │
-    ├── llm/                      # @rag-sdk/llm — LLM 提供商
+    ├── llm/                      # @ragsdk/llm — LLM 提供商
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── embedding/                # @rag-sdk/embedding — 向量嵌入
+    ├── embedding/                # @ragsdk/embedding — 向量嵌入
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── storage/                  # @rag-sdk/storage — 向量存储
+    ├── storage/                  # @ragsdk/storage — 向量存储
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── document/                 # @rag-sdk/document — 文档处理
+    ├── document/                 # @ragsdk/document — 文档处理
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── retrieval/                # @rag-sdk/retrieval — 检索
+    ├── retrieval/                # @ragsdk/retrieval — 检索
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── generation/               # @rag-sdk/generation — 答案生成
+    ├── generation/               # @ragsdk/generation — 答案生成
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── evaluation/               # @rag-sdk/evaluation — 评测
+    ├── evaluation/               # @ragsdk/evaluation — 评测
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── knowledge-graph/          # @rag-sdk/knowledge-graph — 知识图谱
+    ├── knowledge-graph/          # @ragsdk/knowledge-graph — 知识图谱
     │   ├── src/ ...
     │   ├── __tests__/
     │   ├── demo/
     │   └── ...
     │
-    ├── indexing/                 # @rag-sdk/indexing — 文档索引编排
+    ├── indexing/                 # @ragsdk/indexing — 文档索引编排
     │   ├── src/
     │   │   ├── types.ts
     │   │   ├── indexing-pipeline.ts
@@ -194,15 +194,15 @@ rag-sdk/
     │   ├── demo/
     │   └── ...
     │
-    ├── llm-anthropic/            # @rag-sdk/llm-anthropic — Anthropic Claude 适配器
-    ├── llm-google/               # @rag-sdk/llm-google — Google Gemini 适配器
-    ├── embedding-anthropic/      # @rag-sdk/embedding-anthropic
-    ├── embedding-google/         # @rag-sdk/embedding-google
-    ├── embedding-voyage/         # @rag-sdk/embedding-voyage
-    ├── storage-pinecone/         # @rag-sdk/storage-pinecone
-    ├── storage-weaviate/         # @rag-sdk/storage-weaviate
-    ├── storage-chroma/           # @rag-sdk/storage-chroma
-    ├── storage-qdrant/           # @rag-sdk/storage-qdrant
+    ├── llm-anthropic/            # @ragsdk/llm-anthropic — Anthropic Claude 适配器
+    ├── llm-google/               # @ragsdk/llm-google — Google Gemini 适配器
+    ├── embedding-anthropic/      # @ragsdk/embedding-anthropic
+    ├── embedding-google/         # @ragsdk/embedding-google
+    ├── embedding-voyage/         # @ragsdk/embedding-voyage
+    ├── storage-pinecone/         # @ragsdk/storage-pinecone
+    ├── storage-weaviate/         # @ragsdk/storage-weaviate
+    ├── storage-chroma/           # @ragsdk/storage-chroma
+    ├── storage-qdrant/           # @ragsdk/storage-qdrant
     │
     └── rag-sdk/                  # rag-sdk — 主包（re-export + 预设 Pipeline）
         ├── src/

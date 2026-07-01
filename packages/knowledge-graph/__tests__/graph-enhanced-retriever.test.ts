@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { Retriever, SearchResult } from '@rag-sdk/core';
+import type { Retriever, SearchResult } from '@ragsdk/core';
 import { GraphEnhancedRetriever } from '../src/graph-enhanced-retriever';
 import { MemoryGraphStore } from '../src/graph-store';
 import type { Entity, GraphRetrieverLike, Relation } from '../src/types';

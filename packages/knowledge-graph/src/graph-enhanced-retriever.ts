@@ -1,4 +1,4 @@
-import type { Retriever, RetrieveOptions, SearchResult } from '@rag-sdk/core';
+import type { Retriever, RetrieveOptions, SearchResult } from '@ragsdk/core';
 import type { GraphEnhancedRetrieverOptions, GraphStore } from './types';
 
 /**

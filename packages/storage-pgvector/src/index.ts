@@ -1,9 +1,9 @@
 /**
- * @rag-sdk/storage-pgvector
+ * @ragsdk/storage-pgvector
  * PostgreSQL + pgvector 向量数据库适配器
  *
  * 安装:
- *   pnpm add @rag-sdk/storage-pgvector pg
+ *   pnpm add @ragsdk/storage-pgvector pg
  *
  * 前置条件:
  *   1. PostgreSQL 已安装并运行
@@ -14,8 +14,8 @@
  *   docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres pgvector/pgvector:pg17
  */
 
-import type { Chunk, SearchOptions, SearchResult } from '@rag-sdk/core';
-import { BaseVectorStore } from '@rag-sdk/storage';
+import type { Chunk, SearchOptions, SearchResult } from '@ragsdk/core';
+import { BaseVectorStore } from '@ragsdk/storage';
 import type { Pool, PoolConfig, QueryResult } from 'pg';
 
 // ==================== 配置类型 ====================
@@ -62,7 +62,7 @@ async function loadPg(): Promise<{ Pool: new (config?: PoolConfig) => Pool }> {
     return await import('pg');
   } catch {
     throw new Error(
-      '请安装 pg 依赖: pnpm add pg\n（pg 是 @rag-sdk/storage-pgvector 的 peer dependency）',
+      '请安装 pg 依赖: pnpm add pg\n（pg 是 @ragsdk/storage-pgvector 的 peer dependency）',
     );
   }
 }

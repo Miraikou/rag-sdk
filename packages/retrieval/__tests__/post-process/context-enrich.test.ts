@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { SearchResult } from '@rag-sdk/core';
+import type { SearchResult } from '@ragsdk/core';
 
 describe('ContextEnrichPostProcessor', () => {
   it('should export ContextEnrichPostProcessor', async () => {

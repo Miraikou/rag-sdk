@@ -1,4 +1,4 @@
-import type { ChatOptions, LLMProvider, Message } from '@rag-sdk/core';
+import type { ChatOptions, LLMProvider, Message } from '@ragsdk/core';
 import type { JsonOutputMode, LLMConfig } from './types';
 
 /** Provider 能力声明接口，子类通过 override 声明自身能力 */

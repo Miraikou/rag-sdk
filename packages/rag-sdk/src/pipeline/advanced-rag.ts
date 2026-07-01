@@ -1,5 +1,5 @@
-import type { PipelineConfig, PostProcessor } from '@rag-sdk/core';
-import { RAGPipeline } from '@rag-sdk/core';
+import type { PipelineConfig, PostProcessor } from '@ragsdk/core';
+import { RAGPipeline } from '@ragsdk/core';
 
 /**
  * Advanced RAG 预设选项
@@ -55,7 +55,7 @@ export interface AdvancedRAGOptions {
  * ```
  */
 export async function createAdvancedRAG(options: AdvancedRAGOptions): Promise<RAGPipeline> {
-  const { FixedSizeChunker } = await import('@rag-sdk/document');
+  const { FixedSizeChunker } = await import('@ragsdk/document');
   const {
     QueryRewriter,
     VectorSearch,
@@ -63,7 +63,7 @@ export async function createAdvancedRAG(options: AdvancedRAGOptions): Promise<RA
     FusionSearch,
     ThresholdPostProcessor,
     RerankerPostProcessor,
-  } = await import('@rag-sdk/retrieval');
+  } = await import('@ragsdk/retrieval');
 
   const vectorWeight = options.vectorWeight ?? 0.7;
   const keywordWeight = options.keywordWeight ?? 1 - vectorWeight;

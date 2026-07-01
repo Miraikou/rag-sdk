@@ -1,4 +1,4 @@
-import type { Chunk, Message } from '@rag-sdk/core';
+import type { Chunk, Message } from '@ragsdk/core';
 import type { FormatOptions, PromptTemplate } from './types';
 
 /**

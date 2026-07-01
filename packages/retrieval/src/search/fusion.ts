@@ -1,4 +1,4 @@
-import type { Retriever, RetrieveOptions, SearchResult } from '@rag-sdk/core';
+import type { Retriever, RetrieveOptions, SearchResult } from '@ragsdk/core';
 
 /**
  * 加权融合搜索

@@ -1,4 +1,4 @@
-import type { EmbeddingProvider, GenerationEvaluator, MetricResult } from '@rag-sdk/core';
+import type { EmbeddingProvider, GenerationEvaluator, MetricResult } from '@ragsdk/core';
 
 /**
  * BERTScore 评估器（基于句子级语义相似度）

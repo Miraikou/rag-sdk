@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Chunk, LLMProvider, Message, Retriever, RetrieveOptions, SearchResult } from '@rag-sdk/core';
+import type { Chunk, LLMProvider, Message, Retriever, RetrieveOptions, SearchResult } from '@ragsdk/core';
 import type { Entity, GraphRetrieverOptions, GraphStore, Relation } from './types';
 
 /** 实体名称提取的 Zod schema */
@@ -13,7 +13,7 @@ const EntityNamesSchema = z.object({
  * 基于知识图谱进行检索。从用户问题中识别实体，
  * 在图中沿关系链扩展，找到与问题相关的结构化知识。
  *
- * 实现 `@rag-sdk/core` 的 `Retriever` 接口，
+ * 实现 `@ragsdk/core` 的 `Retriever` 接口，
  * 将图实体/关系转换为 SearchResult（含合成 Chunk）格式。
  */
 export class GraphRetriever implements Retriever {

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Document, LLMProvider, Message } from '@rag-sdk/core';
+import type { Document, LLMProvider, Message } from '@ragsdk/core';
 import type { Entity, GraphData, Relation, EntityExtractorOptions } from './types';
 
 /** LLM 抽取结果的 Zod schema */

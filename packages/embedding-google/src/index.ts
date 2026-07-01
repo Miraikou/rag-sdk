@@ -1,13 +1,13 @@
 /**
- * @rag-sdk/embedding-google
+ * @ragsdk/embedding-google
  * Google Embedding 适配器
  *
- * 安装: pnpm add @rag-sdk/embedding-google
+ * 安装: pnpm add @ragsdk/embedding-google
  * 无需额外安装 @google/generative-ai，使用原生 fetch 调用 Gemini API
  */
 
-import { BaseEmbeddingProvider } from '@rag-sdk/embedding';
-import type { EmbeddingConfig } from '@rag-sdk/embedding';
+import { BaseEmbeddingProvider } from '@ragsdk/embedding';
+import type { EmbeddingConfig } from '@ragsdk/embedding';
 
 // ==================== API 响应类型 ====================
 

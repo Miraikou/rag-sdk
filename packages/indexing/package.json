@@ -1,9 +1,15 @@
 {
-  "name": "@rag-sdk/indexing",
+  "name": "@ragsdk/indexing",
   "description": "索引管道，编排文档加载、清洗、切块、嵌入与存储",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "indexing", "document", "embedding", "ai"],
+  "keywords": [
+    "rag",
+    "indexing",
+    "document",
+    "embedding",
+    "ai"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -35,10 +41,10 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/document": "workspace:*",
-    "@rag-sdk/embedding": "workspace:*",
-    "@rag-sdk/storage": "workspace:*"
+    "@ragsdk/core": "workspace:*",
+    "@ragsdk/document": "workspace:*",
+    "@ragsdk/embedding": "workspace:*",
+    "@ragsdk/storage": "workspace:*"
   },
   "devDependencies": {},
   "license": "MIT",

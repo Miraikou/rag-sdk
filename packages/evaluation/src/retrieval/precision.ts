@@ -1,4 +1,4 @@
-import type { MetricResult, RetrievalEvaluator, SearchResult } from '@rag-sdk/core';
+import type { MetricResult, RetrievalEvaluator, SearchResult } from '@ragsdk/core';
 
 /** 精确率评估选项 */
 interface PrecisionOptions {

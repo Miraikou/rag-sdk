@@ -16,7 +16,7 @@ import {
   createAdvancedRAG,
   PipelineBuilder,
 } from '../src/index';
-import type { Document } from '@rag-sdk/core';
+import type { Document } from '@ragsdk/core';
 
 async function main(): Promise<void> {
   const apiKey = process.env.OPENAI_API_KEY;

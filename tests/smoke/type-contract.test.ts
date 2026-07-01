@@ -24,8 +24,8 @@ function hasProperties(obj: unknown, propNames: string[]): boolean {
 
 describe('Retriever 接口契约', () => {
   it('VectorSearch 应实现 Retriever 接口', async () => {
-    const { VectorSearch } = await import('@rag-sdk/retrieval');
-    const { MemoryStore } = await import('@rag-sdk/storage');
+    const { VectorSearch } = await import('@ragsdk/retrieval');
+    const { MemoryStore } = await import('@ragsdk/storage');
 
     const retriever = new VectorSearch(
       { dimension: 3, embed: async () => [1, 2, 3], embedBatch: async () => [[1, 2, 3]] },
@@ -39,7 +39,7 @@ describe('Retriever 接口契约', () => {
   });
 
   it('KeywordSearch 应实现 Retriever 接口', async () => {
-    const { KeywordSearch } = await import('@rag-sdk/retrieval');
+    const { KeywordSearch } = await import('@ragsdk/retrieval');
 
     const retriever = new KeywordSearch([
       {
@@ -56,8 +56,8 @@ describe('Retriever 接口契约', () => {
   });
 
   it('FusionSearch 应实现 Retriever 接口', async () => {
-    const { FusionSearch, VectorSearch, KeywordSearch } = await import('@rag-sdk/retrieval');
-    const { MemoryStore } = await import('@rag-sdk/storage');
+    const { FusionSearch, VectorSearch, KeywordSearch } = await import('@ragsdk/retrieval');
+    const { MemoryStore } = await import('@ragsdk/storage');
 
     const fusion = new FusionSearch(
       new VectorSearch(
@@ -73,8 +73,8 @@ describe('Retriever 接口契约', () => {
   });
 
   it('SmallToBigSearch 应实现 Retriever 接口', async () => {
-    const { SmallToBigSearch, VectorSearch } = await import('@rag-sdk/retrieval');
-    const { MemoryStore } = await import('@rag-sdk/storage');
+    const { SmallToBigSearch, VectorSearch } = await import('@ragsdk/retrieval');
+    const { MemoryStore } = await import('@ragsdk/storage');
 
     const store = new MemoryStore();
     const innerRetriever = new VectorSearch(
@@ -87,8 +87,8 @@ describe('Retriever 接口契约', () => {
   });
 
   it('HierarchicalSearch 应实现 Retriever 接口', async () => {
-    const { HierarchicalSearch } = await import('@rag-sdk/retrieval');
-    const { MemoryStore } = await import('@rag-sdk/storage');
+    const { HierarchicalSearch } = await import('@ragsdk/retrieval');
+    const { MemoryStore } = await import('@ragsdk/storage');
 
     const retriever = new HierarchicalSearch(
       { dimension: 3, embed: async () => [1, 2, 3], embedBatch: async () => [[1, 2, 3]] },
@@ -104,7 +104,7 @@ describe('Retriever 接口契约', () => {
 
 describe('Chunker 接口契约', () => {
   it('FixedSizeChunker 应实现 Chunker 接口', async () => {
-    const { FixedSizeChunker } = await import('@rag-sdk/document');
+    const { FixedSizeChunker } = await import('@ragsdk/document');
 
     const chunker = new FixedSizeChunker({ chunkSize: 500 });
     expect(hasMethods(chunker, ['chunk'])).toBe(true);
@@ -121,7 +121,7 @@ describe('Chunker 接口契约', () => {
   });
 
   it('RecursiveChunker 应实现 Chunker 接口', async () => {
-    const { RecursiveChunker } = await import('@rag-sdk/document');
+    const { RecursiveChunker } = await import('@ragsdk/document');
 
     const chunker = new RecursiveChunker();
     expect(hasMethods(chunker, ['chunk'])).toBe(true);
@@ -135,7 +135,7 @@ describe('Chunker 接口契约', () => {
   });
 
   it('MarkdownChunker 应实现 Chunker 接口', async () => {
-    const { MarkdownChunker } = await import('@rag-sdk/document');
+    const { MarkdownChunker } = await import('@ragsdk/document');
 
     const chunker = new MarkdownChunker();
     expect(hasMethods(chunker, ['chunk'])).toBe(true);
@@ -154,21 +154,21 @@ describe('Chunker 接口契约', () => {
 
 describe('LLMProvider 接口契约', () => {
   it('OpenAIProvider 应满足 LLMProvider 接口', async () => {
-    const { OpenAIProvider } = await import('@rag-sdk/llm');
+    const { OpenAIProvider } = await import('@ragsdk/llm');
 
     const provider = new OpenAIProvider({ apiKey: 'test-key', defaultModel: 'gpt-4o-mini' });
     expect(hasMethods(provider, ['chat', 'chatStream', 'chatJson'])).toBe(true);
   });
 
   it('AnthropicProvider 应满足 LLMProvider 接口', async () => {
-    const { AnthropicProvider } = await import('@rag-sdk/llm-anthropic');
+    const { AnthropicProvider } = await import('@ragsdk/llm-anthropic');
 
     const provider = new AnthropicProvider({ apiKey: 'test-key' });
     expect(hasMethods(provider, ['chat', 'chatStream', 'chatJson'])).toBe(true);
   });
 
   it('GoogleProvider 应满足 LLMProvider 接口', async () => {
-    const { GoogleProvider } = await import('@rag-sdk/llm-google');
+    const { GoogleProvider } = await import('@ragsdk/llm-google');
 
     const provider = new GoogleProvider({ apiKey: 'test-key' });
     expect(hasMethods(provider, ['chat', 'chatStream', 'chatJson'])).toBe(true);
@@ -179,7 +179,7 @@ describe('LLMProvider 接口契约', () => {
 
 describe('VectorStore 接口契约', () => {
   it('MemoryStore 应满足 VectorStore 接口', async () => {
-    const { MemoryStore } = await import('@rag-sdk/storage');
+    const { MemoryStore } = await import('@ragsdk/storage');
 
     const store = new MemoryStore();
     const requiredMethods = ['upsert', 'upsertByDocument', 'search', 'delete', 'deleteByDocument'];
@@ -203,7 +203,7 @@ describe('VectorStore 接口契约', () => {
   });
 
   it('PineconeStore 应满足 VectorStore 接口', async () => {
-    const { PineconeStore } = await import('@rag-sdk/storage-pinecone');
+    const { PineconeStore } = await import('@ragsdk/storage-pinecone');
 
     const store = new PineconeStore({ apiKey: 'test-key', baseUrl: 'https://test.pinecone.io' });
     const requiredMethods = ['upsert', 'upsertByDocument', 'search', 'delete', 'deleteByDocument'];
@@ -211,7 +211,7 @@ describe('VectorStore 接口契约', () => {
   });
 
   it('WeaviateStore 应满足 VectorStore 接口', async () => {
-    const { WeaviateStore } = await import('@rag-sdk/storage-weaviate');
+    const { WeaviateStore } = await import('@ragsdk/storage-weaviate');
 
     const store = new WeaviateStore({ baseUrl: 'http://localhost:8080' });
     const requiredMethods = ['upsert', 'upsertByDocument', 'search', 'delete', 'deleteByDocument'];
@@ -219,7 +219,7 @@ describe('VectorStore 接口契约', () => {
   });
 
   it('ChromaStore 应满足 VectorStore 接口', async () => {
-    const { ChromaStore } = await import('@rag-sdk/storage-chroma');
+    const { ChromaStore } = await import('@ragsdk/storage-chroma');
 
     const store = new ChromaStore({ baseUrl: 'http://localhost:8000' });
     const requiredMethods = ['upsert', 'upsertByDocument', 'search', 'delete', 'deleteByDocument'];
@@ -227,7 +227,7 @@ describe('VectorStore 接口契约', () => {
   });
 
   it('QdrantStore 应满足 VectorStore 接口', async () => {
-    const { QdrantStore } = await import('@rag-sdk/storage-qdrant');
+    const { QdrantStore } = await import('@ragsdk/storage-qdrant');
 
     const store = new QdrantStore({ baseUrl: 'http://localhost:6333' });
     const requiredMethods = ['upsert', 'upsertByDocument', 'search', 'delete', 'deleteByDocument'];
@@ -235,7 +235,7 @@ describe('VectorStore 接口契约', () => {
   });
 
   it('PgVectorStore 应满足 VectorStore 接口', async () => {
-    const { PgVectorStore } = await import('@rag-sdk/storage-pgvector');
+    const { PgVectorStore } = await import('@ragsdk/storage-pgvector');
 
     const store = new PgVectorStore({
       host: 'localhost',
@@ -253,7 +253,7 @@ describe('VectorStore 接口契约', () => {
 
 describe('EmbeddingProvider 接口契约', () => {
   it('OpenAIEmbeddingProvider 应满足 EmbeddingProvider 接口', async () => {
-    const { OpenAIEmbeddingProvider } = await import('@rag-sdk/embedding');
+    const { OpenAIEmbeddingProvider } = await import('@ragsdk/embedding');
 
     const provider = new OpenAIEmbeddingProvider({ apiKey: 'test-key' });
     expect(hasMethods(provider, ['embed', 'embedBatch'])).toBe(true);
@@ -263,7 +263,7 @@ describe('EmbeddingProvider 接口契约', () => {
   });
 
   it('AnthropicEmbeddingProvider 应满足 EmbeddingProvider 接口', async () => {
-    const { AnthropicEmbeddingProvider } = await import('@rag-sdk/embedding-anthropic');
+    const { AnthropicEmbeddingProvider } = await import('@ragsdk/embedding-anthropic');
 
     const provider = new AnthropicEmbeddingProvider({ apiKey: 'test-key' });
     expect(hasMethods(provider, ['embed', 'embedBatch'])).toBe(true);
@@ -273,7 +273,7 @@ describe('EmbeddingProvider 接口契约', () => {
   });
 
   it('GoogleEmbeddingProvider 应满足 EmbeddingProvider 接口', async () => {
-    const { GoogleEmbeddingProvider } = await import('@rag-sdk/embedding-google');
+    const { GoogleEmbeddingProvider } = await import('@ragsdk/embedding-google');
 
     const provider = new GoogleEmbeddingProvider({ apiKey: 'test-key' });
     expect(hasMethods(provider, ['embed', 'embedBatch'])).toBe(true);
@@ -283,7 +283,7 @@ describe('EmbeddingProvider 接口契约', () => {
   });
 
   it('VoyageEmbeddingProvider 应满足 EmbeddingProvider 接口', async () => {
-    const { VoyageEmbeddingProvider } = await import('@rag-sdk/embedding-voyage');
+    const { VoyageEmbeddingProvider } = await import('@ragsdk/embedding-voyage');
 
     const provider = new VoyageEmbeddingProvider({ apiKey: 'test-key' });
     expect(hasMethods(provider, ['embed', 'embedBatch'])).toBe(true);
@@ -297,7 +297,7 @@ describe('EmbeddingProvider 接口契约', () => {
 
 describe('QueryTransformer 接口契约', () => {
   it('QueryRewriter 应实现 QueryTransformer 接口', async () => {
-    const { QueryRewriter } = await import('@rag-sdk/retrieval');
+    const { QueryRewriter } = await import('@ragsdk/retrieval');
 
     const transformer = new QueryRewriter({
       chat: async () => '改写结果',
@@ -308,7 +308,7 @@ describe('QueryTransformer 接口契约', () => {
   });
 
   it('MultiQueryExpander 应实现 QueryTransformer 接口', async () => {
-    const { MultiQueryExpander } = await import('@rag-sdk/retrieval');
+    const { MultiQueryExpander } = await import('@ragsdk/retrieval');
 
     const transformer = new MultiQueryExpander({
       chat: async () => '多查询结果',
@@ -319,7 +319,7 @@ describe('QueryTransformer 接口契约', () => {
   });
 
   it('HyDETransformer 应实现 QueryTransformer 接口', async () => {
-    const { HyDETransformer } = await import('@rag-sdk/retrieval');
+    const { HyDETransformer } = await import('@ragsdk/retrieval');
 
     const transformer = new HyDETransformer({
       chat: async () => '假设文档',
@@ -334,29 +334,29 @@ describe('QueryTransformer 接口契约', () => {
 
 describe('PostProcessor 接口契约', () => {
   it('ThresholdPostProcessor 应实现 PostProcessor 接口', async () => {
-    const { ThresholdPostProcessor } = await import('@rag-sdk/retrieval');
+    const { ThresholdPostProcessor } = await import('@ragsdk/retrieval');
 
     const processor = new ThresholdPostProcessor({ threshold: 0.5 });
     expect(hasMethods(processor, ['process'])).toBe(true);
   });
 
   it('RerankerPostProcessor 应实现 PostProcessor 接口', async () => {
-    const { RerankerPostProcessor } = await import('@rag-sdk/retrieval');
+    const { RerankerPostProcessor } = await import('@ragsdk/retrieval');
 
     const processor = new RerankerPostProcessor(async () => 0.8, { topK: 2 });
     expect(hasMethods(processor, ['process'])).toBe(true);
   });
 
   it('ContextEnrichPostProcessor 应实现 PostProcessor 接口', async () => {
-    const { ContextEnrichPostProcessor } = await import('@rag-sdk/retrieval');
-    const { MemoryStore } = await import('@rag-sdk/storage');
+    const { ContextEnrichPostProcessor } = await import('@ragsdk/retrieval');
+    const { MemoryStore } = await import('@ragsdk/storage');
 
     const processor = new ContextEnrichPostProcessor(new MemoryStore(), { windowSize: 2 });
     expect(hasMethods(processor, ['process'])).toBe(true);
   });
 
   it('CompressionPostProcessor 应实现 PostProcessor 接口', async () => {
-    const { CompressionPostProcessor } = await import('@rag-sdk/retrieval');
+    const { CompressionPostProcessor } = await import('@ragsdk/retrieval');
 
     const processor = new CompressionPostProcessor({
       chat: async () => '压缩后内容',
@@ -377,28 +377,28 @@ describe('Generator 接口契约', () => {
   };
 
   it('StandardGenerator 应实现 Generator 接口', async () => {
-    const { StandardGenerator } = await import('@rag-sdk/generation');
+    const { StandardGenerator } = await import('@ragsdk/generation');
     const generator = new StandardGenerator(mockLLM);
 
     expect(hasMethods(generator, ['generate'])).toBe(true);
   });
 
   it('GroundedGenerator 应实现 Generator 接口', async () => {
-    const { GroundedGenerator } = await import('@rag-sdk/generation');
+    const { GroundedGenerator } = await import('@ragsdk/generation');
     const generator = new GroundedGenerator(mockLLM);
 
     expect(hasMethods(generator, ['generate'])).toBe(true);
   });
 
   it('CitationGenerator 应实现 Generator 接口', async () => {
-    const { CitationGenerator } = await import('@rag-sdk/generation');
+    const { CitationGenerator } = await import('@ragsdk/generation');
     const generator = new CitationGenerator(mockLLM);
 
     expect(hasMethods(generator, ['generate'])).toBe(true);
   });
 
   it('SelfRAGGenerator 应实现 Generator 接口', async () => {
-    const { SelfRAGGenerator } = await import('@rag-sdk/generation');
+    const { SelfRAGGenerator } = await import('@ragsdk/generation');
     const generator = new SelfRAGGenerator(mockLLM);
 
     expect(hasMethods(generator, ['generate'])).toBe(true);
@@ -424,7 +424,7 @@ describe('Evaluator 接口契约', () => {
   const truthIds = ['e1'];
 
   it('RecallEvaluator 应实现 RetrievalEvaluator 接口', async () => {
-    const { RecallEvaluator } = await import('@rag-sdk/evaluation');
+    const { RecallEvaluator } = await import('@ragsdk/evaluation');
     const evaluator = new RecallEvaluator();
 
     expect(hasMethods(evaluator, ['evaluate'])).toBe(true);
@@ -437,7 +437,7 @@ describe('Evaluator 接口契约', () => {
   });
 
   it('PrecisionEvaluator 应实现 RetrievalEvaluator 接口', async () => {
-    const { PrecisionEvaluator } = await import('@rag-sdk/evaluation');
+    const { PrecisionEvaluator } = await import('@ragsdk/evaluation');
     const evaluator = new PrecisionEvaluator({ k: 2 });
 
     expect(hasMethods(evaluator, ['evaluate'])).toBe(true);
@@ -449,7 +449,7 @@ describe('Evaluator 接口契约', () => {
   });
 
   it('MRREvaluator 应实现 RetrievalEvaluator 接口', async () => {
-    const { MRREvaluator } = await import('@rag-sdk/evaluation');
+    const { MRREvaluator } = await import('@ragsdk/evaluation');
     const evaluator = new MRREvaluator();
 
     expect(hasMethods(evaluator, ['evaluate'])).toBe(true);
@@ -459,7 +459,7 @@ describe('Evaluator 接口契约', () => {
   });
 
   it('NDCGEvaluator 应实现 RetrievalEvaluator 接口', async () => {
-    const { NDCGEvaluator } = await import('@rag-sdk/evaluation');
+    const { NDCGEvaluator } = await import('@ragsdk/evaluation');
     const evaluator = new NDCGEvaluator();
 
     expect(hasMethods(evaluator, ['evaluate'])).toBe(true);
@@ -469,7 +469,7 @@ describe('Evaluator 接口契约', () => {
   });
 
   it('BLEUEvaluator 应实现 GenerationEvaluator 接口', async () => {
-    const { BLEUEvaluator } = await import('@rag-sdk/evaluation');
+    const { BLEUEvaluator } = await import('@ragsdk/evaluation');
     const evaluator = new BLEUEvaluator();
 
     expect(hasMethods(evaluator, ['evaluate'])).toBe(true);
@@ -479,7 +479,7 @@ describe('Evaluator 接口契约', () => {
   });
 
   it('ROUGEEvaluator 应实现 GenerationEvaluator 接口', async () => {
-    const { ROUGEEvaluator } = await import('@rag-sdk/evaluation');
+    const { ROUGEEvaluator } = await import('@ragsdk/evaluation');
     const evaluator = new ROUGEEvaluator();
 
     expect(hasMethods(evaluator, ['evaluate'])).toBe(true);
@@ -493,7 +493,7 @@ describe('Evaluator 接口契约', () => {
 
 describe('Knowledge Graph 接口契约', () => {
   it('EntityExtractor 应具有提取实体的能力', async () => {
-    const { EntityExtractor } = await import('@rag-sdk/knowledge-graph');
+    const { EntityExtractor } = await import('@ragsdk/knowledge-graph');
     const extractor = new EntityExtractor({
       llmProvider: {
         chat: async () => '',
@@ -506,7 +506,7 @@ describe('Knowledge Graph 接口契约', () => {
   });
 
   it('MemoryGraphStore 应实现 GraphStore 接口', async () => {
-    const { MemoryGraphStore } = await import('@rag-sdk/knowledge-graph');
+    const { MemoryGraphStore } = await import('@ragsdk/knowledge-graph');
     const store = new MemoryGraphStore();
 
     // GraphStore 应支持 upsert 和查询
@@ -514,7 +514,7 @@ describe('Knowledge Graph 接口契约', () => {
   });
 
   it('GraphRetriever 应能检索图谱', async () => {
-    const { GraphRetriever, MemoryGraphStore } = await import('@rag-sdk/knowledge-graph');
+    const { GraphRetriever, MemoryGraphStore } = await import('@ragsdk/knowledge-graph');
     const retriever = new GraphRetriever({
       graphStore: new MemoryGraphStore(),
       llmProvider: {
@@ -529,7 +529,7 @@ describe('Knowledge Graph 接口契约', () => {
 
   it('GraphBuilder 应能从文档构建图谱', async () => {
     const { GraphBuilder, EntityExtractor, MemoryGraphStore } = await import(
-      '@rag-sdk/knowledge-graph'
+      '@ragsdk/knowledge-graph'
     );
 
     const extractor = new EntityExtractor({
@@ -553,9 +553,9 @@ describe('Knowledge Graph 接口契约', () => {
 
 describe('IndexingPipeline 接口契约', () => {
   it('IndexingPipeline 应实现完整的索引流程', async () => {
-    const { IndexingPipeline } = await import('@rag-sdk/indexing');
-    const { MemoryStore } = await import('@rag-sdk/storage');
-    const { FixedSizeChunker } = await import('@rag-sdk/document');
+    const { IndexingPipeline } = await import('@ragsdk/indexing');
+    const { MemoryStore } = await import('@ragsdk/storage');
+    const { FixedSizeChunker } = await import('@ragsdk/document');
 
     const pipeline = new IndexingPipeline({
       embedding: {
@@ -585,9 +585,9 @@ describe('IndexingPipeline 接口契约', () => {
 
 describe('Pipeline 接口契约', () => {
   it('RAGPipeline 应实现 Pipeline 接口', async () => {
-    const { RAGPipeline } = await import('@rag-sdk/core');
-    const { MemoryStore } = await import('@rag-sdk/storage');
-    const { FixedSizeChunker } = await import('@rag-sdk/document');
+    const { RAGPipeline } = await import('@ragsdk/core');
+    const { MemoryStore } = await import('@ragsdk/storage');
+    const { FixedSizeChunker } = await import('@ragsdk/document');
 
     const pipeline = new RAGPipeline({
       llm: {

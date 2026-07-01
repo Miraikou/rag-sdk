@@ -1,4 +1,4 @@
-import type { SearchResult } from '@rag-sdk/core';
+import type { SearchResult } from '@ragsdk/core';
 
 /**
  * RRF（Reciprocal Rank Fusion）

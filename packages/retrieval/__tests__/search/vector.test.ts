@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { VectorSearch } from '../../src/search/vector';
-import type { EmbeddingProvider, VectorStore, SearchResult } from '@rag-sdk/core';
+import type { EmbeddingProvider, VectorStore, SearchResult } from '@ragsdk/core';
 
 function createMockEmbedding(): EmbeddingProvider {
   return {

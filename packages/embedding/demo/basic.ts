@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/embedding 基础用法示例
+ * @ragsdk/embedding 基础用法示例
  *
  * 运行: npx tsx packages/embedding/demo/basic.ts
  *

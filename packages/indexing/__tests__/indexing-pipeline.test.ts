@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import type { Document, EmbeddingProvider } from '@rag-sdk/core';
+import type { Document, EmbeddingProvider } from '@ragsdk/core';
 
 // 创建 mock 依赖
 function createMockEmbedding(): EmbeddingProvider {
@@ -32,8 +32,8 @@ describe('IndexingPipeline', () => {
 
   it('should index documents with all stages enabled', async () => {
     const { IndexingPipeline } = await import('../src/indexing-pipeline.js');
-    const { MemoryStore } = await import('@rag-sdk/storage');
-    const { FixedSizeChunker } = await import('@rag-sdk/document');
+    const { MemoryStore } = await import('@ragsdk/storage');
+    const { FixedSizeChunker } = await import('@ragsdk/document');
 
     const pipeline = new IndexingPipeline({
       store: new MemoryStore(),
@@ -56,8 +56,8 @@ describe('IndexingPipeline', () => {
 
   it('should index documents with only required stages', async () => {
     const { IndexingPipeline } = await import('../src/indexing-pipeline.js');
-    const { MemoryStore } = await import('@rag-sdk/storage');
-    const { FixedSizeChunker } = await import('@rag-sdk/document');
+    const { MemoryStore } = await import('@ragsdk/storage');
+    const { FixedSizeChunker } = await import('@ragsdk/document');
 
     const pipeline = new IndexingPipeline({
       store: new MemoryStore(),
@@ -76,8 +76,8 @@ describe('IndexingPipeline', () => {
 
   it('should reindex a single document', async () => {
     const { IndexingPipeline } = await import('../src/indexing-pipeline.js');
-    const { MemoryStore } = await import('@rag-sdk/storage');
-    const { FixedSizeChunker } = await import('@rag-sdk/document');
+    const { MemoryStore } = await import('@ragsdk/storage');
+    const { FixedSizeChunker } = await import('@ragsdk/document');
 
     const pipeline = new IndexingPipeline({
       store: new MemoryStore(),
@@ -99,8 +99,8 @@ describe('IndexingPipeline', () => {
 
   it('should throw if loader is missing for indexFromSource', async () => {
     const { IndexingPipeline } = await import('../src/indexing-pipeline.js');
-    const { MemoryStore } = await import('@rag-sdk/storage');
-    const { FixedSizeChunker } = await import('@rag-sdk/document');
+    const { MemoryStore } = await import('@ragsdk/storage');
+    const { FixedSizeChunker } = await import('@ragsdk/document');
 
     const pipeline = new IndexingPipeline({
       store: new MemoryStore(),

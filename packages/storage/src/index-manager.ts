@@ -5,7 +5,7 @@ import type {
   Document,
   EmbeddingProvider,
   VectorStore,
-} from '@rag-sdk/core';
+} from '@ragsdk/core';
 
 /** 增量同步报告 */
 export interface SyncReport {

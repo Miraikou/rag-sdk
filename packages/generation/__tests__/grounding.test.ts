@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { GroundedGenerator } from '../src/grounding';
-import type { LLMProvider, Chunk } from '@rag-sdk/core';
+import type { LLMProvider, Chunk } from '@ragsdk/core';
 import type { GroundingVerification } from '../src/types';
 
 const makeChunk = (id: string, content: string): Chunk => ({

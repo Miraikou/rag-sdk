@@ -1,11 +1,11 @@
 /**
- * @rag-sdk/storage 基础用法示例
+ * @ragsdk/storage 基础用法示例
  *
  * 运行: npx tsx packages/storage/demo/basic.ts
  */
 
 import { MemoryStore, IndexManager } from '../src/index';
-import type { Chunk } from '@rag-sdk/core';
+import type { Chunk } from '@ragsdk/core';
 
 // ==================== MemoryStore 示例 ====================
 

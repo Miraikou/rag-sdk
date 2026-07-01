@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/retrieval 基础用法示例
+ * @ragsdk/retrieval 基础用法示例
  *
  * 运行: npx tsx packages/retrieval/demo/basic.ts
  *
@@ -17,9 +17,9 @@ import {
   ThresholdPostProcessor,
   RerankerPostProcessor,
 } from '../src/index';
-import { MemoryStore } from '@rag-sdk/storage';
-import { OpenAIEmbeddingProvider } from '@rag-sdk/embedding';
-import type { Chunk, SearchResult, EmbeddingProvider } from '@rag-sdk/core';
+import { MemoryStore } from '@ragsdk/storage';
+import { OpenAIEmbeddingProvider } from '@ragsdk/embedding';
+import type { Chunk, SearchResult, EmbeddingProvider } from '@ragsdk/core';
 
 async function main(): Promise<void> {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -82,7 +82,7 @@ async function main(): Promise<void> {
     // ==================== 查询变换 ====================
 
     console.log('=== 查询变换：Query Rewriter ===\n');
-    const { OpenAIProvider } = await import('@rag-sdk/llm');
+    const { OpenAIProvider } = await import('@ragsdk/llm');
     const llm = new OpenAIProvider({ apiKey, defaultModel: process.env.DEFAULT_MODEL, baseUrl: process.env.OPENAI_BASE_URL });
     const rewriter = new QueryRewriter(llm);
     const rewritten = await rewriter.transform('怎么用那个AI东西做搜索？');

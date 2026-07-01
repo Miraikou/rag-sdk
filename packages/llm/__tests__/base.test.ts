@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { BaseLLMProvider } from '../src/base';
 import type { LLMConfig } from '../src/types';
-import type { ChatOptions, Message } from '@rag-sdk/core';
+import type { ChatOptions, Message } from '@ragsdk/core';
 
 // 具体实现用于测试抽象基类
 class TestLLMProvider extends BaseLLMProvider {

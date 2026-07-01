@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import type { Document, LLMProvider } from '@rag-sdk/core'
+import type { Document, LLMProvider } from '@ragsdk/core'
 import { EntityExtractor } from '../src/entity-extractor'
 
 /** 创建 mock LLM */

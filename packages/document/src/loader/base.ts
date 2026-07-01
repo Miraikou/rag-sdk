@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import type { Document, DocumentLoader } from '@rag-sdk/core';
+import type { Document, DocumentLoader } from '@ragsdk/core';
 
 /**
  * 文档加载器抽象基类

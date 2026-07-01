@@ -1,13 +1,13 @@
 /**
- * @rag-sdk/storage-pinecone
+ * @ragsdk/storage-pinecone
  * Pinecone 向量数据库适配器
  *
- * 安装: pnpm add @rag-sdk/storage-pinecone
+ * 安装: pnpm add @ragsdk/storage-pinecone
  * 无需额外安装 @pinecone-database/pinecone，使用原生 fetch 调用 Pinecone REST API
  */
 
-import { BaseVectorStore } from '@rag-sdk/storage';
-import type { Chunk, SearchOptions, SearchResult } from '@rag-sdk/core';
+import { BaseVectorStore } from '@ragsdk/storage';
+import type { Chunk, SearchOptions, SearchResult } from '@ragsdk/core';
 
 // ==================== API 响应类型 ====================
 

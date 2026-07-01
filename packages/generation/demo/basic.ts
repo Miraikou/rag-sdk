@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/generation 基础用法示例
+ * @ragsdk/generation 基础用法示例
  *
  * 运行: npx tsx packages/generation/demo/basic.ts
  *
@@ -14,7 +14,7 @@ import {
   ConsistencyChecker,
   BasePromptTemplate,
 } from '../src/index';
-import type { Chunk } from '@rag-sdk/core';
+import type { Chunk } from '@ragsdk/core';
 
 async function main(): Promise<void> {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -25,7 +25,7 @@ async function main(): Promise<void> {
   }
 
   // 动态导入避免类型检查时缺少依赖
-  const { OpenAIProvider } = await import('@rag-sdk/llm');
+  const { OpenAIProvider } = await import('@ragsdk/llm');
   const llm = new OpenAIProvider({ apiKey, defaultModel: process.env.DEFAULT_MODEL ?? 'gpt-4o-mini', baseUrl: process.env.OPENAI_BASE_URL });
 
   const testChunks: Chunk[] = [

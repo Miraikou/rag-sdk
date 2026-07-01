@@ -1,4 +1,4 @@
-import type { Chunk, PostProcessor, SearchResult, VectorStore } from '@rag-sdk/core';
+import type { Chunk, PostProcessor, SearchResult, VectorStore } from '@ragsdk/core';
 
 /**
  * 上下文丰富后处理器

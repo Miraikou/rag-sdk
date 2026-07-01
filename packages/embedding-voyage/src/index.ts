@@ -1,13 +1,13 @@
 /**
- * @rag-sdk/embedding-voyage
+ * @ragsdk/embedding-voyage
  * Voyage AI Embedding 适配器
  *
- * 安装: pnpm add @rag-sdk/embedding-voyage
+ * 安装: pnpm add @ragsdk/embedding-voyage
  * 无需额外安装 voyageai SDK，使用原生 fetch 调用 Voyage AI API
  */
 
-import { BaseEmbeddingProvider } from '@rag-sdk/embedding';
-import type { EmbeddingConfig } from '@rag-sdk/embedding';
+import { BaseEmbeddingProvider } from '@ragsdk/embedding';
+import type { EmbeddingConfig } from '@ragsdk/embedding';
 
 // ==================== API 响应类型 ====================
 

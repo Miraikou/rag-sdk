@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { Document } from '@rag-sdk/core';
+import type { Document } from '@ragsdk/core';
 import { GraphBuilder } from '../src/graph-builder';
 import { MemoryGraphStore } from '../src/graph-store';
 import type { EntityExtractorLike, GraphData } from '../src/types';

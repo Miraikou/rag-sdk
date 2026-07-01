@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/llm 基础用法示例
+ * @ragsdk/llm 基础用法示例
  *
  * 运行: npx tsx packages/llm/demo/basic.ts
  *

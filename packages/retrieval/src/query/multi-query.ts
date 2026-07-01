@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { LLMProvider, QueryTransformer } from '@rag-sdk/core';
+import type { LLMProvider, QueryTransformer } from '@ragsdk/core';
 
 /** 多查询扩展的结构化输出 schema */
 const MultiQuerySchema = z.object({

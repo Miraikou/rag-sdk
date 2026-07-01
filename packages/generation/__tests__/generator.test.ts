@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { StandardGenerator } from '../src/generator';
-import type { LLMProvider, Chunk } from '@rag-sdk/core';
+import type { LLMProvider, Chunk } from '@ragsdk/core';
 
 const makeChunk = (id: string, content: string): Chunk => ({
   id,

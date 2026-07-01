@@ -11,7 +11,7 @@ export type {
 } from './types';
 
 // Re-export 核心评测接口
-export type { MetricResult, RetrievalEvaluator, GenerationEvaluator } from '@rag-sdk/core';
+export type { MetricResult, RetrievalEvaluator, GenerationEvaluator } from '@ragsdk/core';
 
 // 检索指标
 export { RecallEvaluator } from './retrieval/recall';

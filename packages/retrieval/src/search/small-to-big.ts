@@ -1,4 +1,4 @@
-import type { Retriever, RetrieveOptions, SearchResult, Chunk, VectorStore } from '@rag-sdk/core';
+import type { Retriever, RetrieveOptions, SearchResult, Chunk, VectorStore } from '@ragsdk/core';
 
 /**
  * SmallToBigSearch

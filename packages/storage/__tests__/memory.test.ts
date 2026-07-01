@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { MemoryStore } from '../src/memory';
-import type { Chunk } from '@rag-sdk/core';
+import type { Chunk } from '@ragsdk/core';
 
 describe('MemoryStore', () => {
   let store: MemoryStore;

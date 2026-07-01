@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { SelectiveContextPostProcessor } from '../../src/post-process/selective-context';
-import type { LLMProvider, SearchResult } from '@rag-sdk/core';
+import type { LLMProvider, SearchResult } from '@ragsdk/core';
 
 const makeResult = (id: string, content: string): SearchResult => ({
   chunk: { id, documentId: 'doc-1', content, metadata: {} },

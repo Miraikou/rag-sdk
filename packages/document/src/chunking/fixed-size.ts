@@ -1,4 +1,4 @@
-import type { Chunk, ChunkOptions, Document } from '@rag-sdk/core';
+import type { Chunk, ChunkOptions, Document } from '@ragsdk/core';
 import { BaseChunker } from './base';
 
 /**

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { FaithfulnessEvaluator } from '../../src/generation/faithfulness';
-import type { LLMProvider } from '@rag-sdk/core';
+import type { LLMProvider } from '@ragsdk/core';
 
 /** 构建 mock LLMProvider */
 function createMockLLM(chatJsonResponses?: unknown[]): LLMProvider {

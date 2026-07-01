@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { RetrievalRouter } from '../src/router';
-import type { RouteRule, Retriever, SearchResult } from '@rag-sdk/core';
+import type { RouteRule, Retriever, SearchResult } from '@ragsdk/core';
 
 // 创建一个简单的 mock retriever
 function createMockRetriever(name: string): Retriever {

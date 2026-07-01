@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { GenerationEvaluator, LLMProvider, Message, MetricResult } from '@rag-sdk/core';
+import type { GenerationEvaluator, LLMProvider, Message, MetricResult } from '@ragsdk/core';
 
 /** 声明分解的 Zod schema：从回答中提取原子事实声明 */
 const claimsSchema = z

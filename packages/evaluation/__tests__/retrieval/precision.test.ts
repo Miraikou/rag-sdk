@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { PrecisionEvaluator } from '../../src/retrieval/precision';
-import type { SearchResult } from '@rag-sdk/core';
+import type { SearchResult } from '@ragsdk/core';
 
 /** 构建 mock SearchResult */
 function mockResult(id: string): SearchResult {

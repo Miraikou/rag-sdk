@@ -10,8 +10,8 @@ import type {
   Retriever,
   TokenBudgetManager,
   VectorStore,
-} from '@rag-sdk/core';
-import { RAGPipeline } from '@rag-sdk/core';
+} from '@ragsdk/core';
+import { RAGPipeline } from '@ragsdk/core';
 
 /**
  * Pipeline 流式构建器

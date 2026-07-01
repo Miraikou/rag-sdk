@@ -1,13 +1,13 @@
 /**
- * @rag-sdk/storage-weaviate
+ * @ragsdk/storage-weaviate
  * Weaviate 向量数据库适配器
  *
- * 安装: pnpm add @rag-sdk/storage-weaviate
+ * 安装: pnpm add @ragsdk/storage-weaviate
  * 无需额外安装 weaviate-ts-client，使用原生 fetch 调用 Weaviate REST API
  */
 
-import { BaseVectorStore } from '@rag-sdk/storage';
-import type { Chunk, SearchOptions, SearchResult } from '@rag-sdk/core';
+import { BaseVectorStore } from '@ragsdk/storage';
+import type { Chunk, SearchOptions, SearchResult } from '@ragsdk/core';
 
 // ==================== API 响应类型 ====================
 

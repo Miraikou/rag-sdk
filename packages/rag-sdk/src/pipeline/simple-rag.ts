@@ -1,5 +1,5 @@
-import type { PipelineConfig } from '@rag-sdk/core';
-import { RAGPipeline } from '@rag-sdk/core';
+import type { PipelineConfig } from '@ragsdk/core';
+import { RAGPipeline } from '@ragsdk/core';
 
 /**
  * Simple RAG — 最基础的 RAG 配置
@@ -10,9 +10,9 @@ import { RAGPipeline } from '@rag-sdk/core';
  * @example
  * ```ts
  * import { simpleRAG } from 'rag-sdk/pipeline';
- * import { OpenAIProvider } from '@rag-sdk/llm';
- * import { OpenAIEmbedding } from '@rag-sdk/embedding';
- * import { MemoryStore } from '@rag-sdk/storage';
+ * import { OpenAIProvider } from '@ragsdk/llm';
+ * import { OpenAIEmbedding } from '@ragsdk/embedding';
+ * import { MemoryStore } from '@ragsdk/storage';
  *
  * const rag = simpleRAG({
  *   llm: new OpenAIProvider({ apiKey: '...' }),
@@ -32,7 +32,7 @@ export interface SimpleRAGOptions {
 
 export async function createSimpleRAG(options: SimpleRAGOptions): Promise<RAGPipeline> {
   // 动态导入避免循环依赖
-  const { FixedSizeChunker } = await import('@rag-sdk/document');
+  const { FixedSizeChunker } = await import('@ragsdk/document');
 
   // 构建带 topK 的默认检索器
   const topK = options.topK;

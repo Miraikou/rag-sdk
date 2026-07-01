@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Chunk, GenerateOptions, LLMProvider } from '@rag-sdk/core';
+import type { Chunk, GenerateOptions, LLMProvider } from '@ragsdk/core';
 import type { GroundingVerification, GroundedGenerateResult, PromptTemplate } from './types';
 import { StandardGenerator } from './generator';
 import { BasePromptTemplate } from './prompt-template';

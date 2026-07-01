@@ -1,4 +1,4 @@
-import type { Chunk, Document } from '@rag-sdk/core';
+import type { Chunk, Document } from '@ragsdk/core';
 import { BaseChunker } from './base';
 import type { MarkdownChunkOptions } from '../types';
 

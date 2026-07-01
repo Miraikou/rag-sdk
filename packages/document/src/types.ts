@@ -8,7 +8,7 @@ export type {
   Message,
   LLMProvider,
   EmbeddingProvider,
-} from '@rag-sdk/core';
+} from '@ragsdk/core';
 
 // ==================== Loader Options ====================
 

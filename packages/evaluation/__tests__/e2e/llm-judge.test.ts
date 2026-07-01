@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { E2ELLMJudge } from '../../src/e2e/llm-judge';
-import type { LLMProvider } from '@rag-sdk/core';
+import type { LLMProvider } from '@ragsdk/core';
 
 /** 构建 mock LLMProvider */
 function createMockLLM(chatJsonResponse?: unknown): LLMProvider {

@@ -1,13 +1,13 @@
 /**
- * @rag-sdk/storage-chroma
+ * @ragsdk/storage-chroma
  * Chroma 向量数据库适配器
  *
- * 安装: pnpm add @rag-sdk/storage-chroma
+ * 安装: pnpm add @ragsdk/storage-chroma
  * 无需额外安装 chromadb，使用原生 fetch 调用 Chroma REST API
  */
 
-import { BaseVectorStore } from '@rag-sdk/storage';
-import type { Chunk, SearchOptions, SearchResult } from '@rag-sdk/core';
+import { BaseVectorStore } from '@ragsdk/storage';
+import type { Chunk, SearchOptions, SearchResult } from '@ragsdk/core';
 
 // ==================== API 响应类型 ====================
 

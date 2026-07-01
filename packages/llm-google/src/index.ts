@@ -1,14 +1,14 @@
 /**
- * @rag-sdk/llm-google
+ * @ragsdk/llm-google
  * Google Gemini LLM 适配器
  *
- * 安装: pnpm add @rag-sdk/llm-google
+ * 安装: pnpm add @ragsdk/llm-google
  * 无需额外安装 @google/generative-ai，使用原生 fetch 调用 Gemini API
  */
 
-import type { ChatOptions, Message } from '@rag-sdk/core';
-import { BaseLLMProvider } from '@rag-sdk/llm';
-import type { LLMConfig } from '@rag-sdk/llm';
+import type { ChatOptions, Message } from '@ragsdk/core';
+import { BaseLLMProvider } from '@ragsdk/llm';
+import type { LLMConfig } from '@ragsdk/llm';
 
 // ==================== API 响应类型 ====================
 

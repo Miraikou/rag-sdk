@@ -5,13 +5,13 @@
  * 使用 mock LLM/Embedding + 真实的 MemoryStore 和各模块实现
  */
 import { describe, it, expect, vi } from 'vitest';
-import { RAGPipeline, LoggingMonitor, CollectingMonitor } from '@rag-sdk/core';
-import { MemoryStore } from '@rag-sdk/storage';
-import { FixedSizeChunker, RecursiveChunker } from '@rag-sdk/document';
-import { VectorSearch, KeywordSearch, FusionSearch, RRFSearch } from '@rag-sdk/retrieval';
-import { ThresholdPostProcessor, RerankerPostProcessor } from '@rag-sdk/retrieval';
-import { QueryRewriter, MultiQueryExpander, HyDETransformer } from '@rag-sdk/retrieval';
-import { StandardGenerator, CitationGenerator } from '@rag-sdk/generation';
+import { RAGPipeline, LoggingMonitor, CollectingMonitor } from '@ragsdk/core';
+import { MemoryStore } from '@ragsdk/storage';
+import { FixedSizeChunker, RecursiveChunker } from '@ragsdk/document';
+import { VectorSearch, KeywordSearch, FusionSearch, RRFSearch } from '@ragsdk/retrieval';
+import { ThresholdPostProcessor, RerankerPostProcessor } from '@ragsdk/retrieval';
+import { QueryRewriter, MultiQueryExpander, HyDETransformer } from '@ragsdk/retrieval';
+import { StandardGenerator, CitationGenerator } from '@ragsdk/generation';
 import type {
   LLMProvider,
   EmbeddingProvider,
@@ -21,7 +21,7 @@ import type {
   SearchResult,
   GenerateResult,
   PipelineMonitor,
-} from '@rag-sdk/core';
+} from '@ragsdk/core';
 
 // ==================== Mock 工厂 ====================
 

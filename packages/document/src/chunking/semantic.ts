@@ -1,4 +1,4 @@
-import type { Chunk, ChunkOptions, Document, EmbeddingProvider } from '@rag-sdk/core';
+import type { Chunk, ChunkOptions, Document, EmbeddingProvider } from '@ragsdk/core';
 import { BaseChunker } from './base';
 
 /**

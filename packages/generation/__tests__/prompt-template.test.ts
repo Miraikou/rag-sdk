@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { BasePromptTemplate } from '../src/prompt-template';
-import type { Chunk } from '@rag-sdk/core';
+import type { Chunk } from '@ragsdk/core';
 
 const makeChunk = (id: string, content: string): Chunk => ({
   id,

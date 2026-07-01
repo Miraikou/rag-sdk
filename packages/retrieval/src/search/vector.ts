@@ -4,7 +4,7 @@ import type {
   Retriever,
   RetrieveOptions,
   SearchResult,
-} from '@rag-sdk/core';
+} from '@ragsdk/core';
 
 /**
  * 向量语义搜索

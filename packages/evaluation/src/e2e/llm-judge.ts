@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { LLMProvider, Message } from '@rag-sdk/core';
+import type { LLMProvider, Message } from '@ragsdk/core';
 import type { E2EJudgeResult } from '../types';
 
 /** E2E LLM Judge 评分结果的 Zod schema */

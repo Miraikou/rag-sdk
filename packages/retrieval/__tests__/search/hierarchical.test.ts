@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { MemoryStore } from '@rag-sdk/storage';
-import type { EmbeddingProvider } from '@rag-sdk/core';
+import { MemoryStore } from '@ragsdk/storage';
+import type { EmbeddingProvider } from '@ragsdk/core';
 
 describe('HierarchicalSearch', () => {
   it('should export HierarchicalSearch', async () => {

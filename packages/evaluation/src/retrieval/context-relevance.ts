@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { LLMProvider, Message, MetricResult } from '@rag-sdk/core';
+import type { LLMProvider, Message, MetricResult } from '@ragsdk/core';
 
 /** 上下文相关性判断的 Zod schema */
 const judgmentsSchema = z

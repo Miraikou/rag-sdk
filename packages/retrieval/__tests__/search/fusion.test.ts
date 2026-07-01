@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { FusionSearch } from '../../src/search/fusion';
-import type { Retriever, SearchResult } from '@rag-sdk/core';
+import type { Retriever, SearchResult } from '@ragsdk/core';
 
 function createMockRetriever(results: SearchResult[]): Retriever {
   return {

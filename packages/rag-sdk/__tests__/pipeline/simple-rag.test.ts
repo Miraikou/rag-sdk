@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { createSimpleRAG } from '../../src/pipeline/simple-rag';
-import type { LLMProvider, EmbeddingProvider, VectorStore } from '@rag-sdk/core';
+import type { LLMProvider, EmbeddingProvider, VectorStore } from '@ragsdk/core';
 
 /** 构建 mock 组件 */
 function createMockComponents() {

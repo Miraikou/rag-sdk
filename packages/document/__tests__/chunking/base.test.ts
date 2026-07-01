@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { BaseChunker } from '../../src/chunking/base';
-import type { Document, Chunk, ChunkOptions } from '@rag-sdk/core';
+import type { Document, Chunk, ChunkOptions } from '@ragsdk/core';
 
 // 具体实现用于测试抽象基类
 class TestChunker extends BaseChunker {

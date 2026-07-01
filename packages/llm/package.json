@@ -1,9 +1,15 @@
 {
-  "name": "@rag-sdk/llm",
+  "name": "@ragsdk/llm",
   "description": "LLM 提供者抽象接口，内置 OpenAI 适配器",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "llm", "openai", "language-model", "ai"],
+  "keywords": [
+    "rag",
+    "llm",
+    "openai",
+    "language-model",
+    "ai"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -34,7 +40,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*"
+    "@ragsdk/core": "workspace:*"
   },
   "devDependencies": {},
   "license": "MIT",

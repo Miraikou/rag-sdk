@@ -1,6 +1,6 @@
-import type { ChatOptions, Message } from '@rag-sdk/core';
+import type { ChatOptions, Message } from '@ragsdk/core';
 
-export type { ChatOptions, Message } from '@rag-sdk/core';
+export type { ChatOptions, Message } from '@ragsdk/core';
 
 /** LLM 提供商配置 */
 export interface LLMConfig {

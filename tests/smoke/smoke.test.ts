@@ -9,8 +9,8 @@ describe('冒烟测试', () => {
   // --- 包导入验证 ---
 
   describe('所有包导入', () => {
-    it('应能正常导入 @rag-sdk/core', async () => {
-      const core = await import('@rag-sdk/core');
+    it('应能正常导入 @ragsdk/core', async () => {
+      const core = await import('@ragsdk/core');
       expect(core.RAGPipeline).toBeDefined();
       expect(core.Logger).toBeDefined();
       expect(core.RetrievalRouter).toBeDefined();
@@ -18,27 +18,27 @@ describe('冒烟测试', () => {
       expect(core.LoggingMonitor).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/llm', async () => {
-      const llm = await import('@rag-sdk/llm');
+    it('应能正常导入 @ragsdk/llm', async () => {
+      const llm = await import('@ragsdk/llm');
       expect(llm.BaseLLMProvider).toBeDefined();
       expect(llm.OpenAIProvider).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/embedding', async () => {
-      const embedding = await import('@rag-sdk/embedding');
+    it('应能正常导入 @ragsdk/embedding', async () => {
+      const embedding = await import('@ragsdk/embedding');
       expect(embedding.BaseEmbeddingProvider).toBeDefined();
       expect(embedding.OpenAIEmbeddingProvider).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/storage', async () => {
-      const storage = await import('@rag-sdk/storage');
+    it('应能正常导入 @ragsdk/storage', async () => {
+      const storage = await import('@ragsdk/storage');
       expect(storage.BaseVectorStore).toBeDefined();
       expect(storage.MemoryStore).toBeDefined();
       expect(storage.IndexManager).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/document', async () => {
-      const doc = await import('@rag-sdk/document');
+    it('应能正常导入 @ragsdk/document', async () => {
+      const doc = await import('@ragsdk/document');
       expect(doc.FixedSizeChunker).toBeDefined();
       expect(doc.RecursiveChunker).toBeDefined();
       expect(doc.SemanticChunker).toBeDefined();
@@ -50,8 +50,8 @@ describe('冒烟测试', () => {
       expect(doc.DocumentCleaner).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/retrieval', async () => {
-      const retrieval = await import('@rag-sdk/retrieval');
+    it('应能正常导入 @ragsdk/retrieval', async () => {
+      const retrieval = await import('@ragsdk/retrieval');
       // 搜索策略
       expect(retrieval.VectorSearch).toBeDefined();
       expect(retrieval.KeywordSearch).toBeDefined();
@@ -67,21 +67,21 @@ describe('冒烟测试', () => {
       expect(retrieval.RerankerPostProcessor).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/generation', async () => {
-      const gen = await import('@rag-sdk/generation');
+    it('应能正常导入 @ragsdk/generation', async () => {
+      const gen = await import('@ragsdk/generation');
       expect(gen.StandardGenerator).toBeDefined();
       expect(gen.GroundedGenerator).toBeDefined();
       expect(gen.CitationGenerator).toBeDefined();
       expect(gen.SelfRAGGenerator).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/indexing', async () => {
-      const indexing = await import('@rag-sdk/indexing');
+    it('应能正常导入 @ragsdk/indexing', async () => {
+      const indexing = await import('@ragsdk/indexing');
       expect(indexing.IndexingPipeline).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/evaluation', async () => {
-      const eval_ = await import('@rag-sdk/evaluation');
+    it('应能正常导入 @ragsdk/evaluation', async () => {
+      const eval_ = await import('@ragsdk/evaluation');
       expect(eval_.RecallEvaluator).toBeDefined();
       expect(eval_.PrecisionEvaluator).toBeDefined();
       expect(eval_.MRREvaluator).toBeDefined();
@@ -90,8 +90,8 @@ describe('冒烟测试', () => {
       expect(eval_.ROUGEEvaluator).toBeDefined();
     });
 
-    it('应能正常导入 @rag-sdk/knowledge-graph', async () => {
-      const kg = await import('@rag-sdk/knowledge-graph');
+    it('应能正常导入 @ragsdk/knowledge-graph', async () => {
+      const kg = await import('@ragsdk/knowledge-graph');
       expect(kg.EntityExtractor).toBeDefined();
       expect(kg.MemoryGraphStore).toBeDefined();
       expect(kg.GraphRetriever).toBeDefined();
@@ -113,9 +113,9 @@ describe('冒烟测试', () => {
 
   describe('Pipeline 基础创建', () => {
     it('应能使用默认配置创建 Pipeline', async () => {
-      const { RAGPipeline } = await import('@rag-sdk/core');
-      const { MemoryStore } = await import('@rag-sdk/storage');
-      const { FixedSizeChunker } = await import('@rag-sdk/document');
+      const { RAGPipeline } = await import('@ragsdk/core');
+      const { MemoryStore } = await import('@ragsdk/storage');
+      const { FixedSizeChunker } = await import('@ragsdk/document');
 
       const pipeline = new RAGPipeline({
         llm: {
@@ -137,7 +137,7 @@ describe('冒烟测试', () => {
 
     it('createSimpleRAG 应快速创建可用的 Pipeline', async () => {
       const { createSimpleRAG } = await import('rag-sdk');
-      const { MemoryStore } = await import('@rag-sdk/storage');
+      const { MemoryStore } = await import('@ragsdk/storage');
 
       const pipeline = await createSimpleRAG({
         llm: {
@@ -161,7 +161,7 @@ describe('冒烟测试', () => {
 
     it('createAdvancedRAG 应创建带查询变换和后处理的 Pipeline', async () => {
       const { createAdvancedRAG } = await import('rag-sdk');
-      const { MemoryStore } = await import('@rag-sdk/storage');
+      const { MemoryStore } = await import('@ragsdk/storage');
 
       const pipeline = await createAdvancedRAG({
         llm: {
@@ -185,8 +185,8 @@ describe('冒烟测试', () => {
 
     it('PipelineBuilder 应支持链式构建', async () => {
       const { PipelineBuilder } = await import('rag-sdk');
-      const { MemoryStore } = await import('@rag-sdk/storage');
-      const { FixedSizeChunker } = await import('@rag-sdk/document');
+      const { MemoryStore } = await import('@ragsdk/storage');
+      const { FixedSizeChunker } = await import('@ragsdk/document');
 
       const builder = new PipelineBuilder();
       const pipeline = builder
@@ -212,9 +212,9 @@ describe('冒烟测试', () => {
 
   describe('文档摄入与查询', () => {
     it('应能摄入单文档并查询', async () => {
-      const { RAGPipeline } = await import('@rag-sdk/core');
-      const { MemoryStore } = await import('@rag-sdk/storage');
-      const { FixedSizeChunker } = await import('@rag-sdk/document');
+      const { RAGPipeline } = await import('@ragsdk/core');
+      const { MemoryStore } = await import('@ragsdk/storage');
+      const { FixedSizeChunker } = await import('@ragsdk/document');
 
       let receivedContext = '';
 
@@ -258,9 +258,9 @@ describe('冒烟测试', () => {
     });
 
     it('应能摄入多文档并查询', async () => {
-      const { RAGPipeline } = await import('@rag-sdk/core');
-      const { MemoryStore } = await import('@rag-sdk/storage');
-      const { FixedSizeChunker } = await import('@rag-sdk/document');
+      const { RAGPipeline } = await import('@ragsdk/core');
+      const { MemoryStore } = await import('@ragsdk/storage');
+      const { FixedSizeChunker } = await import('@ragsdk/document');
 
       let contextMessage = '';
 
@@ -298,9 +298,9 @@ describe('冒烟测试', () => {
     });
 
     it('空查询不应崩溃', async () => {
-      const { RAGPipeline } = await import('@rag-sdk/core');
-      const { MemoryStore } = await import('@rag-sdk/storage');
-      const { FixedSizeChunker } = await import('@rag-sdk/document');
+      const { RAGPipeline } = await import('@ragsdk/core');
+      const { MemoryStore } = await import('@ragsdk/storage');
+      const { FixedSizeChunker } = await import('@ragsdk/document');
 
       const pipeline = new RAGPipeline({
         llm: {
@@ -330,9 +330,9 @@ describe('冒烟测试', () => {
 
   describe('中文内容处理', () => {
     it('应正确处理中文文档的摄入和查询', async () => {
-      const { RAGPipeline } = await import('@rag-sdk/core');
-      const { MemoryStore } = await import('@rag-sdk/storage');
-      const { FixedSizeChunker } = await import('@rag-sdk/document');
+      const { RAGPipeline } = await import('@ragsdk/core');
+      const { MemoryStore } = await import('@ragsdk/storage');
+      const { FixedSizeChunker } = await import('@ragsdk/document');
 
       const pipeline = new RAGPipeline({
         llm: {
@@ -370,7 +370,7 @@ describe('冒烟测试', () => {
 
   describe('文档切块器', () => {
     it('FixedSizeChunker 应正确切分文档', async () => {
-      const { FixedSizeChunker } = await import('@rag-sdk/document');
+      const { FixedSizeChunker } = await import('@ragsdk/document');
 
       const chunker = new FixedSizeChunker({ chunkSize: 100, overlap: 10 });
       const chunks = chunker.chunk({
@@ -388,7 +388,7 @@ describe('冒烟测试', () => {
     });
 
     it('RecursiveChunker 应按段落合理切分', async () => {
-      const { RecursiveChunker } = await import('@rag-sdk/document');
+      const { RecursiveChunker } = await import('@ragsdk/document');
 
       const chunker = new RecursiveChunker();
       const chunks = chunker.chunk(

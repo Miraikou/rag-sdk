@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { DocumentAugmenter } from '../src/augmenter';
-import type { Document, LLMProvider } from '@rag-sdk/core';
+import type { Document, LLMProvider } from '@ragsdk/core';
 
 /** 创建测试用文档 */
 function makeDoc(id: string, content: string): Document {

@@ -1,5 +1,5 @@
 /**
- * @rag-sdk/storage-pgvector 基础用法示例
+ * @ragsdk/storage-pgvector 基础用法示例
  *
  * 运行前请先启动 PostgreSQL（含 pgvector 扩展）：
  *   docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres pgvector/pgvector:pg18
@@ -17,7 +17,7 @@
  */
 import 'dotenv/config'
 import { PgVectorStore } from '../src/index'
-import type { Chunk, SearchOptions } from '@rag-sdk/core'
+import type { Chunk, SearchOptions } from '@ragsdk/core'
 
 async function main(): Promise<void> {
   // 统一解析连接参数，保证日志和实际连接使用同一套值

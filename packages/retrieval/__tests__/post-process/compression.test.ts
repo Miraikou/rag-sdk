@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { CompressionPostProcessor } from '../../src/post-process/compression';
-import type { LLMProvider, SearchResult } from '@rag-sdk/core';
+import type { LLMProvider, SearchResult } from '@ragsdk/core';
 
 function createMockLLM(response: string): LLMProvider {
   return {

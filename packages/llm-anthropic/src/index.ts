@@ -1,14 +1,14 @@
 /**
- * @rag-sdk/llm-anthropic
+ * @ragsdk/llm-anthropic
  * Anthropic Claude LLM 适配器
  *
- * 安装: pnpm add @rag-sdk/llm-anthropic
+ * 安装: pnpm add @ragsdk/llm-anthropic
  * 无需额外安装 @anthropic-ai/sdk，使用原生 fetch 调用 Anthropic Messages API
  */
 
-import type { ChatOptions, Message } from '@rag-sdk/core';
-import { BaseLLMProvider } from '@rag-sdk/llm';
-import type { LLMConfig } from '@rag-sdk/llm';
+import type { ChatOptions, Message } from '@ragsdk/core';
+import { BaseLLMProvider } from '@ragsdk/llm';
+import type { LLMConfig } from '@ragsdk/llm';
 
 // ==================== API 响应类型 ====================
 

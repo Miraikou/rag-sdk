@@ -1,4 +1,4 @@
-import type { Chunk, SearchOptions, SearchResult, VectorStore } from '@rag-sdk/core';
+import type { Chunk, SearchOptions, SearchResult, VectorStore } from '@ragsdk/core';
 
 /**
  * 计算两个向量的余弦相似度

@@ -1,4 +1,4 @@
-import type { Chunk, Chunker, ChunkOptions, Document } from '@rag-sdk/core';
+import type { Chunk, Chunker, ChunkOptions, Document } from '@ragsdk/core';
 
 /** 切块策略抽象基类 */
 export abstract class BaseChunker implements Chunker {

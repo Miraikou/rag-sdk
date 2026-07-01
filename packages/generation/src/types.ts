@@ -1,6 +1,6 @@
-import type { Chunk, Citation, GenerateResult, Message } from '@rag-sdk/core';
+import type { Chunk, Citation, GenerateResult, Message } from '@ragsdk/core';
 
-export type { Chunk, Citation, GenerateResult, Message } from '@rag-sdk/core';
+export type { Chunk, Citation, GenerateResult, Message } from '@ragsdk/core';
 
 /** PromptTemplate 格式化选项 */
 export interface FormatOptions {

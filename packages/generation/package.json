@@ -1,9 +1,15 @@
 {
-  "name": "@rag-sdk/generation",
+  "name": "@ragsdk/generation",
   "description": "生成模块，提供提示词模板与多种生成策略",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "generation", "prompt", "llm", "ai"],
+  "keywords": [
+    "rag",
+    "generation",
+    "prompt",
+    "llm",
+    "ai"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -34,8 +40,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/llm": "workspace:*",
+    "@ragsdk/core": "workspace:*",
+    "@ragsdk/llm": "workspace:*",
     "zod": "^4.4.3",
     "zod-to-json-schema": "^3.25.2"
   },

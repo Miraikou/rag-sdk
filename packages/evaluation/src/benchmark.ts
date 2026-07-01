@@ -1,4 +1,4 @@
-import type { Retriever, RetrievalEvaluator, GenerationEvaluator } from '@rag-sdk/core';
+import type { Retriever, RetrievalEvaluator, GenerationEvaluator } from '@ragsdk/core';
 import type { BenchmarkReport, GenerationSample, MetricStats, RetrievalSample } from './types';
 
 /**

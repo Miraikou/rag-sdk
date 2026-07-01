@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { QueryDecomposer } from '../../src/query/decomposition';
-import type { LLMProvider } from '@rag-sdk/core';
+import type { LLMProvider } from '@ragsdk/core';
 
 /** 创建 mock LLM：chatJson 抛异常（测试降级路径） */
 function createMockLLMFallback(chatResponse: string): LLMProvider {

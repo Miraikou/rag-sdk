@@ -1,9 +1,15 @@
 {
-  "name": "@rag-sdk/retrieval",
+  "name": "@ragsdk/retrieval",
   "description": "检索模块，支持查询变换、多种搜索策略与后处理",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "retrieval", "search", "reranking", "ai"],
+  "keywords": [
+    "rag",
+    "retrieval",
+    "search",
+    "reranking",
+    "ai"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -34,13 +40,13 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/embedding": "workspace:*",
-    "@rag-sdk/storage": "workspace:*",
+    "@ragsdk/core": "workspace:*",
+    "@ragsdk/embedding": "workspace:*",
+    "@ragsdk/storage": "workspace:*",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@rag-sdk/llm": "workspace:*"
+    "@ragsdk/llm": "workspace:*"
   },
   "license": "MIT",
   "publishConfig": {

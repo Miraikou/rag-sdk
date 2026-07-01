@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { RerankerPostProcessor } from '../../src/post-process/reranker';
-import type { SearchResult } from '@rag-sdk/core';
+import type { SearchResult } from '@ragsdk/core';
 
 const makeResult = (id: string, score: number): SearchResult => ({
   chunk: {

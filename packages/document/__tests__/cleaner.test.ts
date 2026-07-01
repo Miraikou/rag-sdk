@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { DocumentCleaner } from '../src/cleaner';
-import type { Document } from '@rag-sdk/core';
+import type { Document } from '@ragsdk/core';
 
 /** 创建测试用文档 */
 function makeDoc(id: string, content: string): Document {

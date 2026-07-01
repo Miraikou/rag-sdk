@@ -1,4 +1,4 @@
-import type { EmbeddingProvider, Retriever, RetrieveOptions, SearchResult, VectorStore } from '@rag-sdk/core';
+import type { EmbeddingProvider, Retriever, RetrieveOptions, SearchResult, VectorStore } from '@ragsdk/core';
 
 /**
  * HierarchicalSearch

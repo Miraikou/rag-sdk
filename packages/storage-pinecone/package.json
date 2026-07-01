@@ -1,9 +1,14 @@
 {
-  "name": "@rag-sdk/storage-pinecone",
+  "name": "@ragsdk/storage-pinecone",
   "description": "Pinecone 向量数据库适配器",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Yongchao Chen <2938287734@qq.com>",
-  "keywords": ["rag", "vector-store", "pinecone", "ai"],
+  "keywords": [
+    "rag",
+    "vector-store",
+    "pinecone",
+    "ai"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -33,8 +38,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@rag-sdk/core": "workspace:*",
-    "@rag-sdk/storage": "workspace:*"
+    "@ragsdk/core": "workspace:*",
+    "@ragsdk/storage": "workspace:*"
   },
   "devDependencies": {},
   "license": "MIT",

@@ -1,4 +1,4 @@
-import type { GenerationEvaluator, MetricResult } from '@rag-sdk/core';
+import type { GenerationEvaluator, MetricResult } from '@ragsdk/core';
 
 /**
  * 中文标点 + 英文标点分词正则

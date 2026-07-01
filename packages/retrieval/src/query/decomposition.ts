@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { LLMProvider, QueryTransformer } from '@rag-sdk/core';
+import type { LLMProvider, QueryTransformer } from '@ragsdk/core';
 
 /** 查询分解的结构化输出 schema */
 const DecompositionSchema = z.object({

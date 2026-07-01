@@ -1,4 +1,4 @@
-import type { Document, LLMProvider, Retriever } from '@rag-sdk/core';
+import type { Document, LLMProvider, Retriever } from '@ragsdk/core';
 
 // Re-export 需要用到的核心类型
 export type { Document, LLMProvider, Retriever };
@@ -141,7 +141,7 @@ export interface GraphRetrieverLike {
    * @param options.topK - 返回结果数量
    * @returns 检索结果列表
    */
-  retrieve(query: string, options?: { topK?: number }): Promise<import('@rag-sdk/core').SearchResult[]>;
+  retrieve(query: string, options?: { topK?: number }): Promise<import('@ragsdk/core').SearchResult[]>;
 }
 
 // ==================== GraphBuilder ====================

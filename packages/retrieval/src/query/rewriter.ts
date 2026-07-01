@@ -1,4 +1,4 @@
-import type { LLMProvider, QueryTransformer } from '@rag-sdk/core';
+import type { LLMProvider, QueryTransformer } from '@ragsdk/core';
 
 /**
  * QueryRewriter

@@ -5,7 +5,7 @@ import type {
   DocumentLoader,
   EmbeddingProvider,
   VectorStore,
-} from '@rag-sdk/core';
+} from '@ragsdk/core';
 
 /** 文档清洗器接口 */
 export interface DocumentCleaner {

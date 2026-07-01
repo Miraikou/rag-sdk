@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { GenerationEvaluator, LLMProvider, Message, MetricResult } from '@rag-sdk/core';
+import type { GenerationEvaluator, LLMProvider, Message, MetricResult } from '@ragsdk/core';
 
 /** 问题生成的 Zod schema：从回答中反向生成问题 */
 const questionsSchema = z
