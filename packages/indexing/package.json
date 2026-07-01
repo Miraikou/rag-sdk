@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/indexing",
+  "description": "索引管道，编排文档加载、清洗、切块、嵌入与存储",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",

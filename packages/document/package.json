@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/document",
+  "description": "文档处理模块，提供切块、加载、清洗与增强功能",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",

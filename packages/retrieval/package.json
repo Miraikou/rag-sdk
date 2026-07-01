@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/retrieval",
+  "description": "检索模块，支持查询变换、多种搜索策略与后处理",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",

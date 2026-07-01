@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/llm",
+  "description": "LLM 提供者抽象接口，内置 OpenAI 适配器",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",

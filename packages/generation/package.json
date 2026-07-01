@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/generation",
+  "description": "生成模块，提供提示词模板与多种生成策略",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",

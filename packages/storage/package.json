@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/storage",
+  "description": "向量存储抽象接口，内置 MemoryStore 内存实现",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",

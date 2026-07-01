@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/core",
+  "description": "RAG SDK 核心模块，提供全局类型定义、Pipeline 编排器与路由",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -1,5 +1,6 @@
 {
   "name": "@rag-sdk/storage-weaviate",
+  "description": "Weaviate 向量数据库适配器",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",
