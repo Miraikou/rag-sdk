@@ -2,6 +2,8 @@
   "name": "@rag-sdk/storage-pgvector",
   "description": "PostgreSQL pgvector 向量存储适配器",
   "version": "0.1.0",
+  "author": "Yongchao Chen <2938287734@qq.com>",
+  "keywords": ["rag", "vector-store", "pgvector", "postgresql", "ai"],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

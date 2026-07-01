@@ -2,6 +2,8 @@
   "name": "@rag-sdk/embedding-google",
   "description": "Google 嵌入模型适配器",
   "version": "0.1.0",
+  "author": "Yongchao Chen <2938287734@qq.com>",
+  "keywords": ["rag", "embedding", "google", "ai"],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

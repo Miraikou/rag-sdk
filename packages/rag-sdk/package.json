@@ -1,6 +1,8 @@
 {
   "name": "rag-sdk",
   "version": "0.1.0",
+  "author": "Yongchao Chen <2938287734@qq.com>",
+  "keywords": ["rag", "llm", "embedding", "vector-search", "knowledge-base", "ai"],
   "description": "通用、模块化、可扩展的 TypeScript RAG SDK",
   "type": "module",
   "main": "./dist/index.cjs",

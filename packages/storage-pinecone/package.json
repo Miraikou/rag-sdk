@@ -2,6 +2,8 @@
   "name": "@rag-sdk/storage-pinecone",
   "description": "Pinecone 向量数据库适配器",
   "version": "0.1.0",
+  "author": "Yongchao Chen <2938287734@qq.com>",
+  "keywords": ["rag", "vector-store", "pinecone", "ai"],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

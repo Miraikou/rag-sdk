@@ -2,6 +2,8 @@
   "name": "@rag-sdk/generation",
   "description": "生成模块，提供提示词模板与多种生成策略",
   "version": "0.1.0",
+  "author": "Yongchao Chen <2938287734@qq.com>",
+  "keywords": ["rag", "generation", "prompt", "llm", "ai"],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

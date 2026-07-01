@@ -2,6 +2,8 @@
   "name": "@rag-sdk/storage",
   "description": "向量存储抽象接口，内置 MemoryStore 内存实现",
   "version": "0.1.0",
+  "author": "Yongchao Chen <2938287734@qq.com>",
+  "keywords": ["rag", "vector-store", "vector-database", "ai"],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

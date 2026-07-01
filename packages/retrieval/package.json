@@ -2,6 +2,8 @@
   "name": "@rag-sdk/retrieval",
   "description": "检索模块，支持查询变换、多种搜索策略与后处理",
   "version": "0.1.0",
+  "author": "Yongchao Chen <2938287734@qq.com>",
+  "keywords": ["rag", "retrieval", "search", "reranking", "ai"],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
