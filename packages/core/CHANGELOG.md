@@ -1,5 +1,11 @@
 # @ragsdk/core
 
+## 0.2.1
+
+### Patch Changes
+
+- b10f135: 为所有子包添加 README.md
+
 ## 0.2.0
 
 ### Minor Changes

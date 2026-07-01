@@ -1,5 +1,14 @@
 # @ragsdk/llm-google
 
+## 0.2.1
+
+### Patch Changes
+
+- b10f135: 为所有子包添加 README.md
+- Updated dependencies [b10f135]
+  - @ragsdk/core@0.2.1
+  - @ragsdk/llm@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

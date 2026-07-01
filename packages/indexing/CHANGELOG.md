@@ -1,5 +1,16 @@
 # @ragsdk/indexing
 
+## 0.2.1
+
+### Patch Changes
+
+- b10f135: 为所有子包添加 README.md
+- Updated dependencies [b10f135]
+  - @ragsdk/core@0.2.1
+  - @ragsdk/embedding@0.2.1
+  - @ragsdk/storage@0.2.1
+  - @ragsdk/document@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
