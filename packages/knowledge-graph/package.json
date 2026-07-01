@@ -34,5 +34,6 @@
     "@rag-sdk/llm": "workspace:*",
     "@rag-sdk/storage": "workspace:*",
     "zod": "^4.4.3"
-  }
+  },
+  "license": "MIT"
 }

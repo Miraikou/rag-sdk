@@ -50,5 +50,6 @@
     "@types/pdf-parse": "^1.1.5",
     "cheerio": "^1.2.0",
     "pdf-parse": "^2.4.5"
-  }
+  },
+  "license": "MIT"
 }

@@ -37,5 +37,6 @@
   },
   "devDependencies": {
     "@rag-sdk/llm": "workspace:*"
-  }
+  },
+  "license": "MIT"
 }
