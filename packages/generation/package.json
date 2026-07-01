@@ -27,7 +27,8 @@
     "test:run": "vitest run",
     "lint": "eslint src/ --ext .ts",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
     "@rag-sdk/core": "workspace:*",
