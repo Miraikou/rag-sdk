@@ -51,5 +51,8 @@
     "cheerio": "^1.2.0",
     "pdf-parse": "^2.4.5"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

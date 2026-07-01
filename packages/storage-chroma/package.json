@@ -33,5 +33,8 @@
     "@rag-sdk/storage": "workspace:*"
   },
   "devDependencies": {},
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

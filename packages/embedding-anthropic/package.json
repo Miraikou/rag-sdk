@@ -33,5 +33,8 @@
     "@rag-sdk/embedding": "workspace:*"
   },
   "devDependencies": {},
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

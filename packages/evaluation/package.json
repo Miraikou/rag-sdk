@@ -35,5 +35,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {},
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -40,5 +40,8 @@
     "@rag-sdk/knowledge-graph": "workspace:*"
   },
   "devDependencies": {},
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
