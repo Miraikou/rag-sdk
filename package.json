@@ -24,6 +24,10 @@
     "ai"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Miraikou/rag-sdk.git"
+  },
   "packageManager": "pnpm@10.17.0",
   "engines": {
     "node": ">=18"
