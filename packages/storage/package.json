@@ -1,7 +1,7 @@
 {
   "name": "@ragsdk/storage",
   "description": "向量存储抽象接口，内置 MemoryStore 内存实现",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Yongchao Chen <2938287734@qq.com>",
   "keywords": [
     "rag",

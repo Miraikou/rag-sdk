@@ -1,7 +1,7 @@
 {
   "name": "@ragsdk/embedding-google",
   "description": "Google 嵌入模型适配器",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Yongchao Chen <2938287734@qq.com>",
   "keywords": [
     "rag",

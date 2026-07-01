@@ -1,7 +1,7 @@
 {
   "name": "@ragsdk/storage-weaviate",
   "description": "Weaviate 向量数据库适配器",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Yongchao Chen <2938287734@qq.com>",
   "keywords": [
     "rag",

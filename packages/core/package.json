@@ -1,7 +1,7 @@
 {
   "name": "@ragsdk/core",
   "description": "RAG SDK 核心模块，提供全局类型定义、Pipeline 编排器与路由",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Yongchao Chen <2938287734@qq.com>",
   "keywords": [
     "rag",

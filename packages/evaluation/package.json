@@ -1,7 +1,7 @@
 {
   "name": "@ragsdk/evaluation",
   "description": "评测模块，支持检索、生成与端到端评测",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Yongchao Chen <2938287734@qq.com>",
   "keywords": [
     "rag",
