@@ -22,9 +22,9 @@ pnpm add rag-sdk
 # 或按需安装子包
 pnpm add @rag-sdk/core @rag-sdk/llm @rag-sdk/storage
 
-# 按需安装适配器（需同时安装对应的外部 SDK）
-pnpm add @rag-sdk/llm-anthropic @anthropic-ai/sdk
-pnpm add @rag-sdk/storage-pinecone @pinecone-database/pinecone
+# 按需安装适配器（所有适配器均使用原生 fetch，无需安装额外 SDK）
+pnpm add @rag-sdk/llm-anthropic
+pnpm add @rag-sdk/storage-pinecone
 ```
 
 ## 快速开始
@@ -78,15 +78,15 @@ const { answer, sources } = await rag.query('年假有几天？');
 
 | 适配器包 | 说明 | 外部依赖 |
 |---------|------|---------|
-| [@rag-sdk/llm-anthropic](./packages/llm-anthropic) | Anthropic Claude LLM | @anthropic-ai/sdk |
-| [@rag-sdk/llm-google](./packages/llm-google) | Google Gemini LLM | @google/generative-ai |
-| [@rag-sdk/embedding-anthropic](./packages/embedding-anthropic) | Anthropic Embedding | @anthropic-ai/sdk |
-| [@rag-sdk/embedding-google](./packages/embedding-google) | Google Embedding | @google/generative-ai |
-| [@rag-sdk/embedding-voyage](./packages/embedding-voyage) | Voyage AI Embedding | voyageai |
-| [@rag-sdk/storage-pinecone](./packages/storage-pinecone) | Pinecone 向量数据库 | @pinecone-database/pinecone |
-| [@rag-sdk/storage-weaviate](./packages/storage-weaviate) | Weaviate 向量数据库 | weaviate-ts-client |
-| [@rag-sdk/storage-chroma](./packages/storage-chroma) | Chroma 向量数据库 | chromadb |
-| [@rag-sdk/storage-qdrant](./packages/storage-qdrant) | Qdrant 向量数据库 | @qdrant/js-client-rest |
+| [@rag-sdk/llm-anthropic](./packages/llm-anthropic) | Anthropic Claude LLM | 无（原生 fetch） |
+| [@rag-sdk/llm-google](./packages/llm-google) | Google Gemini LLM | 无（原生 fetch） |
+| [@rag-sdk/embedding-anthropic](./packages/embedding-anthropic) | Anthropic Embedding | 无（原生 fetch） |
+| [@rag-sdk/embedding-google](./packages/embedding-google) | Google Embedding | 无（原生 fetch） |
+| [@rag-sdk/embedding-voyage](./packages/embedding-voyage) | Voyage AI Embedding | 无（原生 fetch） |
+| [@rag-sdk/storage-pinecone](./packages/storage-pinecone) | Pinecone 向量数据库 | 无（原生 fetch） |
+| [@rag-sdk/storage-weaviate](./packages/storage-weaviate) | Weaviate 向量数据库 | 无（原生 fetch） |
+| [@rag-sdk/storage-chroma](./packages/storage-chroma) | Chroma 向量数据库 | 无（原生 fetch） |
+| [@rag-sdk/storage-qdrant](./packages/storage-qdrant) | Qdrant 向量数据库 | 无（原生 fetch） |
 
 ## 目录结构
 
